@@ -380,6 +380,12 @@ jobs:
                  'WEAK long iokit_physical_descriptor_close_notify(void) { return -1; }',
                  'WEAK void sheng_ethernet_probe(void) {}',
                  'WEAK void sheng_software_aes_probe(void) {}',
+                 '/* 24A446 excludes the USB host/device kext closure and omits QcomDwc3. */',
+                 'WEAK void qcom_dwc3_vbus(int value) { (void)value; }',
+                 'WEAK unsigned qcom_ucsi_start(unsigned char *out) { (void)out; return 0; }',
+                 'WEAK unsigned qcom_ucsi_receive(const unsigned char *in, unsigned length, unsigned char *out) { (void)in; (void)length; (void)out; return 0; }',
+                 'WEAK unsigned qcom_ucsi_tick(unsigned char *out) { (void)out; return 0; }',
+                 'WEAK int qcom_ucsi_polling(void) { return 0; }',
                  'WEAK long native_hooks_stub_marker(void) { return 0; }']
           path = pathlib.Path('ci-device-stubs.c')
           path.write_text(chr(10).join(src) + chr(10))
