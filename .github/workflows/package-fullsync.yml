@@ -386,6 +386,7 @@ jobs:
                  'WEAK unsigned qcom_ucsi_receive(const unsigned char *in, unsigned length, unsigned char *out) { (void)in; (void)length; (void)out; return 0; }',
                  'WEAK unsigned qcom_ucsi_tick(unsigned char *out) { (void)out; return 0; }',
                  'WEAK int qcom_ucsi_polling(void) { return 0; }',
+                 'WEAK void sheng_usb_probe(void) {}',
                  'WEAK long native_hooks_stub_marker(void) { return 0; }']
           path = pathlib.Path('ci-device-stubs.c')
           path.write_text(chr(10).join(src) + chr(10))
