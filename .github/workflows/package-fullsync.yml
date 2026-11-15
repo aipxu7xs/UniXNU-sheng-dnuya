@@ -822,8 +822,15 @@ jobs:
         # ABL's dtbo overlay fail and bounces the handset back to fastboot.
         run: |
           python3 - <<'PY'
-          import pathlib
-          p = pathlib.Path('device/build/sheng/sheng.dtb')
+          import hashlib, json, pathlib
+          candidates = list(pathlib.Path('UniXNU/out/sheng').glob('*/*/tree/build/sheng/sheng.dtb'))
+          if len(candidates) != 1:
+              raise SystemExit('expected one assembled-tree sheng.dtb, found %d' % len(candidates))
+          p = candidates[0]
+          work = p.parents[3]
+          report = json.loads((work / 'boot/boot.json').read_text())
+          if hashlib.sha256(p.read_bytes()).hexdigest() != report['dtb_sha256']:
+              raise SystemExit('DTB differs from the input recorded by boot image assembly')
           if not p.is_file():
               raise SystemExit('sheng.dtb missing: the ABL dtb step produced nothing')
           data = p.read_bytes()
