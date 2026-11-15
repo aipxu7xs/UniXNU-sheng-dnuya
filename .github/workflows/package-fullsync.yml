@@ -742,6 +742,24 @@ jobs:
                   raise SystemExit(f'{name}: {len(data)} bytes sha256 {digest} differs from firmware/wcn7850/manifest.json')
               print(f'{name}: {len(data)} bytes sha256 {digest} matches the manifest')
           PY
+      - name: extend Adreno Metal bridge build timeout
+        if: inputs.os == '27'
+        run: |
+          python3 - <<'PY'
+          import pathlib
+          p = pathlib.Path('UniXNU/scripts/build-adreno-metal-bridge.py')
+          if not p.is_file():
+              raise SystemExit('missing framework Adreno bridge script')
+          t = p.read_text(encoding='utf-8')
+          old = 'timeout=1800'
+          new = 'timeout=3600'
+          if t.count(old) != 1:
+              raise SystemExit('expected exactly one Adreno cargo timeout=1800, found %d' % t.count(old))
+          if new in t:
+              raise SystemExit('Adreno timeout already changed before hook')
+          p.write_text(t.replace(old, new, 1), encoding='utf-8')
+          print('build-adreno-metal-bridge.py: timeout changed 1800 -> 3600')
+          PY
       - name: device inputs
         # The runtime step runs before the firmware step, so inputs a developer checkout already holds are fetched here:
         # the proprietary-files.txt entries from its pinned @fetch mirror (SHA-256 checked) and the sources Ath12kWifi
