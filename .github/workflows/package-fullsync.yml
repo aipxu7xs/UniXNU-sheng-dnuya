@@ -31,9 +31,21 @@ concurrency:
 
 jobs:
   package:
-    runs-on: macos-26
+    runs-on: macos-26-intel
     timeout-minutes: 360
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
     steps:
+      - name: verify Intel host and unchanged Xcode SDK inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = x86_64
+          test -d "$DEVELOPER_DIR"
+          xcodebuild -version
+          test "$(xcodebuild -version | head -n 1)" = 'Xcode 26.6'
+          test "$(xcrun --sdk iphoneos --show-sdk-version)" = 26.5
+          test "$(xcrun --sdk macosx --show-sdk-version)" = 26.5
       - uses: actions/checkout@v4
         with:
           repository: UniXNU/UniXNU-sheng
@@ -709,27 +721,44 @@ jobs:
           print('usb diagnostics verified: %d arrays carry usb=2 + log-sys=1' % hits)
           PY
       - name: tools
+        shell: bash
         run: |
-          brew install dtc llvm lld cmake mtools ninja glslang shaderc spirv-tools bison pkgconf rustup blacktop/tap/ipsw
+          set -euo pipefail
+          brew install dtc llvm lld cmake mtools ninja glslang shaderc spirv-tools bison pkgconf rustup openssl@3 blacktop/tap/ipsw
+          LLVM_PREFIX="$(brew --prefix llvm)"
+          LLD_PREFIX="$(brew --prefix lld)"
+          BISON_PREFIX="$(brew --prefix bison)"
+          RUSTUP_PREFIX="$(brew --prefix rustup)"
+          OPENSSL_PREFIX="$(brew --prefix openssl@3)"
+          # GITHUB_PATH only affects later steps; export the same precedence for this shell.
+          export PATH="$HOME/.cargo/bin:$LLVM_PREFIX/bin:$LLD_PREFIX/bin:$BISON_PREFIX/bin:$RUSTUP_PREFIX/bin:$OPENSSL_PREFIX/bin:$PATH"
           {
+            # The runner prepends each entry, so write these in reverse precedence.
+            echo "$OPENSSL_PREFIX/bin"
+            echo "$RUSTUP_PREFIX/bin"
+            echo "$BISON_PREFIX/bin"
+            echo "$LLD_PREFIX/bin"
+            echo "$LLVM_PREFIX/bin"
             echo "$HOME/.cargo/bin"
-            echo "/opt/homebrew/opt/llvm/bin"
-            echo "/opt/homebrew/opt/lld/bin"
-            echo "/opt/homebrew/opt/bison/bin"
           } >> "$GITHUB_PATH"
           rustup toolchain install 1.98.0 --profile minimal --component rust-src
           rustup run 1.98.0 rustc --version
           rustup run 1.98.0 cargo --version
-          # Fail fast, naming the tool, before forty minutes of build.
+          # Preserve the original fail-fast tool gate and check executable permissions.
           ok=1
-          for t in clang xcodebuild make git ninja cmake dtc fdtget fdtput aea compression_tool \
-                   mformat mcopy ipsw; do
+          for t in clang xcodebuild make git ninja cmake dtc fdtget fdtput aea compression_tool mformat mcopy ipsw glslangValidator glslc spirv-val bison codesign hdiutil; do
             command -v "$t" >/dev/null || { echo "missing tool: $t"; ok=0; }
           done
           for t in lld-link llvm-lib llvm-rc llvm-nm llvm-objcopy; do
-            [ -f "/opt/homebrew/opt/llvm/bin/$t" ] || [ -f "/opt/homebrew/opt/lld/bin/$t" ] || { echo "missing tool: $t"; ok=0; }
+            [ -x "$LLVM_PREFIX/bin/$t" ] || [ -x "$LLD_PREFIX/bin/$t" ] || { echo "missing tool: $t"; ok=0; }
           done
+          [ -f "$OPENSSL_PREFIX/include/openssl/evp.h" ] || { echo "missing OpenSSL 3 headers"; ok=0; }
           [ "$ok" = 1 ]
+          # Execute native tools now: an incompatible host binary must fail before release.
+          "$LLVM_PREFIX/bin/clang" --version
+          "$LLD_PREFIX/bin/lld-link" --version
+          "$BISON_PREFIX/bin/bison" --version
+          "$OPENSSL_PREFIX/bin/openssl" version
       - name: WCN7850 firmware
         # firmware/wcn7850 holds only the manifest; the binaries stay out of Git. The pinned linux-firmware commit carries
         # exactly the files the manifest pins (sizes and SHA-256 checked below; any difference stops the run).
