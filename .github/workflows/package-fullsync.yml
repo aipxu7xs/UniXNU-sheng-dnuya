@@ -245,8 +245,11 @@ jobs:
           p = pathlib.Path('package/BootWatchdogPolicy.c')
           t = p.read_text(encoding='utf-8')
           assert t.count(' gpu-pool=0') == 1, 'gpu-pool default missing'
-          p.write_text(t.replace(' gpu-pool=0', ' gpu-pool=1', 1), encoding='utf-8')
-          print('BootWatchdogPolicy.c: gpu-pool=1')
+          t = t.replace(' gpu-pool=0', ' gpu-pool=1', 1)
+          t = t.replace('gpu-pool=1', 'gpu-pool=1 gpu-selftest=1', 1)
+          p.write_text(t, encoding='utf-8')
+          assert 'gpu-selftest=1' in t
+          print('BootWatchdogPolicy.c: gpu-pool=1 gpu-selftest=1')
           PY
       - name: report the SError syndrome at the unhandled branch (diagnostic)
         if: inputs.os == '27'
