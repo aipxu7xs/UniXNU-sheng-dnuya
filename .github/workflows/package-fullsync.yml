@@ -3,7 +3,7 @@ name: package
 # FULL upstream sync round N+2: official device main + official framework main
 # + sm8550 SoC pin bump (a9f45dc6 -> SoC main 2dc650ca: GeniUart/QupDma/VideoCc/AppsSmmu),
 # + PR #229 cherry-pick, + the sheng ABL 0x218 DTB fix, + build-logs upload,
-# + restore the 27 profile's default prelink roots (run 43528673031 layout fix).
+# + measured device-only USB closure and native driver (34 roots / 43 closure members).
 #
 # The platform seed comes from the repository secret UNIXNU_UNIQUE_CHIP_ID and
 # is baked into the images, so the run's artifacts belong to one device alone:
@@ -74,16 +74,48 @@ jobs:
               else:
                   raise SystemExit(rel + ': unexpected SoC pin; inspect feeds.toml')
           PY
-      - name: sync reviewed ArmCpu and Adreno740 upstream fixes
+      - name: apply pinned USB device-only sources and 34 roots
+        if: inputs.os == '27'
+        run: |
+          python3 - <<'PY'
+          import pathlib,runpy,json
+          helper = '"""Apply reviewed 24A446 USB device-only sources to supplied device/driver roots.\nNo network, workspace-relative inputs, or implicit repository lookup.\nRun BEFORE USB removal (which must be removed from the candidate workflow).\nUnrelated -Oz/storage/source edits outside the pinned USB block are preserved.\n"""\nimport argparse,ast,hashlib,json,pathlib,tomllib\nPROFILE_ROOTS = [\'com.apple.AppleFSCompression.AppleFSCompressionTypeZlib\', \'com.apple.driver.AppleARMPlatform\', \'com.apple.driver.AppleARMWatchdogTimer\', \'com.apple.driver.AppleAudioClockLibs\', \'com.apple.driver.AppleEffaceableStorage\', \'com.apple.driver.AppleIISController\', \'com.apple.driver.AppleM2ScalerCSCDriver\', \'com.apple.driver.AppleMobileFileIntegrity\', \'com.apple.driver.ApplePMGR\', \'com.apple.driver.IODARTFamily\', \'com.apple.filesystems.apfs\', \'com.apple.iokit.CoreAnalyticsFamily\', \'com.apple.iokit.IOAVFamily\', \'com.apple.iokit.IOAudio2Family\', \'com.apple.iokit.IOCECFamily\', \'com.apple.iokit.IOCryptoAcceleratorFamily\', \'com.apple.iokit.IOGPUFamily\', \'com.apple.iokit.IOHDCPFamily\', \'com.apple.iokit.IOMobileGraphicsFamily\', \'com.apple.iokit.IOReportFamily\', \'com.apple.iokit.IOSlowAdaptiveClockingFamily\', \'com.apple.iokit.IOStorageFamily\', \'com.apple.iokit.IOSurface\', \'com.apple.kec.Libm\', \'com.apple.kec.corecrypto\', \'com.apple.kext.AppleMatch\', \'com.apple.kext.CoreTrust\', \'com.apple.security.AppleImage4\', \'com.apple.security.sandbox\', \'com.apple.iokit.IOHIDFamily\', \'com.apple.iokit.IOHIDEventDriver\']\nOLD_ROOTS = [\'com.apple.AppleFSCompression.AppleFSCompressionTypeZlib\', \'com.apple.driver.AppleARMPlatform\', \'com.apple.driver.AppleARMWatchdogTimer\', \'com.apple.driver.AppleAudioClockLibs\', \'com.apple.driver.AppleEffaceableStorage\', \'com.apple.driver.AppleIISController\', \'com.apple.driver.AppleM2ScalerCSCDriver\', \'com.apple.driver.AppleMobileFileIntegrity\', \'com.apple.driver.ApplePMGR\', \'com.apple.driver.IODARTFamily\', \'com.apple.filesystems.apfs\', \'com.apple.iokit.CoreAnalyticsFamily\', \'com.apple.iokit.IOAVFamily\', \'com.apple.iokit.IOAudio2Family\', \'com.apple.iokit.IOCECFamily\', \'com.apple.iokit.IOCryptoAcceleratorFamily\', \'com.apple.iokit.IOGPUFamily\', \'com.apple.iokit.IOHDCPFamily\', \'com.apple.iokit.IOMobileGraphicsFamily\', \'com.apple.iokit.IOReportFamily\', \'com.apple.iokit.IOSlowAdaptiveClockingFamily\', \'com.apple.iokit.IOStorageFamily\', \'com.apple.iokit.IOSurface\', \'com.apple.kec.Libm\', \'com.apple.kec.corecrypto\', \'com.apple.kext.AppleMatch\', \'com.apple.kext.CoreTrust\', \'com.apple.security.AppleImage4\', \'com.apple.security.sandbox\', \'com.apple.iokit.IOHIDFamily\', \'com.apple.iokit.IOHIDEventDriver\', \'com.apple.iokit.IOUSBDeviceFamily\', \'com.apple.driver.AppleUSBXDCI\', \'com.apple.driver.AppleUSBDeviceMux\', \'com.apple.iokit.IOUSBHostFamily\', \'com.apple.driver.usb.AppleUSBXHCI\', \'com.apple.driver.usb.AppleUSBHub\', \'com.apple.driver.usb.AppleUSBHostCompositeDevice\', \'com.apple.driver.usb.IOUSBHostHIDDevice\', \'com.apple.iokit.IOUSBMassStorageDriver\', \'com.apple.iokit.IOSCSIArchitectureModelFamily\', \'com.apple.iokit.IOSCSIBlockCommandsDevice\', \'!com.apple.driver.AppleOnboardSerial\', \'!com.apple.driver.AppleSMC\']\nDEVICE_ROOTS = PROFILE_ROOTS + [\'com.apple.iokit.IOUSBDeviceFamily\', \'com.apple.driver.AppleUSBXDCI\', \'com.apple.driver.AppleUSBDeviceMux\']\nUSB_BEGIN = \'# USB device mode: the native SM8550 subclass\'\nUSB_END = \'# The VPU:\'\nUSB_BLOCK_SHA256 = \'934fa8786b78981247bdf0bdee66e803832ac7f8baa5711956899c57f46e8b0e\'\ndef check_usb_block(t):\n if t.count(USB_BEGIN)!=1 or t.count(USB_END)!=1:raise ValueError(\'USB block missing/ambiguous (removal already applied?)\')\n block=t[t.index(USB_BEGIN):t.index(USB_END)]\n if hashlib.sha256(block.encode()).hexdigest()!=USB_BLOCK_SHA256:raise ValueError(\'pinned USB builder block changed\')\ndef once(text,old,new):\n if text.count(old)!=1:raise ValueError(\'nonunique/missing anchor: \'+old[:100])\n return text.replace(old,new,1)\ndef span(text,start,end,new=\'\'):\n if text.count(start)!=1 or text.count(end)!=1:raise ValueError(\'nonunique span\')\n a=text.index(start);b=text.index(end,a);return text[:a]+new+text[b:]\ndef transform_driver(t):\n t=once(t,\'#include "OriginalUsbXhciABI.h"\\n\',\'\')\n t=span(t,"// Host mode: Apple\'s xHCI driver",\'namespace {\\nbool bringUp()\')\n t=once(t,\'enum Role {kRoleNone, kRoleDevice, kRoleHost};\',\'enum Role {kRoleNone, kRoleDevice};\')\n t=once(t,\'bool gForceHost;\\nRegion gGlobals, gXhciRegs;\\nQcomDwc3Nub *gDeviceNub, *gHostNub;\\nQcomDwc3Xhci *gHost;\',\'QcomDwc3Nub *gDeviceNub;\')\n t=once(t,\'    if (!gRoleLock) return;\',\'    if (!gRoleLock || (role != kRoleNone && role != kRoleDevice)) return;\')\n t=once(t,\'            else if (gUcsi.partner == kUcsiPartnerUfp || gUcsi.partner == kUcsiPartnerCableUfp) role = kRoleHost;\\n\',\'\')\n t=once(t,\'    wantRole(gForceHost ? kRoleHost : role);\',\'    wantRole(role);\')\n t=span(t,\'void forceHostThread(\', \'void leaveRole(\')\n t=span(t,\'    } else if (role == kRoleHost && gHostNub) {\',\'// qmp_combo_typec_switch_set\',\'    }\\n}\\n// Device-only: the XDCI reset owns the core mode; cable removal powers the device stack down.\\n\')\n t=span(t,\'void enterHost() {\',\'void enterRole(\')\n t=span(t,\'    setCoreRole(role);\',\'void roleThread(\',\'\'\'    QcomDwc3Nub::route(gDeviceNub);\n    IOService::getResourceService()->setProperty("AppleUSBCableType", "USBHost");\n    native_usb_stats[20] = (uint32_t)gController->cable(true);\n}\n\'\'\')\n t=span(t,\'        while (gRoleWanted == gRoleApplied) {\',\'        const int role = gRoleWanted;\', \'        while (gRoleWanted == gRoleApplied) IOLockSleep(gRoleLock, &gRoleWanted, THREAD_UNINT);\\n\')\n t=once(t,\'        if (role == kRoleHost) gDeviceStackAllowed = false;\\n\',\'\')\n t=once(t,\'extern "C" void qcom_dwc3_host_load(int result) {native_usb_stats[46] = (uint32_t)result << 16;}\\n\',\'\')\n t=span(t,\'        // usb-host=<seconds>:\', \'        gRoleLock = IOLockAlloc();\')\n t=once(t,\'        if (!gRoleLock || !mapRegion(gGlobals, kAppleWindow, 0x1000) || !mapRegion(gXhciRegs, kCore, 0x1000) ||\\n            kernel_thread_start(roleThread, nullptr, &thread) != KERN_SUCCESS)\', \'        if (!gRoleLock || kernel_thread_start(roleThread, nullptr, &thread) != KERN_SUCCESS)\')\n t=once(t,\'        if (forced && kernel_thread_start(forceHostThread, reinterpret_cast<void *>((uintptr_t)forced), &thread) == KERN_SUCCESS) thread_deallocate(thread);\\n\',\'\')\n for forbidden in [\'AppleUSBXHCI\',\'QcomDwc3Xhci\',\'kRoleHost\',\'gHost\',\'gXhci\',\'forceHostThread\',\'hostStats\',\'usb-host\',\'usb-back\',\'qcom_dwc3_host_load\']:\n  if forbidden in t:raise ValueError(\'host dependency remains: \'+forbidden)\n return t\n\ndef transform_probe(t):\n t=once(t,\'extern "C" void qcom_dwc3_host_load(int);\\n\',\'\')\n t=once(t,"        // The same for host mode: Apple\'s xHCI driver and the USB host family below it.\\n        qcom_dwc3_host_load((int)OSKextLoadKextWithIdentifier(\\"com.apple.driver.usb.AppleUSBXHCI\\"));\\n",\'\')\n return t\n\ndef transform_builder(t):\n check_usb_block(t)\n t=once(t,"MACOS = os.environ.get(\'UNIXNU_XNU_TARGET\') == \'macosx\'", "MACOS = os.environ.get(\'UNIXNU_XNU_TARGET\') == \'macosx\'\\nif BUILD != \'24A446\' or MACOS:\\n    raise SystemExit(\'This device-only USB candidate is qualified only for iPadOS 24A446 inputs.\')")\n t=span(t,\'# Host mode: the native subclass of the original AppleUSBXHCI\',"usb_flags = ")\n t=span(t,\'# Every inherited slot must be what the original has:\',"usb_text, usb_addresses = ","USB_DATA = {\'__ZN12AppleUSBXDCI10gMetaClassE\', \'__ZTV12AppleUSBXDCI\'}\\n")\n t=once(t,"print(f\'USB: {len(usb_bindings)} original bindings, {usb_vt} and {xhci_vt} match the original diversities\')","print(f\'USB device-only: {len(usb_bindings)} original bindings, {usb_vt} matches the original diversities\')")\n t=once(t,", ROOT / f\'scripts/usb-xhci-{BUILD}.json\'",\'\')\n t=once(t,"require(all(usb_entries), f\'{usb_vt}: at least the {len(usb_slots)} AppleUSBXDCI entries\')", "require(len(usb_entries) == len(usb_slots) and all(usb_entries), f\'{usb_vt}: all {len(usb_slots)} required AppleUSBXDCI entries\')")\n t=once(t,"usb_found = object_symbols(usb_raw)","usb_found = object_symbols(usb_raw)\\nrequire(not any(\'xhci\' in n.lower() for n, _, _ in usb_found), \'device-only object has no XHCI symbols\')")\n t=once(t,"for name, va in sorted(usb_bindings.items()):", "require(not any(\'xhci\' in n.lower() for n in usb_bindings), \'device-only bindings have no XHCI symbols\')\\nfor name, va in sorted(usb_bindings.items()):")\n ast.parse(t)\n return t\n\ndef transform_board(t):\n marker=\'["os_overrides"."ipados-27.0.1-24A446"."kernel"."prelink"]\'\n if t.count(marker)!=1:raise ValueError(\'27 prelink override missing or ambiguous\')\n data=tomllib.loads(t);actual=data[\'os_overrides\'][\'ipados-27.0.1-24A446\'][\'kernel\'][\'prelink\'][\'roots\']\n if actual!=OLD_ROOTS:raise ValueError(\'unexpected roots; refuse partial or previously transformed override\')\n pos=t.index(marker);end=t.find(chr(10)+\'[\',pos+len(marker));end=len(t) if end<0 else end\n section=t[pos:end];section=once(section,\'"roots" = \'+json.dumps(OLD_ROOTS),\'"roots" = \'+json.dumps(DEVICE_ROOTS))\n result=t[:pos]+section+t[end:];assert tomllib.loads(result)[\'os_overrides\'][\'ipados-27.0.1-24A446\'][\'kernel\'][\'prelink\'][\'roots\']==DEVICE_ROOTS\n return result\n\ndef apply(device_root,driver_root):\n device=pathlib.Path(device_root).resolve();driver=pathlib.Path(driver_root).resolve()\n items=[(driver/\'QcomDwc3.cpp\',transform_driver,\'dfa0cf5fd612e3a23f8006f7bf7d78b6ec19b06efbd207de24b71b1afaa78648\'),\n        (device/\'package/UsbProbe.cpp\',transform_probe,\'c8b7f630a33c67deee481d21033756dd1a533cb32dd1161f0939a8f16df223bd\'),\n        (device/\'scripts/build-gop-legacy-display-27.py\',transform_builder,None),\n        (device/\'board.toml\',transform_board,None)]\n pending=[]\n for path,transform,pin in items:\n  raw=path.read_bytes()\n  if pin and hashlib.sha256(raw).hexdigest()!=pin:raise ValueError(\'source hash drift: \'+str(path))\n  original=raw.decode(\'utf-8\').replace(chr(13)+chr(10),chr(10));updated=transform(original)\n  if path.suffix==\'.py\':ast.parse(updated)\n  pending.append((path,original,updated))\n # No file writes until every source, anchor, and syntax check passes.\n report=[]\n for path,original,updated in pending:\n  path.write_text(updated,encoding=\'utf-8\',newline=\'\\n\')\n  report.append({\'path\':str(path),\'before_sha256\':hashlib.sha256(original.encode()).hexdigest(),\'after_sha256\':hashlib.sha256(updated.encode()).hexdigest()})\n return report\nif __name__==\'__main__\':\n p=argparse.ArgumentParser(description=__doc__);p.add_argument(\'--device\',required=True);p.add_argument(\'--driver\',required=True);p.add_argument(\'--report\');a=p.parse_args()\n report=apply(a.device,a.driver)\n if a.report:pathlib.Path(a.report).write_text(json.dumps(report,indent=2))\n print(\'USB_DEVICE_ONLY_SOURCE\',json.dumps(report))\n'
+          p=pathlib.Path('apply-usb-device.py');p.write_text(helper)
+          report=runpy.run_path(str(p))['apply']('device','device/drivers/QcomDwc3')
+          assert len(report)==4
+          print('USB_DEVICE_ONLY_SOURCE',json.dumps(report))
+          PY
+      - name: sync reviewed ArmCpu Adreno740 and AdrenoMetal upstream fixes
         if: inputs.os == '27'
         run: |
           python3 - <<'PY'
           import pathlib, runpy
-          helper = '"""Select reviewed component commits in ephemeral framework checkout and its index."""\nfrom pathlib import Path\nimport subprocess,tomllib,re\nPINS={\n \'ArmCpu\':(\'d90e457b8392623853ec85c860feef546c767621\',\'acba4ee2674cfb23434431feb124871ae9b3b581\'),\n \'Adreno740\':(\'54b41b8f59e90a167f6f75160739c5f825945fbc\',\'1c9029bc3216a39d9e514ba41dee12e95e8f3598\'),\n}\ndef git(root,*args):\n    return subprocess.check_output([\'git\',\'-C\',str(root),*args],text=True).strip()\ndef apply(root):\n    root=Path(root)\n    catalog=root/\'components.toml\';t=catalog.read_text(encoding=\'utf-8\')\n    specs={c[\'id\']:c for c in tomllib.loads(t)[\'component\']}\n    for name,(old,new) in PINS.items():\n        sub=root/\'drivers\'/name;actual=git(sub,\'rev-parse\',\'HEAD\')\n        assert actual in (old,new),(name,actual)\n        assert not git(sub,\'status\',\'--porcelain\'),name+\' has unreviewed local edits\'\n        assert git(sub,\'remote\',\'get-url\',\'origin\').removesuffix(\'.git\').endswith(\'/UniXNU/\'+name)\n        if actual!=new:\n            subprocess.run([\'git\',\'-C\',str(sub),\'fetch\',\'--depth\',\'1\',\'origin\',new],check=True)\n            subprocess.run([\'git\',\'-C\',str(sub),\'checkout\',\'--detach\',new],check=True)\n        assert git(sub,\'rev-parse\',\'HEAD\')==new\n        # update_submodules uses the index gitlink, so preserve this selected commit across fetch/tree.\n        subprocess.run([\'git\',\'-C\',str(root),\'update-index\',\'--cacheinfo\',f\'160000,{new},drivers/{name}\'],check=True)\n        assert git(root,\'ls-files\',\'--stage\',\'--\',f\'drivers/{name}\').split()[1]==new\n        pattern=r\'(?ms)(^\\[\\[component\\]\\]\\s*\\nid = "\'+name+r\'".*?^revision = ")[^"]+("$)\'\n        t,count=re.subn(pattern,lambda m:m[1]+new+m[2],t)\n        assert count==1,(name,\'catalog anchor\')\n        print(\'REVIEWED_UPSTREAM\',name,old,\'->\',new)\n    catalog.write_text(t,encoding=\'utf-8\')\n    updated={c[\'id\']:c for c in tomllib.loads(t)[\'component\']}\n    assert all(updated[n][\'revision\']==v[1] for n,v in PINS.items())\nif __name__==\'__main__\':apply(\'UniXNU\')\n'
+          helper = '"""Select reviewed component commits in ephemeral framework checkout and its index."""\nfrom pathlib import Path\nimport subprocess,tomllib,re\nPINS={\n \'AdrenoMetal\':(\'73d582fd4d5772b1f5fa83581a25077a16f2b6cd\',\'89d7942e06dad93b5a5a52f817aa8c19fd899b37\'),\n \'ArmCpu\':(\'d90e457b8392623853ec85c860feef546c767621\',\'acba4ee2674cfb23434431feb124871ae9b3b581\'),\n \'Adreno740\':(\'54b41b8f59e90a167f6f75160739c5f825945fbc\',\'1c9029bc3216a39d9e514ba41dee12e95e8f3598\'),\n}\ndef git(root,*args):\n    return subprocess.check_output([\'git\',\'-C\',str(root),*args],text=True).strip()\ndef apply(root):\n    root=Path(root)\n    catalog=root/\'components.toml\';t=catalog.read_text(encoding=\'utf-8\')\n    specs={c[\'id\']:c for c in tomllib.loads(t)[\'component\']}\n    for name,(old,new) in PINS.items():\n        sub=root/\'drivers\'/name;actual=git(sub,\'rev-parse\',\'HEAD\')\n        assert actual in (old,new),(name,actual)\n        assert not git(sub,\'status\',\'--porcelain\'),name+\' has unreviewed local edits\'\n        assert git(sub,\'remote\',\'get-url\',\'origin\').removesuffix(\'.git\').endswith(\'/UniXNU/\'+name)\n        if actual!=new:\n            subprocess.run([\'git\',\'-C\',str(sub),\'fetch\',\'--depth\',\'1\',\'origin\',new],check=True)\n            subprocess.run([\'git\',\'-C\',str(sub),\'checkout\',\'--detach\',new],check=True)\n        assert git(sub,\'rev-parse\',\'HEAD\')==new\n        # update_submodules uses the index gitlink, so preserve this selected commit across fetch/tree.\n        subprocess.run([\'git\',\'-C\',str(root),\'update-index\',\'--cacheinfo\',f\'160000,{new},drivers/{name}\'],check=True)\n        assert git(root,\'ls-files\',\'--stage\',\'--\',f\'drivers/{name}\').split()[1]==new\n        pattern=r\'(?ms)(^\\[\\[component\\]\\]\\s*\\nid = "\'+name+r\'".*?^revision = ")[^"]+("$)\'\n        t,count=re.subn(pattern,lambda m:m[1]+new+m[2],t)\n        assert count==1,(name,\'catalog anchor\')\n        print(\'REVIEWED_UPSTREAM\',name,old,\'->\',new)\n    catalog.write_text(t,encoding=\'utf-8\')\n    updated={c[\'id\']:c for c in tomllib.loads(t)[\'component\']}\n    assert all(updated[n][\'revision\']==v[1] for n,v in PINS.items())\nif __name__==\'__main__\':apply(\'UniXNU\')\n'
           p = pathlib.Path('reviewed-upstream.py')
           p.write_text(helper, encoding='utf-8')
           runpy.run_path(str(p))['apply']('UniXNU')
           assert all((pathlib.Path('UniXNU/drivers') / n).is_dir() for n in ('ArmCpu','Adreno740'))
+          PY
+      - name: install hash-verified paired Metal builders and translator inputs
+        if: inputs.os == '27'
+        run: |
+          python3 - <<'PY'
+          import ast,hashlib,pathlib,urllib.request
+          REV='644ca91af38b8cf174a029a253b1aa816b0bd623'
+          FILES=[{'path': 'scripts/build-adreno-metal-bridge.py', 'base_sha256': '12543b8f66ebe66c589d6ef5c68d8b737b51ae85c2d979749ccb56a3b0990358', 'selected_sha256': '073d044c4e97b608e9531ac14ececd0e5d93db8c566ea67fb455b037e8958975'}, {'path': 'scripts/build-adreno-metal-plugin.py', 'base_sha256': '8e4bbca4d36b317b0c508a3b3e7f2900435486dfc80db3930016997ec8d26995', 'selected_sha256': '332401a82955428ee88e0563e0c9a3c686641096e498fccb0eaddaedeb2682ac'}, {'path': 'scripts/data/gpu-metal-vulkan-inputs.json', 'base_sha256': '544e3bacd0fdcd478cd95163c9e0af7386d4d508efbc992976b59c757c6ef600', 'selected_sha256': '8894ea9c758ed3c2f23ee781a6167e0b5ca59569383ff0fa7d403bccc559ab27'}]
+          pending=[]
+          for item in FILES:
+              relative=item['path'];target=pathlib.Path('UniXNU')/relative
+              assert hashlib.sha256(target.read_bytes()).hexdigest() in (item['base_sha256'],item['selected_sha256']),relative
+              # SourceTree copies framework, then SoC, then device: refuse a device override.
+              assert not (pathlib.Path('device')/relative).exists(),relative+' device override'
+              url='https://raw.githubusercontent.com/UniXNU/UniXNU/'+REV+'/'+relative
+              with urllib.request.urlopen(url,timeout=120) as response: payload=response.read()
+              assert hashlib.sha256(payload).hexdigest()==item['selected_sha256'],relative
+              if relative.endswith('.py'):ast.parse(payload)
+              pending.append((target,payload))
+          for target,payload in pending:target.write_bytes(payload)
+          print('METAL_PAIRED_SCRIPTS',REV,[p.as_posix() for p,_ in pending])
           PY
       - name: compile native board objects with -Oz (layout slack)
         # Measured failure: run 43601833150, fileset_layout.py:115 collision branch,
@@ -126,62 +158,6 @@ jobs:
           import ast
           ast.parse(t)
           print('assertion ok: -Os/-Oz tokens =', n, '; anchors applied; script parses')
-          PY
-      - name: omit USB device mode from the 27 kernel (kexts are not prelinked)
-        if: inputs.os == '27'
-        run: |
-          python3 - <<'PY'
-          """Remove the USB device driver from the 24A446 (27) kernel build.
-
-          The 27 profile does not prelink the AppleUSBXDCI/AppleUSBXHCI kexts: the board's
-          official roots override is dropped because those stacks' __DATA does not fit,
-          and the retained-kext code would also push native code past collection __DATA.
-          XnuPrelink therefore refuses the dwc3 subclass' `.original` absolute targets
-          ("Original target is not retained executable code").  The driver cannot bind a
-          kext that is not in the collection, so the 27 kernel omits the whole device-mode
-          block: QcomDwc3, UsbProbe, the generated ABI headers and the stub adapters.
-          `sheng_usb_probe` is a weak_import hook, so nothing else needs it.
-          """
-          import argparse
-          import ast
-          from pathlib import Path
-          NL = chr(10)
-
-          def apply(source: str) -> str:
-
-              def once(old, new):
-                  nonlocal source
-                  found = source.count(old)
-                  if found != 1:
-                      raise ValueError('USB removal anchor expected once, found %d: %r' % (found, old[:90]))
-                  source = source.replace(old, new, 1)
-              start = '# USB device mode: the native SM8550 subclass of the original AppleUSBXDCI of this fileset.' + NL
-              end = "input_objects += [usb_late, USB_OUT / 'usb-bindings.o', USB_OUT / 'usb-addresses.o', USB_OUT / 'UsbProbe.o']" + NL
-              if source.count(start) != 1 or source.count(end) != 1:
-                  raise ValueError('USB removal block anchors are not unique')
-              first = source.index(start)
-              last = source.index(end, first) + len(end)
-              span = source[first:last]
-              for required in ('OriginalUsbXdciABI', 'OriginalUsbXhciABI', 'usb_bindings', 'usb-addresses.S'):
-                  if required not in span:
-                      raise ValueError('USB removal span does not cover ' + required)
-              note = '# USB device mode is not built for the 27 kernel: the AppleUSBXDCI and AppleUSBXHCI' + NL + '# kexts are not prelinked (their __DATA does not fit), so the native dwc3 subclass' + NL + '# cannot bind them. The usb= kernel argument stays with no driver to consume it.' + NL
-              source = source[:first] + note + source[last:]
-              once("print(f'USB: {len(usb_bindings)} original bindings, {usb_vt} and {xhci_vt} match the original diversities')" + NL, '')
-              once("sources += [KITS / name for name in ('SmmuBypass.h', 'AppsSmmuLock.h', 'UsbProbe.cpp')]", "sources += [KITS / name for name in ('SmmuBypass.h', 'AppsSmmuLock.h')]")
-              once("sources += [USB / 'QcomDwc3.cpp', USB / 'QcomEusb2Phy.h', USB / 'QcomQmpUsb3.h', USB / 'QcomUcsi.h', ROOT / f'scripts/usb-xdci-{BUILD}.json', ROOT / f'scripts/usb-xhci-{BUILD}.json']" + NL, '')
-              for token in ('usb_bindings', 'usb_late', 'QcomDwc3', 'USB_OUT', 'USB / '):
-                  if token in source:
-                      raise ValueError('USB removal left a reference: ' + token)
-              ast.parse(source)
-              return source
-          p = Path('device/scripts/build-gop-legacy-display-27.py')
-          original = p.read_text(encoding='utf-8')
-          patched = apply(original)
-          assert patched != original, "USB removal produced no change"
-          assert 'usb_bindings' not in patched and 'QcomDwc3' not in patched
-          p.write_text(patched, encoding='utf-8')
-          print("USB DEVICE MODE OMITTED (kexts not prelinked)")
           PY
       - name: optimize independent board builders for 24A446
         if: inputs.os == '27'
@@ -258,7 +234,7 @@ jobs:
           anchor = '#if XNU_TARGET_OS_OSX'
           assert t.count(anchor) == 1, 'builtin boot-args OS guard drifted'
           assert 'gpu-selftest=1' not in t, 'selftest argument unexpectedly already present'
-          patch = chr(10).join(['#if XNU_TARGET_OS_IOS', chr(34) + ' gpu-selftest=1 log-gpu=1 log-display=1' + chr(34), '#endif', anchor])
+          patch = chr(10).join(['#if XNU_TARGET_OS_IOS', chr(34) + ' gpu-selftest=1 log-gpu=1 log-display=1 log-power=1' + chr(34), '#endif', anchor])
           t = t.replace(anchor, patch, 1)
           assert patch in t and 'gpu-pool=0' in t
           p.write_text(t, encoding='utf-8')
@@ -281,6 +257,18 @@ jobs:
           assert call in t
           p.write_text(t, encoding='utf-8')
           print('build-xnu-4k-baseline.sh: SError diagnostic hook inserted')
+          PY
+      - name: enforce USB closure imports and print prelink evidence
+        if: inputs.os == '27'
+        run: |
+          python3 - <<'PY'
+          import pathlib,ast
+          p=pathlib.Path('UniXNU/kits/XnuPrelink/fileset_emit.py');t=p.read_text()
+          anchor="    report['output'] = str(Path(output).resolve())"
+          assert t.count(anchor)==1
+          extra="    usb_device = {'com.apple.iokit.IOUSBDeviceFamily', 'com.apple.driver.usb.AppleUSBCommon', 'com.apple.driver.AppleUSBDeviceMux', 'com.apple.driver.AppleUSBXDCI'}\n    expected = ['com.apple.AppleFSCompression.AppleFSCompressionTypeZlib', 'com.apple.driver.AppleARMPlatform', 'com.apple.driver.AppleARMWatchdogTimer', 'com.apple.driver.AppleAudioClockLibs', 'com.apple.driver.AppleEffaceableStorage', 'com.apple.driver.AppleIISController', 'com.apple.driver.AppleM2ScalerCSCDriver', 'com.apple.driver.AppleMobileFileIntegrity', 'com.apple.driver.ApplePMGR', 'com.apple.driver.AppleUSBDeviceMux', 'com.apple.driver.AppleUSBXDCI', 'com.apple.driver.IODARTFamily', 'com.apple.driver.usb.AppleUSBCommon', 'com.apple.filesystems.apfs', 'com.apple.iokit.CoreAnalyticsFamily', 'com.apple.iokit.IOAVFamily', 'com.apple.iokit.IOAudio2Family', 'com.apple.iokit.IOCECFamily', 'com.apple.iokit.IOCryptoAcceleratorFamily', 'com.apple.iokit.IOGPUFamily', 'com.apple.iokit.IOHDCPFamily', 'com.apple.iokit.IOHIDEventDriver', 'com.apple.iokit.IOHIDFamily', 'com.apple.iokit.IOMobileGraphicsFamily', 'com.apple.iokit.IOReportFamily', 'com.apple.iokit.IOSlowAdaptiveClockingFamily', 'com.apple.iokit.IOStorageFamily', 'com.apple.iokit.IOSurface', 'com.apple.iokit.IOUSBDeviceFamily', 'com.apple.kec.Libm', 'com.apple.kec.corecrypto', 'com.apple.kext.AppleMatch', 'com.apple.kext.CoreTrust', 'com.apple.kpi.bsd', 'com.apple.kpi.dsep', 'com.apple.kpi.iokit', 'com.apple.kpi.libkern', 'com.apple.kpi.mach', 'com.apple.kpi.private', 'com.apple.kpi.unsupported', 'com.apple.security.AppleImage4', 'com.apple.security.Image4', 'com.apple.security.sandbox']\n    required = ('closure','missing','stubbed','statistics','native_original_branches')\n    if any(key not in report for key in required):\n        raise ValueError('USB prelink evidence fields missing')\n    if set(report['closure'] or []) != set(expected):\n        raise ValueError('USB device closure differs from reviewed 43-member closure')\n    for category in ('missing','stubbed'):\n        bad = {owner: sites for owner,sites in report[category].items() if owner in usb_device and sites}\n        if bad:\n            raise ValueError('USB original imports unresolved or stubbed: '+category+' '+str(bad))\n    layout = report['statistics']['segment_layout']\n    if not layout:\n        raise ValueError('USB native segment layout missing')\n    print('USB_PRELINK_LAYOUT',layout)\n    print('USB_PRELINK_CLOSURE',report['closure'])\n    print('USB_PRELINK_ORIGINAL_BRANCHES',[b for b in report['native_original_branches'] if 'AppleUSBXDCI' in b.get('symbol','')])\n"
+          p.write_text(t.replace(anchor,extra+anchor,1));ast.parse(p.read_text())
+          print('USB_PRELINK_GATE_INSTALLED')
           PY
       - name: layout collide diagnostics (print numbers before the exception)
         # Runs 43571646791 and 43586156184 both died at fileset_layout.py:115 with
@@ -431,6 +419,7 @@ jobs:
         #     authenticated pointer to an undefined weak symbol, so these get
         #     weak defaults (project convention).
         env:
+          USB_PROFILE: ${{ inputs.os }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python3 - <<'PY'
@@ -471,6 +460,9 @@ jobs:
                  'WEAK int qcom_ucsi_polling(void) { return 0; }',
                  'WEAK void sheng_usb_probe(void) {}',
                  'WEAK long native_hooks_stub_marker(void) { return 0; }']
+          if os.environ['USB_PROFILE'] == '27':
+              src = [line for line in src if not any(name in line for name in ('qcom_dwc3_vbus', 'qcom_ucsi_', 'sheng_usb_probe', 'USB host/device kext closure'))]
+              assert not any('qcom_' in line or 'sheng_usb_probe' in line for line in src)
           path = pathlib.Path('ci-device-stubs.c')
           path.write_text(chr(10).join(src) + chr(10))
           sdk = subprocess.check_output(['xcrun', '--sdk', 'iphoneos', '--show-sdk-path'], text=True).strip()
@@ -604,54 +596,6 @@ jobs:
               print('already has the new file mode line')
           else:
               raise SystemExit('unexpected header of ' + str(path))
-          PY
-      - name: restore profile default prelink roots (layout fit)
-        # ROOT CAUSE (run 43528673031): device main's board.toml adds an
-        # ["os_overrides"."ipados-27.0.1-24A446"."kernel"."prelink"] section whose
-        # roots retain 13 extra kexts (IOUSBDeviceFamily, AppleUSBXDCI,
-        # AppleUSBDeviceMux, IOUSBHostFamily, AppleUSBXHCI, AppleUSBHub,
-        # AppleUSBHostCompositeDevice, IOUSBHostHIDDevice, IOUSBMassStorageDriver,
-        # IOSCSIArchitectureModelFamily, IOSCSIBlockCommandsDevice,
-        # AppleOnboardSerial, AppleSMC). XnuPrelink places retained kext code
-        # inside native __TEXT_EXEC before the native kernel
-        # (fileset_layout.py: end_kept = max end of retained __TEXT_EXEC), so the
-        # extra kexts pushed native code past the collection's __DATA:
-        # "Native code would collide with collection data". The proven generation
-        # (run 43449862147) used the 31 profile default roots and kept ~160 KiB of
-        # slack. Delete the override so the profile defaults apply again. The USB
-        # host stacks are not needed for this run's diagnostics: QcomDwc3 is not in
-        # the 27 archives list and the native dwc3 probe stays parked
-        # (INCLUDE_DWC3_PROBE=0).
-        run: |
-          python3 - <<'PY'
-          import pathlib
-          p = pathlib.Path('device/board.toml')
-          t = p.read_text()
-          marker = '["os_overrides"."ipados-27.0.1-24A446"."kernel"."prelink"]'
-          if marker not in t:
-              print('board.toml: prelink override absent; nothing to restore')
-          else:
-              start = t.index(marker)
-              # The section ends at the next TOML table header (a line starting with '['
-              # after the roots assignment) or EOF.
-              rest = t[start + len(marker):]
-              nxt = rest.find(chr(10) + '[')
-              end = start + len(marker) + (nxt if nxt >= 0 else len(rest))
-              removed = t[start:end]
-              if '"roots"' not in removed:
-                  raise SystemExit('board.toml: override section without roots; inspect manually')
-              p.write_text(t[:start] + t[end:])
-              print('board.toml: removed 27-profile prelink roots override (%d bytes);'
-                    ' profile defaults (31 roots) restored' % len(removed))
-          PY
-          python3 - <<'PY'
-          # Assertion: after the patch the board must carry no 27-profile prelink
-          # roots, so the framework falls back to profiles/os/ipados-27.0.1-24A446.
-          import pathlib
-          t = pathlib.Path('device/board.toml').read_text()
-          marker = '["os_overrides"."ipados-27.0.1-24A446"."kernel"."prelink"]'
-          assert marker not in t, 'prelink roots override still present'
-          print('assertion ok: 27-profile prelink roots override absent')
           PY
       - name: sheng ABL device tree (0x218 symbols)
         # Official main's sheng-abl-dtb.py adds splash_region via fdtput; the result carries no
@@ -809,23 +753,17 @@ jobs:
                   raise SystemExit(f'{name}: {len(data)} bytes sha256 {digest} differs from firmware/wcn7850/manifest.json')
               print(f'{name}: {len(data)} bytes sha256 {digest} matches the manifest')
           PY
-      - name: extend Adreno Metal bridge build timeout
+      - name: verify selected Metal bridge 7200-second build timeout
         if: inputs.os == '27'
         run: |
           python3 - <<'PY'
-          import pathlib
-          p = pathlib.Path('UniXNU/scripts/build-adreno-metal-bridge.py')
-          if not p.is_file():
-              raise SystemExit('missing framework Adreno bridge script')
-          t = p.read_text(encoding='utf-8')
-          old = 'timeout=1800'
-          new = 'timeout=3600'
-          if t.count(old) != 1:
-              raise SystemExit('expected exactly one Adreno cargo timeout=1800, found %d' % t.count(old))
-          if new in t:
-              raise SystemExit('Adreno timeout already changed before hook')
-          p.write_text(t.replace(old, new, 1), encoding='utf-8')
-          print('build-adreno-metal-bridge.py: timeout changed 1800 -> 3600')
+          import ast,pathlib
+          path=pathlib.Path('UniXNU/scripts/build-adreno-metal-bridge.py')
+          tree=ast.parse(path.read_text())
+          limits=[keyword.value.value for node in ast.walk(tree) if isinstance(node,ast.Call) for keyword in node.keywords if keyword.arg=='timeout' and isinstance(keyword.value,ast.Constant)]
+          assert limits==[7200],limits
+          assert '0048-main-optimizations-on-development-842fd73b.patch' in path.read_text()
+          print('METAL_BRIDGE_TIMEOUT',7200,'job budget 360 minutes')
           PY
       - name: device inputs
         # The runtime step runs before the firmware step, so inputs a developer checkout already holds are fetched here:
@@ -916,6 +854,19 @@ jobs:
             args+=(--init-data)
           fi
           scripts/package.sh "${args[@]}"
+      - name: verify packaged USB closure strong hooks and original bindings
+        if: inputs.os == '27'
+        run: |
+          python3 - <<'PY'
+          import pathlib,runpy,json
+          source = '"""Read-only post-package USB artifact gate. No third-party dependencies."""\nimport argparse,hashlib,json,pathlib,plistlib,struct\nDEVICE_KEXTS={\'com.apple.driver.AppleUSBDeviceMux\',\'com.apple.driver.AppleUSBXDCI\',\'com.apple.driver.usb.AppleUSBCommon\',\'com.apple.iokit.IOUSBDeviceFamily\'}\nREQUIRED=[\'_sheng_usb_probe\',\'_qcom_dwc3_bring_up\',\'_qcom_dwc3_publish\',\'_qcom_dwc3_vbus\',\'_qcom_ucsi_start\',\'_qcom_ucsi_receive\',\'_qcom_ucsi_tick\',\'_qcom_ucsi_polling\',\'_native_usb_stats\']\ndef image(raw,at=0):\n magic,cpu,sub,kind,count,size=struct.unpack_from(\'<6I\',raw,at);assert magic==0xfeedfacf and cpu==0x100000c\n segments=[];entries={};symbols={};absolute={};pos=at+32\n for _ in range(count):\n  cmd,length=struct.unpack_from(\'<II\',raw,pos);assert length>=8 and pos+length<=len(raw)\n  if cmd==0x19:\n   name,va,span,off,fs=struct.unpack_from(\'<16s4Q\',raw,pos+8);segments.append({\'name\':name.rstrip(bytes([0])).decode(),\'va\':va,\'size\':span,\'fileoff\':off,\'filesize\':fs})\n  elif cmd==0x80000035:\n   va,off,na=struct.unpack_from(\'<QQI\',raw,pos+8);end=raw.index(0,pos+na);entries[raw[pos+na:end].decode()]=(va,off)\n  elif cmd==2:\n   off,n,st,ss=struct.unpack_from(\'<4I\',raw,pos+8)\n   for i in range(n):\n    sx,ty,se,desc,va=struct.unpack_from(\'<IBBHQ\',raw,off+16*i)\n    if not sx or ty&0xe0:continue\n    name=raw[st+sx:raw.index(0,st+sx)].decode()\n    if ty&14==14:symbols[name]={\'va\':va,\'desc\':desc,\'section\':se}\n    elif ty&14==2:absolute[name]=va\n  pos+=length\n return {\'segments\':segments,\'entries\':entries,\'symbols\':symbols,\'absolute\':absolute}\ndef verify(base,expected_closure):\n base=pathlib.Path(base);m=json.loads((base/\'package.manifest.json\').read_text());raw=(base/\'kernel/kernel.macho\').read_bytes();assert hashlib.sha256(raw).hexdigest()==m[\'outputs\'][\'kernel.macho\'][\'sha256\']\n root=image(raw);native=image(raw,root[\'entries\'][\'com.apple.kernel\'][1]);seg=next(s for s in root[\'segments\'] if s[\'name\']==\'__PRELINK_INFO\');meta=plistlib.loads(raw[seg[\'fileoff\']:seg[\'fileoff\']+seg[\'filesize\']].split(bytes([0]),1)[0]);closure={e[\'CFBundleIdentifier\'] for e in meta[\'_PrelinkInfoDictionary\']}\n assert closure==set(expected_closure),(sorted(closure-set(expected_closure)),sorted(set(expected_closure)-closure));assert len(closure)==43\n assert DEVICE_KEXTS<=set(root[\'entries\']);assert \'com.apple.iokit.IOUSBHostFamily\' not in closure and not any(\'XHCI\' in n for n in root[\'entries\'])\n syms=native[\'symbols\'];assert all(n in syms for n in REQUIRED),[n for n in REQUIRED if n not in syms]\n assert not any(syms[n][\'desc\']&0x80 for n in REQUIRED),\'USB hooks resolved to weak definitions\'\n assert not any(\'xhci\' in n.lower() for n in syms),\'native XHCI symbol remains\'\n assert any(\'QcomDwc3Xdci\' in n and \'gMetaClass\' in n for n in syms),\'device metaclass absent\'\n assert \'__ZTV12QcomDwc3Xdci\' in syms,\'device vtable absent\'\n probe=syms[\'_sheng_usb_probe\'][\'va\'];s=next(s for s in native[\'segments\'] if s[\'va\']<=probe<s[\'va\']+s[\'filesize\']);assert s[\'name\']==\'__TEXT_EXEC\'\n at=s[\'fileoff\']+probe-s[\'va\'];words=struct.unpack_from(\'<8I\',raw,at);assert words[0]!=0xd65f03c0 and words[1]!=0xd65f03c0,\'probe is RET or MOV/RET stub\'\n nextva=min((x[\'va\'] for x in syms.values() if x[\'va\']>probe),default=probe);assert nextva-probe>=16,\'probe too short for real launch path\'\n usbabs={n:v for n,v in native[\'absolute\'].items() if \'AppleUSBXDCI\' in n and n.endswith(\'.original\')};assert usbabs,\'missing original XDCI branch bindings\'\n for n,va in usbabs.items():\n  owners=[name for name,(_,off) in root[\'entries\'].items() if name!=\'com.apple.kernel\' for s in image(raw,off)[\'segments\'] if s[\'name\']==\'__TEXT_EXEC\' and s[\'va\']<=va<s[\'va\']+s[\'filesize\']]\n  assert len(owners)==1 and owners[0] in DEVICE_KEXTS,(n,hex(va),owners)\n  stub=n[:-len(\'.original\')];assert stub in syms,(\'missing adapter\',stub)\n  address=syms[stub][\'va\'];ss=next(s for s in native[\'segments\'] if s[\'name\']==\'__TEXT_EXEC\' and s[\'va\']<=address and address+8<=s[\'va\']+s[\'filesize\'])\n  fileoff=ss[\'fileoff\']+address-ss[\'va\'];bti,branch=struct.unpack_from(\'<2I\',raw,fileoff)\n  assert bti==0xd503245f and branch&0xfc000000==0x14000000,(\'invalid BTI/B adapter\',stub)\n  displacement=branch&0x3ffffff;displacement=displacement-(1<<26) if displacement&(1<<25) else displacement\n  assert address+4+displacement*4==va,(\'adapter target mismatch\',stub,hex(address+4+displacement*4),hex(va))\n codeend=max(s[\'va\']+s[\'size\'] for s in native[\'segments\'] if s[\'name\'] in (\'__TEXT_EXEC\',\'__KLD\'));data=next(s for s in root[\'segments\'] if s[\'name\']==\'__DATA\');assert codeend<=data[\'va\']\n report={\'kernel_sha256\':hashlib.sha256(raw).hexdigest(),\'closure\':sorted(closure),\'closure_count\':len(closure),\'required_strong_symbols\':{n:hex(syms[n][\'va\']) for n in REQUIRED},\'probe_first_words\':[hex(x) for x in words],\'xdci_original_bindings\':len(usbabs),\'code_slack\':data[\'va\']-codeend,\'native_segments\':native[\'segments\'],\'scope\':\'final symbol/metadata/machine-code evidence; not hardware qualification\'}\n print(\'USB_ARTIFACT_GATE\',json.dumps(report));return report\nif __name__==\'__main__\':\n p=argparse.ArgumentParser();p.add_argument(\'base\');p.add_argument(\'--closure\',required=True);a=p.parse_args();verify(a.base,json.loads(pathlib.Path(a.closure).read_text()))\n'
+          p=pathlib.Path('verify-usb-artifact.py');p.write_text(source)
+          expected=['com.apple.AppleFSCompression.AppleFSCompressionTypeZlib', 'com.apple.driver.AppleARMPlatform', 'com.apple.driver.AppleARMWatchdogTimer', 'com.apple.driver.AppleAudioClockLibs', 'com.apple.driver.AppleEffaceableStorage', 'com.apple.driver.AppleIISController', 'com.apple.driver.AppleM2ScalerCSCDriver', 'com.apple.driver.AppleMobileFileIntegrity', 'com.apple.driver.ApplePMGR', 'com.apple.driver.AppleUSBDeviceMux', 'com.apple.driver.AppleUSBXDCI', 'com.apple.driver.IODARTFamily', 'com.apple.driver.usb.AppleUSBCommon', 'com.apple.filesystems.apfs', 'com.apple.iokit.CoreAnalyticsFamily', 'com.apple.iokit.IOAVFamily', 'com.apple.iokit.IOAudio2Family', 'com.apple.iokit.IOCECFamily', 'com.apple.iokit.IOCryptoAcceleratorFamily', 'com.apple.iokit.IOGPUFamily', 'com.apple.iokit.IOHDCPFamily', 'com.apple.iokit.IOHIDEventDriver', 'com.apple.iokit.IOHIDFamily', 'com.apple.iokit.IOMobileGraphicsFamily', 'com.apple.iokit.IOReportFamily', 'com.apple.iokit.IOSlowAdaptiveClockingFamily', 'com.apple.iokit.IOStorageFamily', 'com.apple.iokit.IOSurface', 'com.apple.iokit.IOUSBDeviceFamily', 'com.apple.kec.Libm', 'com.apple.kec.corecrypto', 'com.apple.kext.AppleMatch', 'com.apple.kext.CoreTrust', 'com.apple.kpi.bsd', 'com.apple.kpi.dsep', 'com.apple.kpi.iokit', 'com.apple.kpi.libkern', 'com.apple.kpi.mach', 'com.apple.kpi.private', 'com.apple.kpi.unsupported', 'com.apple.security.AppleImage4', 'com.apple.security.Image4', 'com.apple.security.sandbox']
+          base=pathlib.Path('UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27')
+          report=runpy.run_path(str(p))['verify'](base,expected)
+          assert report['closure_count']==43
+          (base/'usb-device-audit.json').write_text(json.dumps(report,indent=2))
+          PY
       - name: verify reviewed component revisions in packaged manifest
         if: inputs.os == '27'
         run: |
@@ -930,6 +881,72 @@ jobs:
           assert probe.is_file(), 'Missing assembled GPU probe'
           assert 'kSelfTestPluginOpenType = 0x4147' in probe.read_text()
           print('Verified packaged upstream revisions:', expected)
+          PY
+      - name: verify packaged Metal bridge and embedded addon identity
+        if: inputs.os == '27'
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,pathlib,struct,zlib,os,subprocess,tempfile
+          BASE=pathlib.Path('UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27')
+          COMPONENT='89d7942e06dad93b5a5a52f817aa8c19fd899b37';TRANSLATOR='842fd73b71f4c595810651bb61d8a0c48f486845'
+          def sha(path):return hashlib.file_digest(path.open('rb'),'sha256').hexdigest()
+          def translator_tree(source,overlay):
+           assert subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()==TRANSLATOR
+           # Scratch index only: bind actual patched worktree and exact selected overlay to the same Git tree.
+           with tempfile.TemporaryDirectory() as td:
+            env=dict(os.environ,GIT_INDEX_FILE=str(pathlib.Path(td)/'index'))
+            def git(*args):return subprocess.check_output(['git','-C',str(source),*args],env=env,text=True).strip()
+            git('read-tree','HEAD');git('apply','--cached',str(overlay.resolve()));expected=git('write-tree')
+            git('read-tree','HEAD');git('add','-A');actual=git('write-tree')
+            assert actual==expected,'translator working tree differs from selected overlay'
+            return actual
+          def verify():
+
+           manifest=json.loads((BASE/'package.manifest.json').read_text())
+           assert manifest['revisions']['driver:AdrenoMetal']==COMPONENT
+           tree=BASE/'tree';build=tree/'build'
+           expected_scripts={'scripts/build-adreno-metal-bridge.py':'073d044c4e97b608e9531ac14ececd0e5d93db8c566ea67fb455b037e8958975','scripts/build-adreno-metal-plugin.py':'332401a82955428ee88e0563e0c9a3c686641096e498fccb0eaddaedeb2682ac','scripts/data/gpu-metal-vulkan-inputs.json':'8894ea9c758ed3c2f23ee781a6167e0b5ca59569383ff0fa7d403bccc559ab27'}
+           for relative,digest in expected_scripts.items():assert sha(tree/relative)==digest,relative+' assembled-tree override'
+           record=json.loads((build/'adreno-metal-bridge/ios27/libadreno_metal_bridge.a.json').read_text());identity=record['identity']
+           assert identity['target']=='ios27' and identity['component']==COMPONENT and identity['translator']==TRANSLATOR
+           assert sha(build/'adreno-metal-bridge/ios27/libadreno_metal_bridge.a')==record['sha256']
+           plugin=build/'adreno-metal-plugin27/NativeAdrenoMetal.bundle/gpu-build.json'
+           info=json.loads(plugin.read_text())
+           assert info['target']=='ios27' and info['component']==COMPONENT and info['bridge_component']==COMPONENT
+           assert info['runtime']==identity['runtime'] and info['cache_build']==info['runtime']+'-'+info['turnip_uuid']
+           assert len(info['turnip_uuid'])==32 and not info['runtime_draw_checks']
+           source_tree=translator_tree(tree/'.cache/gpu-reference/metal2vulkan',tree/'drivers/AdrenoMetal/bridge/patches/0048-main-optimizations-on-development-842fd73b.patch')
+           assert identity['source_tree']==source_tree
+           assert identity['runtime']==hashlib.sha256((TRANSLATOR+'\n'+source_tree).encode()).hexdigest()[:32]
+           bundle=plugin.parent
+           expected_entries={name:(bundle/name).read_bytes() for name in ('gpu-build.json','NativeAdrenoMetal','libvulkan_freedreno.dylib')}
+           assert all(expected_entries.values()),'empty signed bundle output'
+           # Match the selected plugin builder's actual hash algorithm exactly (it excludes tools and .c).
+           digest=hashlib.sha256();component=tree/'drivers/AdrenoMetal'
+           for path in sorted(component.rglob('*')):
+            if path.is_file() and '.git' not in path.parts and path.relative_to(component).parts[0]!='tools' and path.suffix in ('.h','.mm','.cpp','.rs','.patch'):
+             digest.update(str(path.relative_to(component)).encode());digest.update(path.read_bytes())
+           assert info['metal_source_sha256']==digest.hexdigest()
+           inputs=json.loads((BASE/'runtime/inputs.json').read_text())['inputs'];addon=pathlib.Path(inputs['gpu_addon']['path'])
+           assert sha(addon)==inputs['gpu_addon']['sha256']==manifest['runtime']['inputs']['gpu_addon']
+           data=addon.read_bytes();assert data[:8]==b'NGPUADD2' and len(data)>=24 and struct.unpack_from('<Q',data,16)[0]==len(data)
+           at=24;found={}
+           for _ in range(struct.unpack_from('<I',data,8)[0]):
+            assert at+24<=len(data)
+            length,mode,size,packed=struct.unpack_from('<IIQQ',data,at);at+=24
+            assert 1<length<=160 and at+length<=len(data) and data[at+length-1]==0
+            name=data[at:at+length-1].decode();assert not name.startswith('/') and '..' not in pathlib.PurePosixPath(name).parts
+            at+=(length+7)&~7;assert at+packed<=len(data)
+            for basename,expected in expected_entries.items():
+             if name.endswith('NativeAdrenoMetal.bundle/'+basename):
+              assert basename not in found,'duplicate embedded '+basename
+              body=zlib.decompress(data[at:at+packed]);assert len(body)==size and body==expected,'embedded bytes differ: '+name
+              found[basename]=name
+            at+=(packed+7)&~7
+           assert at==len(data) and set(found)==set(expected_entries),found
+           assert len({path.rsplit('/',1)[0] for path in found.values()})==1,'bundle entries have different prefixes'
+           print('METAL_ARTIFACT_IDENTITY',COMPONENT,TRANSLATOR,identity['runtime'],info['cache_build'],found)
+          if __name__=='__main__':verify()
           PY
       - name: assert ABL dtb (0x218 + __symbols__)
         # The ABL step only installs the fetcher into board.toml preflight, so the
@@ -990,6 +1007,7 @@ jobs:
             UniXNU/out/sheng/*/*/payload/payload.img
             UniXNU/out/sheng/*/*/kernel/kernel.macho
             UniXNU/out/sheng/*/*/package.manifest.json
+            UniXNU/out/sheng/*/*/usb-device-audit.json
       - name: build logs
         if: always()
         uses: actions/upload-artifact@v4
