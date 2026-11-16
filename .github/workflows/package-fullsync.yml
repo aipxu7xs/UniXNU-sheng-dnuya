@@ -74,6 +74,17 @@ jobs:
               else:
                   raise SystemExit(rel + ': unexpected SoC pin; inspect feeds.toml')
           PY
+      - name: sync reviewed ArmCpu and Adreno740 upstream fixes
+        if: inputs.os == '27'
+        run: |
+          python3 - <<'PY'
+          import pathlib, runpy
+          helper = '"""Select reviewed component commits in ephemeral framework checkout and its index."""\nfrom pathlib import Path\nimport subprocess,tomllib,re\nPINS={\n \'ArmCpu\':(\'d90e457b8392623853ec85c860feef546c767621\',\'acba4ee2674cfb23434431feb124871ae9b3b581\'),\n \'Adreno740\':(\'54b41b8f59e90a167f6f75160739c5f825945fbc\',\'1c9029bc3216a39d9e514ba41dee12e95e8f3598\'),\n}\ndef git(root,*args):\n    return subprocess.check_output([\'git\',\'-C\',str(root),*args],text=True).strip()\ndef apply(root):\n    root=Path(root)\n    catalog=root/\'components.toml\';t=catalog.read_text(encoding=\'utf-8\')\n    specs={c[\'id\']:c for c in tomllib.loads(t)[\'component\']}\n    for name,(old,new) in PINS.items():\n        sub=root/\'drivers\'/name;actual=git(sub,\'rev-parse\',\'HEAD\')\n        assert actual in (old,new),(name,actual)\n        assert not git(sub,\'status\',\'--porcelain\'),name+\' has unreviewed local edits\'\n        assert git(sub,\'remote\',\'get-url\',\'origin\').removesuffix(\'.git\').endswith(\'/UniXNU/\'+name)\n        if actual!=new:\n            subprocess.run([\'git\',\'-C\',str(sub),\'fetch\',\'--depth\',\'1\',\'origin\',new],check=True)\n            subprocess.run([\'git\',\'-C\',str(sub),\'checkout\',\'--detach\',new],check=True)\n        assert git(sub,\'rev-parse\',\'HEAD\')==new\n        # update_submodules uses the index gitlink, so preserve this selected commit across fetch/tree.\n        subprocess.run([\'git\',\'-C\',str(root),\'update-index\',\'--cacheinfo\',f\'160000,{new},drivers/{name}\'],check=True)\n        assert git(root,\'ls-files\',\'--stage\',\'--\',f\'drivers/{name}\').split()[1]==new\n        pattern=r\'(?ms)(^\\[\\[component\\]\\]\\s*\\nid = "\'+name+r\'".*?^revision = ")[^"]+("$)\'\n        t,count=re.subn(pattern,lambda m:m[1]+new+m[2],t)\n        assert count==1,(name,\'catalog anchor\')\n        print(\'REVIEWED_UPSTREAM\',name,old,\'->\',new)\n    catalog.write_text(t,encoding=\'utf-8\')\n    updated={c[\'id\']:c for c in tomllib.loads(t)[\'component\']}\n    assert all(updated[n][\'revision\']==v[1] for n,v in PINS.items())\nif __name__==\'__main__\':apply(\'UniXNU\')\n'
+          p = pathlib.Path('reviewed-upstream.py')
+          p.write_text(helper, encoding='utf-8')
+          runpy.run_path(str(p))['apply']('UniXNU')
+          assert all((pathlib.Path('UniXNU/drivers') / n).is_dir() for n in ('ArmCpu','Adreno740'))
+          PY
       - name: compile native board objects with -Oz (layout slack)
         # Measured failure: run 43601833150, fileset_layout.py:115 collision branch,
         # over_by=0x10000 (64 KiB), native __TEXT_EXEC=0xbbc000.
@@ -199,6 +210,26 @@ jobs:
               p.write_text(t)
               print('Patched independent builder:', rel)
           PY
+      - name: repair GPU selftest IOVA and kernel client contract
+        if: inputs.os == '27'
+        working-directory: device
+        run: |
+          python3 - <<'PY'
+          import pathlib, runpy
+          first = '#!/usr/bin/env python3\n"""Apply reviewed GPU self-test fixes to device 68800685763d755c368775b848dd703fb3f8a3ce.\nOnly accepts the exact pinned source; repeated application is rejected. No network/device actions.\n"""\nimport argparse\nimport hashlib\nfrom pathlib import Path\n\nPIN_SHA256 = "bb7a55ce77907d976849bf00c64adfc268106bc805940adb1c529b066a8d5199"\n\ndef once(text, old, new):\n    if text.count(old) != 1:\n        raise ValueError("expected exactly one anchor: " + old[:100])\n    return text.replace(old, new, 1)\n\ndef transform(source):\n    if hashlib.sha256(source.encode()).hexdigest() != PIN_SHA256:\n        raise ValueError("GpuPowerProbe.cpp is not the audited pinned source")\n    text = source\n    # Disjoint 32-bit test-only arenas. Preserve the round-2 stale-TLB reuse test.\n    for old, new in [\n        ("ucRound(1, 0x10000000, 0x10001000,", "ucRound(1, 0x50000000, 0x50001000,"),\n        ("ucRound(2, 0x10000000, 0x10002000,", "ucRound(2, 0x50000000, 0x50002000,"),\n        ("const uint64_t ibIova = 0x10004000, tgtIova = 0x10005000;", "const uint64_t ibIova = 0x50004000, tgtIova = 0x50005000;"),\n        ("0x30000000ull + uint64_t(i) * 0x2000", "0x51000000ull + uint64_t(i) * 0x2000"),\n        ("kIbIova = 0x10010000ull", "kIbIova = 0x50010000ull"),\n        ("kTgtIova = 0x10020000ull", "kTgtIova = 0x50020000ull"),\n    ]:\n        text = once(text, old, new)\n    start = text.index("int ucRound(")\n    end = text.index("// Limits and paths", start)\n    body = text[start:end]\n    # BoFree owns unmapping and refuses buffers still in use. Never force-release on timeout.\n    body = once(body, "    NativeAdrenoAbiBoAllocReply ib{}, tgt{};", """    NativeAdrenoAbiBoAllocReply ib{}, tgt{};\n    auto finish = [&](int matched) {\n        const uint64_t handles[2] = {ib.handle, tgt.handle};\n        for (uint64_t h : handles) {\n            if (!h) continue;\n            NativeAdrenoAbiBoFree f{h};\n            step(ucCall(NativeAdrenoMethodBoFree, &f, nullptr));\n        }\n        return matched;\n    };""")\n    body = body.replace("return -1;", "return finish(-1);")\n    body = once(body, """    NativeAdrenoAbiBoFree f1{ib.handle}, f2{tgt.handle};\n    step(ucCall(NativeAdrenoMethodBoFree, &f1, nullptr));\n    step(ucCall(NativeAdrenoMethodBoFree, &f2, nullptr));\n    return matched;""", "    return finish(matched);")\n    text = text[:start] + body + text[end:]\n    text = once(text, "    unsigned spans = 0, mapMs = 0;", "    unsigned spans = 0, mapMs = 0;\\n    bool ibMapped = false;")\n    text = once(text, "        if (bm && im && !bigMap && !ucCall(NativeAdrenoMethodBoMap, &mi, &r)) {", "        if (bm && im && !bigMap && !ucCall(NativeAdrenoMethodBoMap, &mi, &r)) {\\n            ibMapped = true;")\n    text = once(text, "        if (tm && im && !ucCall(NativeAdrenoMethodBoMap, &mt, &r)) {", "        if (tm && im && ibMapped && !ucCall(NativeAdrenoMethodBoMap, &mt, &r)) {")\n    return text\n\ndef main():\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument("source", type=Path)\n    parser.add_argument("--output", type=Path, help="write a separate result instead of replacing source")\n    args = parser.parse_args()\n    original = args.source.read_text(encoding="utf-8")\n    result = transform(original)\n    target = args.output or args.source\n    target.write_text(result, encoding="utf-8", newline="\\n")\n    print("GPU self-test: safe 32-bit IOVAs, partial-allocation cleanup, mapped-IB burst gate")\n\nif __name__ == "__main__":\n    main()\n'
+          second = '#!/usr/bin/env python3\n"""Second-stage wrapper fix, applied only after patch_gpu_selftest.transform."""\nimport argparse,hashlib\nfrom pathlib import Path\nfrom patch_gpu_selftest import once\nINPUT_SHA256 = "1505805d961eb7653874a9f2b63609f994b91c8adf83acc8c74cafc567be9353"\ndef transform(source):\n if hashlib.sha256(source.encode()).hexdigest()!=INPUT_SHA256:raise ValueError(\'Expected exact first-stage GPU selftest output\')\n source=once(source,\'    IOUserClient *uc = nullptr;\',\'\'\'    // NativeAdrenoPublish.cpp (54b41b8): the native plugin ABI open, including kernel self-tests.\n    constexpr UInt32 kSelfTestPluginOpenType = 0x4147;\n    IOUserClient *uc = nullptr;\'\'\')\n source=once(source,\'svc->newUserClient(kernel_task, nullptr, 0, nullptr, &uc)\',\'svc->newUserClient(kernel_task, nullptr, kSelfTestPluginOpenType, nullptr, &uc)\')\n source=once(source,\'\'\'    step(svc->newUserClient(kernel_task, nullptr, 0, nullptr, &second) == kIOReturnBusy ? 0 : kIOReturnError);\n    if (second) second->release();\'\'\',\'\'\'    // mount(kernel) has one kernel-table slot; userspace clients have separate VMs.\n    step(svc->newUserClient(kernel_task, nullptr, kSelfTestPluginOpenType, nullptr, &second) == kIOReturnBusy ? 0 : kIOReturnError);\n    if (second) {step(second->clientClose()); second->release();}\'\'\')\n return source\ndef main():\n p=argparse.ArgumentParser(description=__doc__);p.add_argument(\'source\',type=Path);p.add_argument(\'--output\',type=Path);a=p.parse_args()\n text=transform(a.source.read_text());(a.output or a.source).write_text(text,encoding=\'utf-8\',newline=\'\\n\')\n print(\'GPU wrapper: native plugin open type; exclusive kernel slot and close ownership preserved\')\nif __name__==\'__main__\':main()\n'
+          assert 'from patch_gpu_selftest import once' in second
+          second = second.replace('from patch_gpu_selftest import once', '', 1)
+          ns = {'__name__': 'gpu_selftest_patch'}
+          exec(compile(first, 'GPU selftest map fix', 'exec'), ns)
+          p = pathlib.Path('package/GpuPowerProbe.cpp')
+          before = p.read_text(encoding='utf-8'); after = ns['transform'](before)
+          exec(compile(second, 'GPU wrapper fix', 'exec'), ns)
+          after = ns['transform'](after)
+          assert after != before and 'kSelfTestPluginOpenType' in after and '0x51000000ull' in after
+          p.write_text(after, encoding='utf-8')
+          print('GPU selftests: non-overlapping 32-bit IOVAs, failed-round cleanup, legal kernel-client type')
+          PY
       - name: use plain GICR priority stores for the 24A446 fault experiment
         if: inputs.os == '27'
         run: |
@@ -227,7 +258,7 @@ jobs:
           anchor = '#if XNU_TARGET_OS_OSX'
           assert t.count(anchor) == 1, 'builtin boot-args OS guard drifted'
           assert 'gpu-selftest=1' not in t, 'selftest argument unexpectedly already present'
-          patch = chr(10).join(['#if XNU_TARGET_OS_IOS', chr(34) + ' gpu-selftest=1' + chr(34), '#endif', anchor])
+          patch = chr(10).join(['#if XNU_TARGET_OS_IOS', chr(34) + ' gpu-selftest=1 log-gpu=1 log-display=1' + chr(34), '#endif', anchor])
           t = t.replace(anchor, patch, 1)
           assert patch in t and 'gpu-pool=0' in t
           p.write_text(t, encoding='utf-8')
@@ -885,6 +916,21 @@ jobs:
             args+=(--init-data)
           fi
           scripts/package.sh "${args[@]}"
+      - name: verify reviewed component revisions in packaged manifest
+        if: inputs.os == '27'
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib
+          base = pathlib.Path('UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27')
+          manifest = json.loads((base / 'package.manifest.json').read_text())
+          expected = {'driver:ArmCpu': 'acba4ee2674cfb23434431feb124871ae9b3b581', 'driver:Adreno740': '1c9029bc3216a39d9e514ba41dee12e95e8f3598'}
+          for key, commit in expected.items():
+              assert manifest['revisions'].get(key) == commit, (key, manifest['revisions'].get(key), commit)
+          probe = base / 'tree/kits/sheng/GpuPowerProbe.cpp'
+          assert probe.is_file(), 'Missing assembled GPU probe'
+          assert 'kSelfTestPluginOpenType = 0x4147' in probe.read_text()
+          print('Verified packaged upstream revisions:', expected)
+          PY
       - name: assert ABL dtb (0x218 + __symbols__)
         # The ABL step only installs the fetcher into board.toml preflight, so the
         # tree is produced during `package`. It overwrites build/sheng/sheng.dtb
