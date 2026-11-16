@@ -724,7 +724,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          brew install dtc llvm lld cmake mtools ninja glslang shaderc spirv-tools bison pkgconf rustup openssl@3 blacktop/tap/ipsw
+          brew install --formula dtc llvm lld cmake mtools ninja glslang shaderc spirv-tools bison pkgconf rustup openssl@3 blacktop/tap/ipsw
           LLVM_PREFIX="$(brew --prefix llvm)"
           LLD_PREFIX="$(brew --prefix lld)"
           BISON_PREFIX="$(brew --prefix bison)"
