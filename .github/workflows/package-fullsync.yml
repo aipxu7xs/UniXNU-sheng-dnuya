@@ -216,27 +216,7 @@ jobs:
           ast.parse(t)
           p.write_text(t, encoding='utf-8')
           PY
-      - name: enable the separate digitizer HID device (touch-split)
-        if: inputs.os == '27'
-        working-directory: device
-        run: |
-          python3 - <<'PY'
-          import pathlib
-          q = chr(34)
-          p = pathlib.Path('board.toml')
-          t = p.read_text(encoding='utf-8')
-          old = q + 'touch-hid=1' + q
-          new = q + 'touch-hid=1' + q + ', ' + q + 'touch-split=1' + q
-          n = t.count(old)
-          assert n, 'touch-hid=1 missing from board.toml'
-          if t.count(new) != n:
-              assert q + 'touch-split=1' + q not in t, 'touch-split without matching rewrite'
-              t = t.replace(old, new)
-              assert t.count(q + 'touch-split=1' + q) == n
-              p.write_text(t, encoding='utf-8')
-          print('board.toml: touch-split=1 present on', n, 'kernel_args lists')
-          PY
-      - name: allow the GPU memory pool for icon rendering (diagnostic)
+      - name: enable GPU self-tests in the iPadOS kernel
         if: inputs.os == '27'
         working-directory: device
         run: |
@@ -244,12 +224,14 @@ jobs:
           import pathlib
           p = pathlib.Path('package/BootWatchdogPolicy.c')
           t = p.read_text(encoding='utf-8')
-          assert t.count(' gpu-pool=0') == 1, 'gpu-pool default missing'
-          t = t.replace(' gpu-pool=0', ' gpu-pool=1', 1)
-          t = t.replace('gpu-pool=1', 'gpu-pool=1 gpu-selftest=1', 1)
+          anchor = '#if XNU_TARGET_OS_OSX'
+          assert t.count(anchor) == 1, 'builtin boot-args OS guard drifted'
+          assert 'gpu-selftest=1' not in t, 'selftest argument unexpectedly already present'
+          patch = chr(10).join(['#if XNU_TARGET_OS_IOS', chr(34) + ' gpu-selftest=1' + chr(34), '#endif', anchor])
+          t = t.replace(anchor, patch, 1)
+          assert patch in t and 'gpu-pool=0' in t
           p.write_text(t, encoding='utf-8')
-          assert 'gpu-selftest=1' in t
-          print('BootWatchdogPolicy.c: gpu-pool=1 gpu-selftest=1')
+          print('iPadOS builtin boot arguments: gpu-selftest=1')
           PY
       - name: report the SError syndrome at the unhandled branch (diagnostic)
         if: inputs.os == '27'
@@ -760,12 +742,9 @@ jobs:
             echo "/opt/homebrew/opt/lld/bin"
             echo "/opt/homebrew/opt/bison/bin"
           } >> "$GITHUB_PATH"
-          rustup +1.98.0 toolchain install 1.98.0 --profile minimal --component rust-src
-          rustup +1.98.0 default 1.98.0
-          rustup +1.98.0 component add rust-src
-          rustc --version
-          cargo --version
           rustup toolchain install 1.98.0 --profile minimal --component rust-src
+          rustup run 1.98.0 rustc --version
+          rustup run 1.98.0 cargo --version
           # Fail fast, naming the tool, before forty minutes of build.
           ok=1
           for t in clang xcodebuild make git ninja cmake dtc fdtget fdtput aea compression_tool \
