@@ -760,6 +760,11 @@ jobs:
             echo "/opt/homebrew/opt/lld/bin"
             echo "/opt/homebrew/opt/bison/bin"
           } >> "$GITHUB_PATH"
+          rustup +1.98.0 toolchain install 1.98.0 --profile minimal --component rust-src
+          rustup +1.98.0 default 1.98.0
+          rustup +1.98.0 component add rust-src
+          rustc --version
+          cargo --version
           rustup toolchain install 1.98.0 --profile minimal --component rust-src
           # Fail fast, naming the tool, before forty minutes of build.
           ok=1
