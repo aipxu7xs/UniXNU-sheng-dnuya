@@ -216,6 +216,26 @@ jobs:
           ast.parse(t)
           p.write_text(t, encoding='utf-8')
           PY
+      - name: enable the separate digitizer HID device (touch-split)
+        if: inputs.os == '27'
+        working-directory: device
+        run: |
+          python3 - <<'PY'
+          import pathlib
+          q = chr(34)
+          p = pathlib.Path('board.toml')
+          t = p.read_text(encoding='utf-8')
+          old = q + 'touch-hid=1' + q
+          new = q + 'touch-hid=1' + q + ', ' + q + 'touch-split=1' + q
+          n = t.count(old)
+          assert n, 'touch-hid=1 missing from board.toml'
+          if t.count(new) != n:
+              assert q + 'touch-split=1' + q not in t, 'touch-split without matching rewrite'
+              t = t.replace(old, new)
+              assert t.count(q + 'touch-split=1' + q) == n
+              p.write_text(t, encoding='utf-8')
+          print('board.toml: touch-split=1 present on', n, 'kernel_args lists')
+          PY
       - name: report the SError syndrome at the unhandled branch (diagnostic)
         if: inputs.os == '27'
         run: |
