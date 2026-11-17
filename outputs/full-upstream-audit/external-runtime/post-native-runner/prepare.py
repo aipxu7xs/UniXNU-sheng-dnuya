@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Reconstruct exact sealed bytes. Never update expected hashes."""
-import argparse, hashlib, json, pathlib, shutil, subprocess, tarfile, urllib.request
+import argparse, base64, hashlib, json, pathlib, shutil, subprocess, tarfile, urllib.request
 O=pathlib.Path(__file__).resolve().parent
 LOCK=json.loads((O/'inputs.lock.json').read_text())
 def digest(p):
@@ -42,6 +42,23 @@ def restore_layout(s,rows):
         data=p.read_bytes();changed=data.replace(bytes([13,10]),bytes([10])).replace(bytes([10]),bytes([13,10]))
         assert hashlib.sha256(changed).hexdigest()==row['output_sha256'],'byte-layout output drift'
         p.write_bytes(changed)
+def apply_qualification_repair(s):
+    verify(s,'combined')
+    repair=json.loads((O/'qualification-repair.json').read_text(encoding='utf-8'))
+    staged=[];seen=set()
+    for row in repair['files']:
+        rel=pathlib.PurePosixPath(row['path'])
+        assert not rel.is_absolute() and '..' not in rel.parts and rel.parts[0] in {'crates','scripts','docs'}
+        assert row['path'] not in seen;seen.add(row['path'])
+        p=s/pathlib.Path(*rel.parts);assert p.is_file() and not p.is_symlink()
+        assert digest(p)==row['before_sha256'],'repair input drift: '+row['path']
+        data=base64.b64decode(row['content_base64'],validate=True)
+        assert hashlib.sha256(data).hexdigest()==row['after_sha256'],'repair payload drift'
+        staged.append((p,data))
+    # Validate the complete overlay before changing any source byte.
+    for p,data in staged:p.write_bytes(data)
+    return verify(s,'repaired')
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--archive',type=pathlib.Path);p.add_argument('--git',default='git');p.add_argument('--nextest',action='store_true');a=p.parse_args()
     check_inputs();E=O/'evidence';E.mkdir(exist_ok=True)
@@ -61,6 +78,8 @@ def main():
         if stage=='baseline':
             restore_layout(s,json.loads((O/'byte-layout.json').read_text()))
         count=verify(s,stage);print(stage,count,'files exact')
+    count=apply_qualification_repair(s)
+    shutil.copyfile(O/'product-Cargo.lock',s/'Cargo.lock')
     for n,mode in modes.items():
         if (s/n).exists():(s/n).chmod(mode)
     from guard import fingerprint

@@ -14,10 +14,24 @@ def run(name,cmd,env,cwd=S):
     return r.returncode,text
 CHECKS=[('299','metal2vulkan-runtime','test(a_depth_or_stencil_format_held_combined_is_an_attachment_of_its_combined_image)',{},[]),('410','metal2vulkan-air','test(canon::tests::static_vectors)',{},['canon::tests::static_vectors']),('412','metal2vulkan-air','test(canon::tests::generic_pointers)',{},['canon::tests::generic_pointers']),('614-pure','metal2vulkan-runtime','test(releasing_footprints_drops_probes_outside_the_lock)',{},[])]
 for v in ['0','1']:CHECKS.append(('397-'+v,'metal2vulkan-runtime','test(device::compiles::tests) or test(pipeline::pool::tests)',{'METAL2VULKAN_COMPILE_ON_ASKING_THREAD':v},['device::compiles::tests','pipeline::pool::tests']))
+def validate_nextest(code, text, selected):
+    assert code == 0, 'test command failed'
+    assert selected, 'empty selection'
+    summaries = re.findall(r'^\s*Summary \[.*?\] (\d+) tests? run: (.*)$', text, re.M)
+    assert len(summaries) == 1, 'missing or ambiguous nextest summary'
+    count, details = summaries[0]
+    assert int(count) == len(selected), 'run count differs from selected tests'
+    passed = re.findall(r'(\d+) passed', details)
+    assert len(passed) == 1 and int(passed[0]) == len(selected), 'passed count differs from selected tests'
+    # nextest skips tests excluded by the filter; ignored/failed selected tests are errors.
+    assert not re.search(r'[1-9][0-9]* (?:failed|ignored|leaked|cancelled)', details), 'selected test did not pass'
+    assert not re.search(r'^\s*(?:SKIP|SKIPPED)\s', text, re.M), 'selected test skipped'
+    assert 'KEPT-SPARSE: no sparse' not in text, 'capability skip'
+
 def main():
     check_inputs();assert platform.system()=='Darwin' and platform.machine()=='x86_64','requires native macos-26-intel, no emulation'
     assert platform.mac_ver()[0].split('.')[0]=='26','runner OS major drift'
-    verify(S,'combined');guard,names=fingerprint(S);assert guard==(S/'crates/metal2vulkan-validation/runtime-sources.sha256').read_text().strip()
+    verify(S,'repaired');guard,names=fingerprint(S);assert guard==(S/'crates/metal2vulkan-validation/runtime-sources.sha256').read_text().strip()
     assert os.access(S/'scripts/rustc-wrapper',os.X_OK)
     env=os.environ.copy();env.update(RUSTUP_TOOLCHAIN=LOCK['rust'],RUSTFLAGS='-Dwarnings',RUSTDOCFLAGS='-Dwarnings',RUSTC_WRAPPER=str(S/'scripts/rustc-wrapper'),CARGO_TARGET_DIR=str(S/'target'),CARGO_TERM_COLOR='never',NEXTEST_COLOR='never',CI='true')
     env.pop('CARGO_ENCODED_RUSTFLAGS',None);env.pop('CARGO_BUILD_RUSTFLAGS',None)
@@ -34,7 +48,8 @@ def main():
         executable=shutil.which(tool);inventory[tool]={'path':executable,'required_by_selected_six':False,'status':'AVAILABLE' if executable else 'NOT_INSTALLED'}
         if executable:run('optional-'+tool,[executable,'--version'],env)
     (E/'fixture-tools.json').write_text(json.dumps(inventory,indent=2))
-    code,_=run('resolve-lock',['cargo','generate-lockfile'],env);assert code==0,'dependency lock generation failed'
+    assert hashlib.sha256((S/'Cargo.lock').read_bytes()).hexdigest()==LOCK['files']['product-Cargo.lock'],'product lock drift'
+    code,_=run('resolve-lock',['cargo','fetch','--locked'],env);assert code==0,'locked dependency fetch failed'
     shutil.copyfile(S/'Cargo.lock',E/'Cargo.lock');lockhash=hashlib.sha256((S/'Cargo.lock').read_bytes()).hexdigest();state['cargo_lock_sha256']=lockhash
     steps=[('fmt',['cargo','fmt','--all','--','--check']),('api',[sys.executable,'scripts/api-signatures/signatures.py','--check']),('refusals',[sys.executable,'scripts/refusal-surface/refusal_surface.py','--check']),('clippy',['cargo','clippy','--locked','-p','metal2vulkan-air','-p','metal2vulkan','-p','metal2vulkan-runtime','--all-targets','--all-features','--','-D','warnings']),('rustdoc',['cargo','doc','--locked','-p','metal2vulkan-air','-p','metal2vulkan','-p','metal2vulkan-runtime','--all-features','--no-deps'])]
     failures=[]
@@ -58,16 +73,13 @@ def main():
             assert selected,'empty selection'
             for prefix in required:assert any(prefix in n for n in selected),'missing test family '+prefix
             row['selected']=selected
-            code,text=run(name,['cargo','nextest','run',*args,'--no-capture'],e)
-            assert code==0,'test command failed'
-            counts=re.findall(r'([0-9]+) passed',text)
-            assert counts and int(counts[-1])==len(selected),'passed count differs from selected tests'
-            assert not re.search(r'SKIPPED|KEPT-SPARSE: no sparse|[1-9][0-9]* (?:failed|ignored)',text),'skip/ignore/failure in selected tests'
+            code,text=run(name,['cargo','nextest','run',*args,'--no-capture','--no-fail-fast'],e)
+            validate_nextest(code,text,selected)
             row['status']='PASS'
         except (AssertionError,KeyError,ValueError) as ex:
             row['status']='FAIL';row['reason']=str(ex);failures.append(name)
         save()
-    verify(S,'combined');assert hashlib.sha256((S/'Cargo.lock').read_bytes()).hexdigest()==lockhash,'Cargo.lock changed during locked run'
+    verify(S,'repaired');assert hashlib.sha256((S/'Cargo.lock').read_bytes()).hexdigest()==lockhash,'Cargo.lock changed during locked run'
     state['failures']=failures;state['status']='FOCUSED_CPU_PASS' if not failures else 'FAIL';save()
     return 1 if failures else 0
 if __name__=='__main__':
