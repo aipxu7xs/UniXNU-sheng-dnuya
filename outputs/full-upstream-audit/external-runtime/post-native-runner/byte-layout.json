@@ -1,0 +1,398 @@
+[
+  {
+    "path": "crates/metal2vulkan/src/device/driver_facts.rs",
+    "input_sha256": "c2fe6645e499d7be07043a4f4b6b2eee676e3cb3a57fba16820e6d40d93b5794",
+    "output_sha256": "92f8f5dd982a28f8ba1009aeb7e831f7ee40bf05165407c7baf353e4d4c9b13f",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/device/policy.rs",
+    "input_sha256": "7150fa9163aa1837dd2510b34c1b41e5e771031342b999e140d597470649d33d",
+    "output_sha256": "1e995c7e54309c7ab477e5b33b96a800a57efcedaa3621c9873eea57b7e8055e",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/lower/access/blob.rs",
+    "input_sha256": "47770ed40fd30622d09eb8ae47620400aa266f7286c11b91d214b929c6509b35",
+    "output_sha256": "6be798b4781b66ba550b99df506445c4e36ea55b9f4b966c6b72010d5443ae4f",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/lower/arith/divide.rs",
+    "input_sha256": "4e227709c57c78bb57c49b0cf2ce8af81a54eca3dabb604fef9b3f6fbd73c282",
+    "output_sha256": "168f124084a91e6f7d438935e4f7d94c195ff5c261a064585b1eda42c52311d4",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/lower/arith/math.rs",
+    "input_sha256": "46304d5b2b89d89d319a986c27f3aa42bb8f36144a40e2fac1bc6c155058ffb2",
+    "output_sha256": "7175d38621b92dd609bbf7307dff7101db00c0f5e952efad3d2187cb4dece677",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/lower/arith/mod.rs",
+    "input_sha256": "aae68651e5a1205b6a5279a0d83473ec24ac03cc354dd2204b0e7de95f85c577",
+    "output_sha256": "7b59ee8c3ea3dc7b46d44a32aaa9cee171034f842a12bb92b6ef2cb400abbc11",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/lower/arith/narrow.rs",
+    "input_sha256": "393a7dbed33886e9446ebc2f6e05b51a1926e54c4973a924fb72a950d7d359d8",
+    "output_sha256": "d4e9f733eac9add1a83a08584caaa8861062d2ddb5a0241f985dc950d75a516a",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/lower/arith/ops.rs",
+    "input_sha256": "c0cfe370b1a0abd76b1c90941fb0757c06c695b844034da30781498d83275f06",
+    "output_sha256": "8ddd907b0bc1c476703f79de25097c9ec47d8579374607fb3f9e280427ebd167",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/lower/emit.rs",
+    "input_sha256": "08d23f4a181bc1c806d3aa6678079948d297f2778e038ed51c1a3b7ee127eebe",
+    "output_sha256": "ccc68ce6a56be53c2e4b0bd3e0bca6762c37b2d536e0e626d688193e5ec96347",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/memory/plan.rs",
+    "input_sha256": "696fc719d3237e2721bbd968e35b02a0bb51c42d5808aa7b73f7232a34bacde8",
+    "output_sha256": "bdc71ea5f14b4fc3a20eddd47efd145dff4f4cce51b29fa767b21a5aaeae3741",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/pipeline/compile.rs",
+    "input_sha256": "258149e5fe03599472c7af587681198b87012ef30858b7e9d1aac19f0b4465f5",
+    "output_sha256": "25b8cc7f129c5ebecd666e6f2fbad152f90dac957a8ec82d4819657f86b370e4",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/reflection/function.rs",
+    "input_sha256": "96529499770acfb6a95706acc0f704f6ddfdff7e497463df38f98aa909317b6e",
+    "output_sha256": "d390b6cfdf89640a750a309f0cdfcc5b399812b6f7458667c6585410e3ff47c1",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/spirv/builder/module.rs",
+    "input_sha256": "d44dbfc49eba163e547c301ab96b22b1bfbd18ece75ae011a34b90698acfe6d8",
+    "output_sha256": "67681e62077245154857e54c1561f659c3573e6db37e9584557bd59e89addfd5",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/spirv/interp/sched.rs",
+    "input_sha256": "6bfc8c70b2cccb19065cb10bf66fb9f59ad0d9c0726dd8ee7123791c22aa407d",
+    "output_sha256": "e2ce32721b26b7f0e4ffe080499cc57159e1f6c70732629d868f4dbaf02f8f7a",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/spirv/ir/edit.rs",
+    "input_sha256": "151ca5a1fae6048effcd50aa09cd54873d2512d4cfe9bb9425d454a811fd6b82",
+    "output_sha256": "d4a7942037e2724737b6316154993c1cbbecddbc752c98f5586030dc35914c04",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/spirv/ir/module.rs",
+    "input_sha256": "f1afb16389e7caa82c99afd719d9c71c772377365af40806ed465cc5e7630338",
+    "output_sha256": "349f69a513b106f03205769e1b622fc96a2c769e0d04c80773378eeedc0c8be9",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/spirv/roll/mod.rs",
+    "input_sha256": "b80a48929612564504ac679489f424bbb70c53cda49492d8b1438ecdc6e5e12c",
+    "output_sha256": "e65dc9d87aaa7e64dcc03b51b9492a4ec414bfc4902fbd22a46139eda2ee8d7b",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/spirv/serialize/mod.rs",
+    "input_sha256": "0de5b8aa8878cc06e350aafcad652f37c53d5a01759e319fce05ec03264a3cd0",
+    "output_sha256": "b34c1c963f1c2ecc8f099843c719cdf9948abddcffab330dd90cde4b4f68f487",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/spv.rs",
+    "input_sha256": "807cd1ec0be718678caab805b2553b37831d8aaede46ef15b361febff74d2c57",
+    "output_sha256": "737f526c2a7ba1b673ecebdf6024c7e3df1b3fce9c386e63b23039a6afd73151",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/tests/engine_arena.rs",
+    "input_sha256": "d5327ed60509bc07afd3494ce4b0aa4da88a22dd4e417fe753ff100c79273647",
+    "output_sha256": "775e6dcf5b3ee573cced9e6286b12e69ca04c60bff975469aa6ea36e63c2c27a",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/tests/engine_native_half.rs",
+    "input_sha256": "942988daa0078a3c42bece1df309f139df783df6d8f116f794485368fc0f65ce",
+    "output_sha256": "648a54e00a0ea7c11b98753134c6f5e01e61db2676fb59a4e2d69065b7ed44b7",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan/src/tests/fast_paths.rs",
+    "input_sha256": "2ed740e9986825e8237445647debd6b2fdaf826837cf9b5966501fac785ff60f",
+    "output_sha256": "95a50bd6715e6e2acf6e5883c416fff0d54fedb350c1c07914e4d56534fc3d2b",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-air/src/canon/mod.rs",
+    "input_sha256": "a8075c666ab3d68cdbc3715160170305adfd6aa0545e711afc160aa9b2fa35d1",
+    "output_sha256": "b1f195fc4b241c82f3d01ba1b0d394a7587b840f875758e2da705168a58531e3",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-conformance/src/device.rs",
+    "input_sha256": "188ed14ee4202fb3219fc1ea7c7f6517cab32be1df3f5ffbbd0c75f4509fa0fe",
+    "output_sha256": "e7e46ce1dfe4a753436f15c35e8052b3537a334ca5e3014b4ba0f031e9df1f4a",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/batch_order.rs",
+    "input_sha256": "f1e8665505d5b3b3873a847c41256791c89970f6be9967e2bcd5e76dda98fbbb",
+    "output_sha256": "5063fb26bb669d3a9592a2ebc3d36c612a746a61b9797f6abc12c8a4740a81fe",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/buffer.rs",
+    "input_sha256": "53e30f4b27a81623a0577bd4eb0cb6d885b7ae04d0376aa6390159f4f6b9f22f",
+    "output_sha256": "b9021118b7b4af71307b52620e6f104c01a9ef2a9318a34118d5fe1c52c09c34",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/buffer_texture.rs",
+    "input_sha256": "e8dc865cbd3dbb29fbd03d59cefd0985612f0bd27332e9facc5a11d9d074187b",
+    "output_sha256": "a390f598660fbbaddf95d8f04abc8bccf1d5ff4db531b9b453862c21188f3e49",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/command_buffer/completion.rs",
+    "input_sha256": "693511336251fb827950ef3a95d16568c5a00be78cb398d5b26ab84a91ebb533",
+    "output_sha256": "338170e14b0eca6652e9a40f75eedd97a2d93c9ed5ff2fae2974bdbe6fe3965f",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/command_buffer/mod.rs",
+    "input_sha256": "d5b5aa56334e6911aa24e20b1bcdaf615c2f65ef3930c6cace37e7ae803d7842",
+    "output_sha256": "64dec880229e830f1beef76abff7e89c3e753c5841fac515b89846bae026e131",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/command_buffer/submit.rs",
+    "input_sha256": "8966bf87c6b2ad1a10a2a6049c6ca041af88c0fe91adc09141f288aaf9b37d95",
+    "output_sha256": "70a2a9251c1de415f23f7c3aaa39293624fc8659bfa9bd358751eb38ed1c4eae",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/creation.rs",
+    "input_sha256": "9cc353cc7a1d10dff2f5312ffcbe8549ec1ca1c2fe73c0b587ca21bda3a0953a",
+    "output_sha256": "435a70435b7a06023364ecfa66bd1cf9a6feda542d141acdb576b64e94b2c667",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/device/compiles.rs",
+    "input_sha256": "96b41481da04276ac3b863b1e5f9063a76ef19f6a78db520ec2b9f48cdd68340",
+    "output_sha256": "7cc6485b40376bb713c065f9e28ab9a023d537742bac65b27f9b7c01ff967101",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/device/mod.rs",
+    "input_sha256": "a530988f59f168ce7d73e102b498063520703edfeadb4edb314e945e96e57f9c",
+    "output_sha256": "dc959ba4ef0995444b1ab13b7276a4586cf613297a5536ea7c0c404fc75cc389",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/device/prime.rs",
+    "input_sha256": "936315deb51cff1f1709774206f8e5994f0d25b7e96b386b665eead763156255",
+    "output_sha256": "da7204c7e13ab62dae18a1f1b6d29991f9ff15796237684391f2c07848b64582",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/device/room.rs",
+    "input_sha256": "e57c8bdbe38ad451ff29c7c4aab94eb04e5dd633fb1a6285f58b11a15fd35d60",
+    "output_sha256": "ab95c0131abb3b862356803aeff49a4a4a12bce2ddfffbe44887fba3ac246c18",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/device/submit.rs",
+    "input_sha256": "3aa7af45ef9bc0f6c4c085529b064940440d046954282d2d02fb2028bb2f05ff",
+    "output_sha256": "f870bb3fb9495a4ba5baefe9953db2fac0716f15ac5589f17e35ec1ad6994677",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/exit_guard.rs",
+    "input_sha256": "0cebc87e7d6f51f341697000403bfaa6d85d4fa62f76e9c77a28cd5769b40af5",
+    "output_sha256": "980aa1326a5aeb6b4d304e6f95f2e712d526b298197c478b537ebbff769b5307",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/in_place.rs",
+    "input_sha256": "1376ff66186c329f8453082827f1124e8a937f167c7cfe7df97f4e4600d6ab7d",
+    "output_sha256": "bd7a6100e6ce71a667df40b398ea70b88e5f0ab37f33dd57ca26132ed80a71a0",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/lib.rs",
+    "input_sha256": "372b54733c9f0e32b56bea567749671d306f1f39dabd402fd3b88e03304abf45",
+    "output_sha256": "12c00d55af1896c29084c97f25279406777d061e84d0776bed4da860e268d679",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/library.rs",
+    "input_sha256": "89bc3898c99f38c82bbdc5027f482f3ed060bb616cc5d697def16aaae97bdadf",
+    "output_sha256": "55f320bbfbd75d1f43855c086a8f65c514aec301f746d8b4bc8105849956aac5",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/linear_plan.rs",
+    "input_sha256": "9470ec418e8a76c22bb6178fb84c4fc644aace3ece2e17cba02334e77e69c0fa",
+    "output_sha256": "85ff8f8e86b2675cfc6df2cf3f11d23d40bc57af740d1b77a4ebda1e3e5b946c",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/memory.rs",
+    "input_sha256": "045c69943dbb996aa4e1aacfb51a4cfa9188e94efe53d6d22c4366740550943d",
+    "output_sha256": "38283cd214f24106d550469507a24e4bb43d8dc976aa2749ac092e7e9a92d2ed",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/neutral.rs",
+    "input_sha256": "96f4688e9fea6510a3fd00cfc20a198b0cae8b16ff611c597bac5a522817b4a7",
+    "output_sha256": "137558d0b472dfc879b60bc8f86a7cb11a4c70eec8c2360d3210e301131aff9e",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/range.rs",
+    "input_sha256": "dba6f6d35e8e58ae5731a10fce6c9184ca49c04c1bd2d2df36cc72f5d1ca63a3",
+    "output_sha256": "85ee48ecf9859c5808c7ae9325510b8b06c8b6b238e24044e2c1bb48e15b1eb4",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/rebind.rs",
+    "input_sha256": "f181fb142f2ce94e80729237eff1a4fa91c822957dbcb89bd31746ffbb719c2a",
+    "output_sha256": "e154ebde78029ff3bde310517c0c47b0076c889a28839e57e00ec020a85a74f0",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/recycle.rs",
+    "input_sha256": "77806d765247f6680bf7c623a872a37f1ab432b014fe9a474d9b9384ef5c460a",
+    "output_sha256": "6d8e02809f941bda18d0cc5762bfd7073cf7a03626a5dec796d45b8dbcf343c2",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/render.rs",
+    "input_sha256": "adfeffd44272b1e9d583585f94a4389f42110647b8c2edf53cba5f1371e4118a",
+    "output_sha256": "b1b8ce4c78bbfd853fa9587402ff78aaacd7b516f1625607c9ec05ca2c3c47db",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/scheduler/mod.rs",
+    "input_sha256": "5df159ea464242e42036b1dc3ee14fb9af62a99eda17da7347b0e11d18cd6334",
+    "output_sha256": "cf46666161c18be9a6efb090fae5f84cd6c40eccd75a5edb919aa364f3f982c9",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/scheduler/steps.rs",
+    "input_sha256": "3698f9c78eeebf4652f5c4dd154850a58c9b323e217911a203d8169bac7a0a80",
+    "output_sha256": "48e9781cfd842577fc6f292b2b6ed8226f38fba3d7502ba62e4e83304269b7aa",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/shader_cache/chunks.rs",
+    "input_sha256": "79d3935a0280fe5f9aaac1cab9b8c5f946b47ce433bb6f9187430c2f9e0676ce",
+    "output_sha256": "c2f37a078fb95311c159fef6a3115198e6151e0231f00efda0ff2e86bb684e49",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/shader_cache/mod.rs",
+    "input_sha256": "6ceccf13bc47776128b0d77bf9657cca01ff26fea9d9d0d618daebafaaada833",
+    "output_sha256": "6218714f94132dd8e9a44b0c53f6f1308168f40e190b3abf949525b72eedf96d",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/shader_cache/store.rs",
+    "input_sha256": "2845f326fbcd9ab6bf108d63796441c04b27e92c86c3f97e6baeaf2595efac23",
+    "output_sha256": "a49e2ba9bfa1597d1750758b6ab9a8178effb3ca4058855a035f719c7889ca0d",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/shader_cache/system.rs",
+    "input_sha256": "b10fb219fca2f401842e98ead819681312de94c0c4d525ab6b0736d3211db80e",
+    "output_sha256": "2961b60bf892e7c8633fae724176bfe09f1f8772ffa2df8befe359340a6f89b8",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/shadow.rs",
+    "input_sha256": "1ee8bbb56c0c54d7cd59afacf2b38f40db1ec70aa995fbc892bc8e4a983ade75",
+    "output_sha256": "1c617721817c57fe9f278d3ab4d84a48003fc0e1a1a35fd7d359fab713356a4c",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/stage_trace.rs",
+    "input_sha256": "8641238fe9bb0ef7f3befad32b192b4143da034f8488b8655e3a0c3c9988a904",
+    "output_sha256": "a7e41eb8f75c5dd4df6c04837bb0e93381ee2fcd45b532333c46ae637d50ec23",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/texture/heap.rs",
+    "input_sha256": "e329ea868d03a234e9a4a7a254cd7890d66a4ee255231b35e0af9021214d11c1",
+    "output_sha256": "061a6bc6207ffba61b46afd20144033e2419435b5413228eb0b2ffc5b29d6997",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/texture/surface_two_planes.rs",
+    "input_sha256": "1b622ac60bed8394bec56c15f51afcbaff1fce817cd3f49e5070ba9b1211b5c8",
+    "output_sha256": "b462b3a7d2643eca5fcb469716ac65c3e442de4ae6b1b6a337f24ff1854ce257",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/texture/usage_shadow.rs",
+    "input_sha256": "02e064a529656d4458c358710c14a1f84705059b033531001c31a80979ed2d08",
+    "output_sha256": "5a4f515775395b8edd08ae556e0687375e84f952edf9fd84d2c34774c1cc891e",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/texture/ycbcr_image.rs",
+    "input_sha256": "4b431586bc28a30e2d09c807e8ee52531a34d32e5670d848205e161aa9df9549",
+    "output_sha256": "599b1373ce0b1ef656f2c894ffb047133866c79ceddd7f0ad91eca63455e0b52",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/texture.rs",
+    "input_sha256": "dfde5d0077849823108cca73272cc35662bef3ad033da98d4c684d4f22dd383c",
+    "output_sha256": "ef4c3a58feaadf8995d55104249bd0faa3ab61026a74dea637dd0e35b2e3a40f",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/used_resources.rs",
+    "input_sha256": "6b1baff66b15de193fae0b8c94f9177200c1fa19602e7bcd8d62aad1a2d5e355",
+    "output_sha256": "34058411cb66bc1083db22471cf8f39ff2cdbb5b55ba37242528603723fad5af",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/work_counts.rs",
+    "input_sha256": "87cafaa5fb6c836eb1b137ea7457307fe820a70b1cdb322b993900391f177bb5",
+    "output_sha256": "8672847a8fdc5243ba05c3ab5ebab5ade6f82f1b68ba3ee934aca1d3b0717b71",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "crates/metal2vulkan-runtime/src/ycbcr.rs",
+    "input_sha256": "e52a86582a6a4694a8b6f514dafac35a6258b396ea7013adc1f72cb216181aed",
+    "output_sha256": "6484aae312cae047c102885c8c5e7038c07fae99d0f155922b3b09ff713da3b1",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "docs/API.md",
+    "input_sha256": "bd4b5b8c7dbcc13ee2351d52354c57a6980270e4ed0a2f730c3f70948f32f463",
+    "output_sha256": "02a1c7fc1092f3a63f3c0d999622806a836201fe89050636b06091045044c2f2",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "docs/FAST-PATHS.md",
+    "input_sha256": "daec6f89962adadcd8af68b68418d6b7dbc380d06057be5966fa6433c60b22db",
+    "output_sha256": "af61cc50e809a3fd52b48fe71b10601c672d9a5378a3e6decdc5c52a6fd3ce38",
+    "operation": "LF_to_CRLF"
+  },
+  {
+    "path": "scripts/regen-spirv-grammar/items.txt",
+    "input_sha256": "5fb9a1e115f518a85fbb17cc6e05ff51a4b45ffcd38a60433208ce86daff6c84",
+    "output_sha256": "d1bd311f87caf3961395dc74faef188967066087ecc3f13ec34482237f04bdfa",
+    "operation": "LF_to_CRLF"
+  }
+]

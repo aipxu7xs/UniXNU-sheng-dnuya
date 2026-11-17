@@ -1,0 +1,24 @@
+{
+  "translator": "8b9b2875ab2ca32de30db6d5c396e1469e164bee",
+  "archive_url": "https://api.github.com/repos/steelbrain/metal2vulkan/tarball/8b9b2875ab2ca32de30db6d5c396e1469e164bee",
+  "archive_sha256": "d337fe8a202ee65e8fb637c50bd64b4e0b9ea7781d25725284891495f2460ca5",
+  "rust": "nightly-2026-11-03",
+  "rust_components": [
+    "rustfmt",
+    "clippy"
+  ],
+  "rust_host": "x86_64-apple-darwin",
+  "nextest_version": "0.9.100",
+  "nextest_url": "https://crates.io/api/v1/crates/cargo-nextest/0.9.100/download",
+  "nextest_sha256": "74e1003eeb47ed3d42cbdecf2bdf722c332736ab85440137050d90760c897e91",
+  "files": {
+    "byte-layout.json": "b630dc951ea386339466cf5536b63f9ff5c34200884dfcfbd6932f3e2aacc2f0",
+    "overlay-0053.patch": "2a2e4daf664ee97641258b9a34157d7efb48d91a70c57f1946910b8d9cb5161f",
+    "combined.patch": "34ca175579e47aab0af54638b38f142f8ef256236f5e668199c2b910992f02e0",
+    "tree-manifest.json": "458c196ed31dab3713ed95db1f2c7320d8871745c49a8f3f77b8747880f6b3cc",
+    "integration.json": "57387b93cc72652861373b2868f0f2f61096b6fbe3f8b3402e6b05e95ce484e9",
+    "verification.json": "2a6d2e1c0928900ee0aaa8005fdf91519b3b3f6b4cc519a3a3d4c3421c67ec03",
+    "api-delta.json": "d2c0277cdac78621ca07c5261574dec3930042b8fc12d37104e33f2df8072969",
+    "guard.py": "b2af3881b9b909afc8f6de501bff7c4b641b099c6f824ce32cc47366eb59a34e"
+  }
+}

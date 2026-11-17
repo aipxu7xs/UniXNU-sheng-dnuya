@@ -1,0 +1,67 @@
+{
+  "status": "PASS_STATIC_ONLY",
+  "patch_sha256": "34ca175579e47aab0af54638b38f142f8ef256236f5e668199c2b910992f02e0",
+  "changed_files": [
+    "crates/metal2vulkan-air/src/canon/fold.rs",
+    "crates/metal2vulkan-air/src/canon/generic.rs",
+    "crates/metal2vulkan-air/src/canon/generic/cells.rs",
+    "crates/metal2vulkan-air/src/canon/generic/plan.rs",
+    "crates/metal2vulkan-air/src/canon/static_init.rs",
+    "crates/metal2vulkan-air/src/canon/tests.rs",
+    "crates/metal2vulkan-air/src/canon/tests/generic_pointers.rs",
+    "crates/metal2vulkan-air/src/canon/tests/static_vectors.rs",
+    "crates/metal2vulkan-runtime/README.md",
+    "crates/metal2vulkan-runtime/src/command_buffer/completion.rs",
+    "crates/metal2vulkan-runtime/src/command_buffer/mod.rs",
+    "crates/metal2vulkan-runtime/src/device/compiles.rs",
+    "crates/metal2vulkan-runtime/src/device/mod.rs",
+    "crates/metal2vulkan-runtime/src/error.rs",
+    "crates/metal2vulkan-runtime/src/gpu_time.rs",
+    "crates/metal2vulkan-runtime/src/image_plan.rs",
+    "crates/metal2vulkan-runtime/src/pipeline/pool.rs",
+    "crates/metal2vulkan-runtime/src/tests/dropped_work.rs",
+    "crates/metal2vulkan-runtime/src/tests/image_plan.rs",
+    "crates/metal2vulkan-runtime/src/tests/kept_sparse_updates.rs",
+    "crates/metal2vulkan-runtime/src/tests/mod.rs",
+    "crates/metal2vulkan-runtime/src/this_thread.rs",
+    "crates/metal2vulkan-runtime/src/work_counts.rs",
+    "crates/metal2vulkan-validation/runtime-sources.sha256",
+    "crates/metal2vulkan/src/cache/mod.rs",
+    "crates/metal2vulkan/tests/api_signatures.tsv",
+    "docs/FAST-PATHS.md",
+    "docs/REFUSALS.md"
+  ],
+  "baseline_files": 7468,
+  "combined_files": 7471,
+  "forward_full_tree_equal": true,
+  "reverse_full_tree_equal": true,
+  "six_intentions": [
+    {
+      "index": 299,
+      "all_original_production_and_tests_survive": true
+    },
+    {
+      "index": 410,
+      "all_original_production_and_tests_survive": true
+    },
+    {
+      "index": 412,
+      "all_original_production_and_tests_survive": true
+    },
+    {
+      "index": 429,
+      "all_original_production_and_tests_survive": true
+    },
+    {
+      "index": 397,
+      "all_original_production_and_tests_survive": true
+    },
+    {
+      "index": 614,
+      "all_original_production_and_tests_survive": true
+    }
+  ],
+  "runtime_guard": "a50e060f7c5fe5eee30fd7fd6933920c9576a86933984d24d9ffa75fe0935129",
+  "runtime_inputs": 587,
+  "native_executed": false
+}

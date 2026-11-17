@@ -1,0 +1,71 @@
+name: Sealed translator six-group CPU qualification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sealed-translator-native-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native-cpu:
+    runs-on: macos-26-intel
+    timeout-minutes: 120
+    env:
+      BUNDLE: outputs/full-upstream-audit/external-runtime/post-native-runner
+      RUSTUP_TOOLCHAIN: nightly-2026-11-03
+      CARGO_TERM_COLOR: never
+      NEXTEST_COLOR: never
+      PYTHONDONTWRITEBYTECODE: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout reviewed support files
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Initialize honest status before setup
+        run: |
+          set -euo pipefail
+          mkdir -p "$BUNDLE/evidence"
+          printf '%s\n' '{"status":"NOT_RUN","gpu":"NOT_RUN","adreno":"NOT_RUN","ios_bridge":"NOT_RUN"}' > "$BUNDLE/evidence/native-results.json"
+          printf '%s\n' "$GITHUB_SHA" > "$BUNDLE/evidence/support-commit.txt"
+          python3 --version > "$BUNDLE/evidence/python-version.txt" 2>&1
+          uname -a > "$BUNDLE/evidence/host.txt"
+          test "$(uname -m)" = x86_64
+      - name: Reconstruct locked 8b9 plus 0053 plus combined bytes
+        run: |
+          set -euo pipefail
+          python3 "$BUNDLE/prepare.py" 2>&1 | tee "$BUNDLE/evidence/prepare.log"
+      - name: Install fixed Rust components and checksum-locked nextest
+        run: |
+          set -euo pipefail
+          {
+            test -z "${RUSTUP_DIST_SERVER:-}"
+            test -z "${RUSTUP_UPDATE_ROOT:-}"
+            rustup --version
+            rustup toolchain install nightly-2026-11-03 --profile minimal --component rustfmt --component clippy
+            python3 "$BUNDLE/prepare.py" --nextest
+            cargo +nightly-2026-11-03 install --path "$BUNDLE/nextest-source" --locked --root "$RUNNER_TEMP/nextest-0.9.100"
+            PATH="$RUNNER_TEMP/nextest-0.9.100/bin:$PATH" cargo nextest --version
+          } 2>&1 | tee "$BUNDLE/evidence/setup.log"
+          echo "$RUNNER_TEMP/nextest-0.9.100/bin" >> "$GITHUB_PATH"
+      - name: Run every non-GPU focused group and static native gates
+        run: |
+          set -euo pipefail
+          python3 "$BUNDLE/run-native.py" 2>&1 | tee "$BUNDLE/evidence/driver.log"
+      - name: Upload full evidence even after failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: translator-six-cpu-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            outputs/full-upstream-audit/external-runtime/post-native-runner/evidence/
+            outputs/full-upstream-audit/external-runtime/post-native-runner/inputs.lock.json
+            outputs/full-upstream-audit/external-runtime/post-native-runner/qualification.yml
+            outputs/full-upstream-audit/external-runtime/post-native-runner/prepare.py
+            outputs/full-upstream-audit/external-runtime/post-native-runner/run-native.py
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 6
