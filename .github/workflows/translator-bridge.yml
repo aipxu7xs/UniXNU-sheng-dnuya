@@ -1,0 +1,97 @@
+name: Qualified translator arm64e bridge compilation
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: translator-bridge-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  bridge:
+    runs-on: macos-26-intel
+    timeout-minutes: 180
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+      BUNDLE: outputs/full-upstream-audit/external-runtime/post-native-runner
+      CANDIDATE: ci/translator-bridge
+      PYTHONDONTWRITEBYTECODE: "1"
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout reviewed support
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Initialize evidence and verify SDK inventory
+        run: |
+          set -euo pipefail
+          mkdir -p bridge-evidence
+          printf '%s\n' '{"status":"NOT_RUN","gpu":"NOT_RUN","device":"NOT_RUN"}' > bridge-evidence/result.json
+          printf '%s\n' "$GITHUB_SHA" > bridge-evidence/support-commit.txt
+          test "$(uname -m)" = x86_64
+          xcodebuild -version | tee bridge-evidence/xcode.txt
+          test "$(sed -n '1p' bridge-evidence/xcode.txt)" = 'Xcode 26.6'
+          test "$(xcrun --sdk iphoneos --show-sdk-version)" = 26.5
+          test "$(xcrun --sdk macosx --show-sdk-version)" = 26.5
+      - name: Checkout frozen framework
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: UniXNU/UniXNU
+          ref: 71b8a5a3d78edfe6404a706c1ebccd9915fb3c5e
+          path: UniXNU
+          persist-credentials: false
+      - name: Checkout frozen native Metal bridge
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: UniXNU/AdrenoMetal
+          ref: 54c18dcffc359d21f4e620c3b38b3908cecc46a5
+          path: UniXNU/drivers/AdrenoMetal
+          persist-credentials: false
+      - name: Install arm64e compiler and fixture tools
+        run: |
+          set -euo pipefail
+          brew install --formula llvm rustup
+          export PATH="$HOME/.cargo/bin:$(brew --prefix llvm)/bin:$(brew --prefix rustup)/bin:$PATH"
+          echo "$(brew --prefix rustup)/bin" >> "$GITHUB_PATH"
+          echo "$(brew --prefix llvm)/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          rustup toolchain install 1.98.0 --profile minimal --component rust-src
+          rustup run 1.98.0 rustc -Vv | tee bridge-evidence/rustc.txt
+          rustup run 1.98.0 cargo -V | tee bridge-evidence/cargo.txt
+          llvm-as --version | tee bridge-evidence/llvm.txt
+      - name: Download checksum pinned translator archive
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import importlib.util, pathlib
+          b=pathlib.Path("outputs/full-upstream-audit/external-runtime/post-native-runner").resolve()
+          spec=importlib.util.spec_from_file_location("frozen_prepare",b/"prepare.py")
+          p=importlib.util.module_from_spec(spec);spec.loader.exec_module(p)
+          p.check_inputs()
+          p.fetch(p.LOCK["archive_url"],b/"translator.tar.gz",p.LOCK["archive_sha256"])
+          PY
+      - name: Install exact CPU qualified translator for arm64e bridge
+        run: |
+          set -euo pipefail
+          python3 "$CANDIDATE/install.py" --framework UniXNU --native-support "$BUNDLE" --archive "$BUNDLE/translator.tar.gz" 2>&1 | tee bridge-evidence/install.log
+      - name: Compile arm64e iPadOS bridge
+        run: |
+          set -euo pipefail
+          python3 UniXNU/scripts/build-adreno-metal-bridge.py --target ios27 2>&1 | tee bridge-evidence/build-driver.log
+      - name: Verify arm64e archive and complete build provenance
+        run: |
+          set -euo pipefail
+          python3 "$CANDIDATE/verify.py" --framework UniXNU --target ios27 2>&1 | tee bridge-evidence/verify.log
+      - name: Upload complete bridge evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: translator-arm64e-bridge-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            bridge-evidence/
+            UniXNU/build/adreno-metal-bridge/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 6

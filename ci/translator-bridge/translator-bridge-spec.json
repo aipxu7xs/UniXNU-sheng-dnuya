@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "framework": "71b8a5a3d78edfe6404a706c1ebccd9915fb3c5e",
+  "component": "54c18dcffc359d21f4e620c3b38b3908cecc46a5",
+  "translator": "8b9b2875ab2ca32de30db6d5c396e1469e164bee",
+  "cpu_run": 44050965293,
+  "cpu_toolchain": "nightly-2026-11-03",
+  "bridge_toolchain": "1.98.0",
+  "cpu_lock": "7237887fd27a6b44b1816c0ee5b73496b1ea6e699c978b081ab790af4c4b85b4",
+  "guard": "c555cffe6203fda8081b8c58d0ede96040bb755b3aa7b04b38da91898dc24024",
+  "support": {
+    "prepare.py": "79f60741d8d23ce4bb13dc25e0f04afeb98b56af2dee2c5c05ae9fe18656b568",
+    "inputs.lock.json": "679ea2c46f9bd9e8bb33c6126a306272836c4e30ca5914bff29195f45c8fcc10",
+    "byte-layout.json": "b630dc951ea386339466cf5536b63f9ff5c34200884dfcfbd6932f3e2aacc2f0",
+    "overlay-0053.patch": "2a2e4daf664ee97641258b9a34157d7efb48d91a70c57f1946910b8d9cb5161f",
+    "combined.patch": "34ca175579e47aab0af54638b38f142f8ef256236f5e668199c2b910992f02e0",
+    "tree-manifest.json": "e2456a3418f409548f939def0937210543527ee0a6cde2a52712216c8c30fa42",
+    "integration.json": "57387b93cc72652861373b2868f0f2f61096b6fbe3f8b3402e6b05e95ce484e9",
+    "verification.json": "2a6d2e1c0928900ee0aaa8005fdf91519b3b3f6b4cc519a3a3d4c3421c67ec03",
+    "api-delta.json": "d2c0277cdac78621ca07c5261574dec3930042b8fc12d37104e33f2df8072969",
+    "guard.py": "b2af3881b9b909afc8f6de501bff7c4b641b099c6f824ce32cc47366eb59a34e",
+    "qualification-repair.json": "f56c789ce8098c6dd9d5e20fd904d0d78578189eceed652ed21acb74008a5233",
+    "product-Cargo.lock": "7237887fd27a6b44b1816c0ee5b73496b1ea6e699c978b081ab790af4c4b85b4"
+  },
+  "framework_inputs": {
+    "scripts/build-adreno-metal-bridge.py": "83fb5781a5da900b4661870bf4b9e87194985141be6522d450af82b02e18d67f",
+    "scripts/build-adreno-metal-plugin.py": "332401a82955428ee88e0563e0c9a3c686641096e498fccb0eaddaedeb2682ac",
+    "scripts/data/gpu-metal-vulkan-inputs.json": "090a7c255f1a393e3013b4b54b94048dc463e5d3ea1fff8cf580beea46a576cb"
+  }
+}
