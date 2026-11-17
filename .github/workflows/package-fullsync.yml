@@ -449,9 +449,14 @@ jobs:
       - name: install reviewed Mesa v2 backports before runtime tree build
         if: inputs.os == '27'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/102-install-reviewed-mesa-v2-backports-before-runtime-tree-build.sh"
-      - name: verify reviewed Mesa v2 installed sources before packaging
+      - name: install reviewed Mesa160 after sealed v2
         if: inputs.os == '27'
-        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/103-verify-reviewed-mesa-v2-installed-sources-before-packaging.sh"
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/install.py" UniXNU --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/install.py" UniXNU
+      - name: verify reviewed Mesa160 installed sources before packaging
+        if: inputs.os == '27'
+        run: python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/prebuild-gate.py" UniXNU
       - name: verify final reviewed source digests before packaging
         if: inputs.os == '27'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/104-verify-final-reviewed-source-digests-before-packaging.sh"
@@ -473,9 +478,9 @@ jobs:
       - name: verify reviewed component revisions in packaged manifest
         if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/108-verify-reviewed-component-revisions-in-packaged-manifest.sh"
-      - name: verify reviewed Mesa v2 actual patched source and report
+      - name: verify reviewed Mesa160 actual patched source and report
         if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
-        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/109-verify-reviewed-mesa-v2-actual-patched-source-and-report.sh"
+        run: python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/artifact-gate.py" UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27
       - name: verify packaged Metal bridge and embedded addon identity
         if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/110-verify-packaged-metal-bridge-and-embedded-addon-identity.sh"

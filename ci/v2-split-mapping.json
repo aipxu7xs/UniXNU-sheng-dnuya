@@ -5,9 +5,9 @@
     "bytes": 937903
   },
   "split_workflow": {
-    "path": "package-fullsync.yml",
-    "sha256": "d63b17993efe002fd11c4213bc45b1578cf9084a068cb9544d09dc931cacaa16",
-    "bytes": 37659
+    "path": ".github/workflows/package-fullsync.yml",
+    "sha256": "8aa699cfb88f9571d088db21a2f96022157d8987faefa659b707e326a0a822b3",
+    "bytes": 37827
   },
   "checkout_step": {
     "after_step": 0,
@@ -21,749 +21,963 @@
       "name": "bump sm8550 SoC pin (Sm8550GeniUart.h requirement)",
       "file": "ci/steps/004-bump-sm8550-soc-pin-sm8550geniuart-h-requirement.sh",
       "sha256": "8e3284773b27ba5faf8acc906b14945d8fe6848c35550e68ccfb30d3321b4ebd",
-      "bytes": 510
+      "bytes": 510,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 5,
       "name": "apply pinned USB device-only sources and 34 roots",
       "file": "ci/steps/005-apply-pinned-usb-device-only-sources-and-34-roots.sh",
       "sha256": "f5c1151d003114db7796481358b1ab9605e2ae4576fbb66ed8c435b8b1ffb6a5",
-      "bytes": 11455
+      "bytes": 11455,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 6,
       "name": "verify frozen framework component gitlinks before local repairs",
       "file": "ci/steps/006-verify-frozen-framework-component-gitlinks-before-local-repa.sh",
       "sha256": "e50d09e8c66fb11cda0479162b6175a3510ae9b4334cd2b0d764a8d951421979",
-      "bytes": 1167
+      "bytes": 1167,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 7,
       "name": "verify frozen Metal builders translator and overlay pairing",
       "file": "ci/steps/007-verify-frozen-metal-builders-translator-and-overlay-pairing.sh",
       "sha256": "4919d5fa3f7a2f5fccced869ab3d7659522fdde7325459a4039c75fbced833c5",
-      "bytes": 1051
+      "bytes": 1051,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 8,
       "name": "compile native board objects with -Oz (layout slack)",
       "file": "ci/steps/008-compile-native-board-objects-with-oz-layout-slack.sh",
       "sha256": "f5b885a3d2426ea6eb7eb0178fb6d102b785e35f897b26cf6b7d0da083d80731",
-      "bytes": 1864
+      "bytes": 1864,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 9,
       "name": "optimize independent board builders for 24A446",
       "file": "ci/steps/009-optimize-independent-board-builders-for-24a446.sh",
       "sha256": "18ebc9beb7ace295c048a6ad8ade0d2b04f8d5f3f30e88877cfb9e9799016b4b",
-      "bytes": 1106
+      "bytes": 1106,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 10,
       "name": "repair GPU selftest IOVA and kernel client contract",
       "file": "ci/steps/010-repair-gpu-selftest-iova-and-kernel-client-contract.sh",
       "sha256": "ac575036f5ad04902b09acd979555129012f511640c7494d60e6fbdb86841036",
-      "bytes": 6042
+      "bytes": 6042,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 11,
       "name": "use plain GICR priority stores for the 24A446 fault experiment",
       "file": "ci/steps/011-use-plain-gicr-priority-stores-for-the-24a446-fault-experime.sh",
       "sha256": "7568e02067e5167d74370b90ad89a8ea92e1bd83ac2bb15f0844017d127bc91a",
-      "bytes": 2217
+      "bytes": 2217,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 12,
       "name": "enable GPU self-tests in the iPadOS kernel",
       "file": "ci/steps/012-enable-gpu-self-tests-in-the-ipados-kernel.sh",
       "sha256": "515a40d5738708c663bd0eab2ba5aeae7c352a1de989e20dd044921aae2e74ff",
-      "bytes": 602
+      "bytes": 602,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 13,
       "name": "report the SError syndrome at the unhandled branch (diagnostic)",
       "file": "ci/steps/013-report-the-serror-syndrome-at-the-unhandled-branch-diagnosti.sh",
       "sha256": "eeef702900f2b51d50567222a167ade53c43d62408dc24b1ae0e3cebd25d3afb",
-      "bytes": 2326
+      "bytes": 2326,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 14,
       "name": "enforce USB closure imports and print prelink evidence",
       "file": "ci/steps/014-enforce-usb-closure-imports-and-print-prelink-evidence.sh",
       "sha256": "2716474c0e46609400c90512109ec1d3418ba361aa32af679c4487c086d1ba02",
-      "bytes": 2926
+      "bytes": 2926,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 15,
       "name": "layout collide diagnostics (print numbers before the exception)",
       "file": "ci/steps/015-layout-collide-diagnostics-print-numbers-before-the-exceptio.sh",
       "sha256": "a1fed083d6805f83423b9e279e1867d72caa1fd31a9f0c38a4f6e683be3f5824",
-      "bytes": 939
+      "bytes": 939,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 16,
       "name": "allocate board data buffers at runtime for 24A446",
       "file": "ci/steps/016-allocate-board-data-buffers-at-runtime-for-24a446.sh",
       "sha256": "5defa4308ed1cb00e767212a27fe3adc3c44382867241cc316785b0823c64232",
-      "bytes": 8753
+      "bytes": 8753,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 17,
       "name": "stage reviewed source payload chunk 1",
       "file": "ci/steps/017-stage-reviewed-source-payload-chunk-1.sh",
       "sha256": "5b1ad40c230c1cb456b63eb15213aff169e3825feb32280c4653539d7b390213",
-      "bytes": 12368
+      "bytes": 12368,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 18,
       "name": "stage reviewed source payload chunk 2",
       "file": "ci/steps/018-stage-reviewed-source-payload-chunk-2.sh",
       "sha256": "71c059d40247dbf8b897f6649144275a450be3da2f4c58584170904579f8589b",
-      "bytes": 12372
+      "bytes": 12372,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 19,
       "name": "stage reviewed source payload chunk 3",
       "file": "ci/steps/019-stage-reviewed-source-payload-chunk-3.sh",
       "sha256": "64362eb7f3f66849cd45f1fd38e156bef9d201b94ed3ff2a753ae9f7769bcff9",
-      "bytes": 12372
+      "bytes": 12372,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 20,
       "name": "stage reviewed source payload chunk 4",
       "file": "ci/steps/020-stage-reviewed-source-payload-chunk-4.sh",
       "sha256": "c425b0381ef036fdd047d909c2d9975c0b1fb042512871cef58303e368eabe43",
-      "bytes": 12372
+      "bytes": 12372,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 21,
       "name": "stage reviewed source payload chunk 5",
       "file": "ci/steps/021-stage-reviewed-source-payload-chunk-5.sh",
       "sha256": "b0a958f1b86851df9130d61aeb42ac914831c421c416aecf060531dfcd050204",
-      "bytes": 12372
+      "bytes": 12372,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 22,
       "name": "stage reviewed source payload chunk 6",
       "file": "ci/steps/022-stage-reviewed-source-payload-chunk-6.sh",
       "sha256": "817df967ca0e36d812085f176fe64d8c4f104955078939554cd384f58f0a8a3d",
-      "bytes": 12372
+      "bytes": 12372,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 23,
       "name": "stage reviewed source payload chunk 7",
       "file": "ci/steps/023-stage-reviewed-source-payload-chunk-7.sh",
       "sha256": "c3db3cf2dee98b4fe042b48d522207e3bfbb807da4efb54d067efac90a064aa4",
-      "bytes": 12372
+      "bytes": 12372,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 24,
       "name": "stage reviewed source payload chunk 8",
       "file": "ci/steps/024-stage-reviewed-source-payload-chunk-8.sh",
       "sha256": "54a8f19ab1fa5ab9aef918e1cc6f66643c9c9a7d916e156f5dbd95953f733074",
-      "bytes": 12372
+      "bytes": 12372,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 25,
       "name": "stage reviewed source payload chunk 9",
       "file": "ci/steps/025-stage-reviewed-source-payload-chunk-9.sh",
       "sha256": "abb3650072477b7a757545a19c7be6601b5f2e3391b484f73bdf426ffdcff1bd",
-      "bytes": 12372
+      "bytes": 12372,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 26,
       "name": "stage reviewed source payload chunk 10",
       "file": "ci/steps/026-stage-reviewed-source-payload-chunk-10.sh",
       "sha256": "04fe9ded11b5865a0a66f84abf24b7f944e889c52842bba4dc2b788f8ac4f769",
-      "bytes": 12373
+      "bytes": 12373,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 27,
       "name": "stage reviewed source payload chunk 11",
       "file": "ci/steps/027-stage-reviewed-source-payload-chunk-11.sh",
       "sha256": "1240ae7cfd9484210cf6b6f1fc48705dd7a222765baa846da1058eac3f41bdad",
-      "bytes": 12373
+      "bytes": 12373,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 28,
       "name": "stage reviewed source payload chunk 12",
       "file": "ci/steps/028-stage-reviewed-source-payload-chunk-12.sh",
       "sha256": "66cda4153b0d3524c53cdbbcea7bee872889bac3cbb3594db49b283affa283ee",
-      "bytes": 12373
+      "bytes": 12373,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 29,
       "name": "stage reviewed source payload chunk 13",
       "file": "ci/steps/029-stage-reviewed-source-payload-chunk-13.sh",
       "sha256": "ed79342d51be01ee5c449085305875ca1115ce56c46780e89f6238129840230d",
-      "bytes": 12373
+      "bytes": 12373,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 30,
       "name": "stage reviewed source payload chunk 14",
       "file": "ci/steps/030-stage-reviewed-source-payload-chunk-14.sh",
       "sha256": "3d1e4d3f430879db909affa26211a8e497f1bc0c4b93388af05561da8167a1b8",
-      "bytes": 12373
+      "bytes": 12373,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 31,
       "name": "stage reviewed source payload chunk 15",
       "file": "ci/steps/031-stage-reviewed-source-payload-chunk-15.sh",
       "sha256": "01e3a430601f950daa832d3f343383f46aa7fa88d6f7bf6543281f5715b1c2d5",
-      "bytes": 12373
+      "bytes": 12373,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 32,
       "name": "stage reviewed source payload chunk 16",
       "file": "ci/steps/032-stage-reviewed-source-payload-chunk-16.sh",
       "sha256": "c3038bdeabe91560696a3e8256b4634055dfc3f4e213fbeb2d479ffa6c9a0271",
-      "bytes": 12373
+      "bytes": 12373,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 33,
       "name": "stage reviewed source payload chunk 17",
       "file": "ci/steps/033-stage-reviewed-source-payload-chunk-17.sh",
       "sha256": "832bb8443109af30356d54c0fe1f3f23d14539432743f2ec22e834f9ec3a8edb",
-      "bytes": 12373
+      "bytes": 12373,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 34,
       "name": "stage reviewed source payload chunk 18",
       "file": "ci/steps/034-stage-reviewed-source-payload-chunk-18.sh",
       "sha256": "7d17435182e7ccbe8abb0ace63312fd8c3c516f49e751709a83f3080dd31c782",
-      "bytes": 12373
+      "bytes": 12373,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 35,
       "name": "stage reviewed source payload chunk 19",
       "file": "ci/steps/035-stage-reviewed-source-payload-chunk-19.sh",
       "sha256": "04f71e519003084f67799d061981cba13e0988146fdc1a2923c41cf785ee0905",
-      "bytes": 12373
+      "bytes": 12373,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 36,
       "name": "stage reviewed source payload chunk 20",
       "file": "ci/steps/036-stage-reviewed-source-payload-chunk-20.sh",
       "sha256": "6efe000953d7ae71c8f66f1d72ee496bfc6944074ba9626f8dfec850ca04e65f",
-      "bytes": 3077
+      "bytes": 3077,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 37,
       "name": "apply reviewed board timing diagnostics peripheral counters and Iris bridge",
       "file": "ci/steps/037-apply-reviewed-board-timing-diagnostics-peripheral-counters-.sh",
       "sha256": "92f96a2e2a6ebdbbccbe3a0ffc41a2e8fe1d16d13e65f50e530accc54731365a",
-      "bytes": 1907
+      "bytes": 1907,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 38,
       "name": "pin device-priority ShengUfs and framework catalog",
       "file": "ci/steps/038-pin-device-priority-shengufs-and-framework-catalog.sh",
       "sha256": "16fc61d2543432ba8903e180f8dce5ec3485bbd8b85ab60f03bb47169b106cc1",
-      "bytes": 255
+      "bytes": 255,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 39,
       "name": "install reviewed firmware callbacks for actual selected trees",
       "file": "ci/steps/039-install-reviewed-firmware-callbacks-for-actual-selected-tree.sh",
       "sha256": "10f67b19eca33d1f459ae6b60c58dba6c12555841f0bc5379eb456c30527113f",
-      "bytes": 290
+      "bytes": 290,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 40,
       "name": "report full native layout before validation",
       "file": "ci/steps/040-report-full-native-layout-before-validation.sh",
       "sha256": "8d32a9338bce7d4cb3f000fc773ec287d3178c09e47f88979de96c84a7c141c3",
-      "bytes": 1600
+      "bytes": 1600,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 41,
       "name": "device hook weak stubs (macOS-only hooks; real hooks force-pulled)",
       "file": "ci/steps/041-device-hook-weak-stubs-macos-only-hooks-real-hooks-force-pul.sh",
       "sha256": "343715affa4330d78cacb918b65a68ad8bc57d850b9f093356da4b0cfddc9926",
-      "bytes": 4350
+      "bytes": 4350,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 42,
       "name": "patch fileset reference stubs (device hook prefixes)",
       "file": "ci/steps/042-patch-fileset-reference-stubs-device-hook-prefixes.sh",
       "sha256": "c825e8ce5bd9243cb07b19380f5c4b0e8d02f53140227f664f733c88d2154c67",
-      "bytes": 650
+      "bytes": 650,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 43,
       "name": "note on upstream PR 229 (not applied)",
       "file": "ci/steps/043-note-on-upstream-pr-229-not-applied.sh",
       "sha256": "f227ee29fd0effec00008473f70180da036c35f1b0472fb36da9505cc0711c7b",
-      "bytes": 96
+      "bytes": 96,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 44,
       "name": "verify upstream pinned Adreno download retries and publication",
       "file": "ci/steps/044-verify-upstream-pinned-adreno-download-retries-and-publicati.sh",
       "sha256": "22d53bd2dd9a87840396a05863ec2b3c85c3fb67a4781193b56f21291f9055c5",
-      "bytes": 830
+      "bytes": 830,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 45,
       "name": "repair Mesa patch header",
       "file": "ci/steps/045-repair-mesa-patch-header.sh",
       "sha256": "e4574dfe8c51074a39e65f4e9b295cd70ad00128db202257af3fadeab2a1df30",
-      "bytes": 588
+      "bytes": 588,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 46,
       "name": "sheng ABL device tree (0x218 symbols)",
       "file": "ci/steps/046-sheng-abl-device-tree-0x218-symbols.sh",
       "sha256": "238e1ad3c562af283ad9c13b7f974bd1317bc54a3719d136c1b27fb7f495d4ca",
-      "bytes": 2154
+      "bytes": 2154,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 47,
       "name": "usb diagnostics (usb=2 register sampling + log-sys=1)",
       "file": "ci/steps/047-usb-diagnostics-usb-2-register-sampling-log-sys-1.sh",
       "sha256": "23c7042f8bddbb6c51f4d1c967cbf9124a55e7e8881e61b8a5fa9786e257f790",
-      "bytes": 1661
+      "bytes": 1661,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 48,
       "name": "tools",
       "file": "ci/steps/048-tools.sh",
       "sha256": "bdb69513a6c9c443ed9c4f09044c78b6761d3cf56dd376955f2d4d7f77380c7a",
-      "bytes": 4345
+      "bytes": 4345,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 49,
       "name": "WCN7850 firmware",
       "file": "ci/steps/049-wcn7850-firmware.sh",
       "sha256": "bb27413d3913378cd3f5429006d2c86214db576c335515f96d1824fc9d6c9f28",
-      "bytes": 917
+      "bytes": 917,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 50,
       "name": "verify selected Metal bridge 7200-second build timeout",
       "file": "ci/steps/050-verify-selected-metal-bridge-7200-second-build-timeout.sh",
       "sha256": "0ccc6c880d70f21a33d0bb56a6dd35a03b20e87295a4be7c61e6d29253b242b1",
-      "bytes": 492
+      "bytes": 492,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 51,
       "name": "device inputs",
       "file": "ci/steps/051-device-inputs.sh",
       "sha256": "58a3dc1b95fcd5aacc5f80877ab8ce6ed46391050469c4f00434a810bc6ae3fd",
-      "bytes": 1063
+      "bytes": 1063,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 52,
       "name": "platform seed",
       "file": "ci/steps/052-platform-seed.sh",
       "sha256": "6c7c619d76289567e4209fba15883f7794d68909308efa74f6f2863632c7c50b",
-      "bytes": 166
+      "bytes": 166,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 53,
       "name": "seed cache identity",
       "file": "ci/steps/053-seed-cache-identity.sh",
       "sha256": "4c8c3b6428070d4cd7e5b1fbcdfa0edb7327a985cf1f8c4d95854e99fb2a2069",
-      "bytes": 196
+      "bytes": 196,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 55,
       "name": "prepare preserved Data seed",
       "file": "ci/steps/055-prepare-preserved-data-seed.sh",
       "sha256": "21259116b97ae07b22023f2dbb81e3f9982e683d410864c68901fe62ed5f40d9",
-      "bytes": 1256
+      "bytes": 1256,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 56,
       "name": "stage reviewed Mesa v2 payload chunk 1",
       "file": "ci/steps/056-stage-reviewed-mesa-v2-payload-chunk-1.sh",
       "sha256": "623888ab18e96f869d8e7e1f32fdffccfc745364e7ae807ffac51d448df1e1bb",
-      "bytes": 12307
+      "bytes": 12307,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 57,
       "name": "stage reviewed Mesa v2 payload chunk 2",
       "file": "ci/steps/057-stage-reviewed-mesa-v2-payload-chunk-2.sh",
       "sha256": "4b430c1fdc035976bb0656aa2259887d7bd4c45deb220cae6bd91cd7066d3294",
-      "bytes": 12311
+      "bytes": 12311,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 58,
       "name": "stage reviewed Mesa v2 payload chunk 3",
       "file": "ci/steps/058-stage-reviewed-mesa-v2-payload-chunk-3.sh",
       "sha256": "e2554af5934625b74cd9a417f80886f40f1ddb969f05bbac7ed169c84afcb294",
-      "bytes": 12311
+      "bytes": 12311,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 59,
       "name": "stage reviewed Mesa v2 payload chunk 4",
       "file": "ci/steps/059-stage-reviewed-mesa-v2-payload-chunk-4.sh",
       "sha256": "5a3fa6ad35521afe7e77a89d554ba37d7e0d66e1e5436a266260d1616dd7a34a",
-      "bytes": 12311
+      "bytes": 12311,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 60,
       "name": "stage reviewed Mesa v2 payload chunk 5",
       "file": "ci/steps/060-stage-reviewed-mesa-v2-payload-chunk-5.sh",
       "sha256": "01e249d49d69138d7845fe67a211b88ec660ce174564319aaf0b2f00d84de0ed",
-      "bytes": 12311
+      "bytes": 12311,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 61,
       "name": "stage reviewed Mesa v2 payload chunk 6",
       "file": "ci/steps/061-stage-reviewed-mesa-v2-payload-chunk-6.sh",
       "sha256": "8c15fa6b29b1c81f5f7a07ade5cecd1e8426aeb5eaaf9884bc85de1fa93239c2",
-      "bytes": 12311
+      "bytes": 12311,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 62,
       "name": "stage reviewed Mesa v2 payload chunk 7",
       "file": "ci/steps/062-stage-reviewed-mesa-v2-payload-chunk-7.sh",
       "sha256": "27d2124bdad16b913fed59c7cdae27486cefe484c1997f453b6dcdcf67faf8d8",
-      "bytes": 12311
+      "bytes": 12311,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 63,
       "name": "stage reviewed Mesa v2 payload chunk 8",
       "file": "ci/steps/063-stage-reviewed-mesa-v2-payload-chunk-8.sh",
       "sha256": "35c7d20c451dd5806d74038bc5544a7798b4f36839cc55c7a6a6fdb972609672",
-      "bytes": 12311
+      "bytes": 12311,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 64,
       "name": "stage reviewed Mesa v2 payload chunk 9",
       "file": "ci/steps/064-stage-reviewed-mesa-v2-payload-chunk-9.sh",
       "sha256": "8b1b9a9c5dfa98b7afbc66b4f498f65112a49c174ed2d6feda7a915807dd6d6c",
-      "bytes": 12311
+      "bytes": 12311,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 65,
       "name": "stage reviewed Mesa v2 payload chunk 10",
       "file": "ci/steps/065-stage-reviewed-mesa-v2-payload-chunk-10.sh",
       "sha256": "d97ce5d9b892afa38dbeb970b38a32c9a4c4907f58a81893dcbe41de1db84b1e",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 66,
       "name": "stage reviewed Mesa v2 payload chunk 11",
       "file": "ci/steps/066-stage-reviewed-mesa-v2-payload-chunk-11.sh",
       "sha256": "c84bf447f84cbcd1a5feec4275f2e53fee9206a331e5d6d80764d9d6fe5fd7ae",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 67,
       "name": "stage reviewed Mesa v2 payload chunk 12",
       "file": "ci/steps/067-stage-reviewed-mesa-v2-payload-chunk-12.sh",
       "sha256": "11eb6fe5800fd3b8b94f647a811164646e6b2a4941f7d3290c863baa49a03a95",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 68,
       "name": "stage reviewed Mesa v2 payload chunk 13",
       "file": "ci/steps/068-stage-reviewed-mesa-v2-payload-chunk-13.sh",
       "sha256": "4dfbb06ffe01b7677e3a9eb62e2945f09134fd6ac1e7ca0230b060cde2feb332",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 69,
       "name": "stage reviewed Mesa v2 payload chunk 14",
       "file": "ci/steps/069-stage-reviewed-mesa-v2-payload-chunk-14.sh",
       "sha256": "cb1a4a12deb27816e2baf5b5e05f26bd0b7040e090c66c108920e76d3fbd1049",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 70,
       "name": "stage reviewed Mesa v2 payload chunk 15",
       "file": "ci/steps/070-stage-reviewed-mesa-v2-payload-chunk-15.sh",
       "sha256": "ee6acd9566bb05aa45ce640cbca410cbfa4e7f8e4f07245d78dd8298a43c014a",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 71,
       "name": "stage reviewed Mesa v2 payload chunk 16",
       "file": "ci/steps/071-stage-reviewed-mesa-v2-payload-chunk-16.sh",
       "sha256": "8252ae2a0cc2af7957fa66747f942371f31a9c6bd29baa3f38d7363b175d503d",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 72,
       "name": "stage reviewed Mesa v2 payload chunk 17",
       "file": "ci/steps/072-stage-reviewed-mesa-v2-payload-chunk-17.sh",
       "sha256": "3332e5ab8c04cec50a256c6a640beb18c6a2467e682e807d060105454db35c9e",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 73,
       "name": "stage reviewed Mesa v2 payload chunk 18",
       "file": "ci/steps/073-stage-reviewed-mesa-v2-payload-chunk-18.sh",
       "sha256": "1659ebd9875a96692ed504db6e5454f38ab704978b93b1263a66ee37c31296d7",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 74,
       "name": "stage reviewed Mesa v2 payload chunk 19",
       "file": "ci/steps/074-stage-reviewed-mesa-v2-payload-chunk-19.sh",
       "sha256": "e7f9ac9a7958ee3bd136def0e68b0124af6555905f3e23a8c5d4e82fee0f83cf",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 75,
       "name": "stage reviewed Mesa v2 payload chunk 20",
       "file": "ci/steps/075-stage-reviewed-mesa-v2-payload-chunk-20.sh",
       "sha256": "2a8f19f7214e15b101f8e9f2d07574bb2333670782e4dfc518b08aa40ac3bf2a",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 76,
       "name": "stage reviewed Mesa v2 payload chunk 21",
       "file": "ci/steps/076-stage-reviewed-mesa-v2-payload-chunk-21.sh",
       "sha256": "f966e2145fd92e7d860c7fde50f9b72fcb0301d32b70b2b495ee5348bf801a11",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 77,
       "name": "stage reviewed Mesa v2 payload chunk 22",
       "file": "ci/steps/077-stage-reviewed-mesa-v2-payload-chunk-22.sh",
       "sha256": "4cca19ecd81c3bf69cb509757e349f99109225900389431820dc404aa3916ad1",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 78,
       "name": "stage reviewed Mesa v2 payload chunk 23",
       "file": "ci/steps/078-stage-reviewed-mesa-v2-payload-chunk-23.sh",
       "sha256": "2e41443a52cd93f0a4375029249ed52e662e7b433181dacbfa1a9e8860a17896",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 79,
       "name": "stage reviewed Mesa v2 payload chunk 24",
       "file": "ci/steps/079-stage-reviewed-mesa-v2-payload-chunk-24.sh",
       "sha256": "2119810ca84d5dfbfaa36b66b72acc77b7c26f11da5741581b6280972260ec4b",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 80,
       "name": "stage reviewed Mesa v2 payload chunk 25",
       "file": "ci/steps/080-stage-reviewed-mesa-v2-payload-chunk-25.sh",
       "sha256": "46d848c42211fea8d26955844cba284b752c67db8a7ddb9c97785a542bf85c45",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 81,
       "name": "stage reviewed Mesa v2 payload chunk 26",
       "file": "ci/steps/081-stage-reviewed-mesa-v2-payload-chunk-26.sh",
       "sha256": "9f20352c9b47aeaa1c6f093606cce9bdcdbc719ba4551334cd2afdee3ce447b6",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 82,
       "name": "stage reviewed Mesa v2 payload chunk 27",
       "file": "ci/steps/082-stage-reviewed-mesa-v2-payload-chunk-27.sh",
       "sha256": "eab2a85b34e2266e8acb7023a41da2fd5fb8926869e40d5581c9b7e5f11fd5fd",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 83,
       "name": "stage reviewed Mesa v2 payload chunk 28",
       "file": "ci/steps/083-stage-reviewed-mesa-v2-payload-chunk-28.sh",
       "sha256": "8076df358cc01c3c2b1973318753acbd3d3840eeb77e70a4a9ef476fb22a1bd4",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 84,
       "name": "stage reviewed Mesa v2 payload chunk 29",
       "file": "ci/steps/084-stage-reviewed-mesa-v2-payload-chunk-29.sh",
       "sha256": "6889dcb7e13b8abb441323cf2fb6ffd516115d2c458a9bc1abce5f564fb4ee78",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 85,
       "name": "stage reviewed Mesa v2 payload chunk 30",
       "file": "ci/steps/085-stage-reviewed-mesa-v2-payload-chunk-30.sh",
       "sha256": "1b19e9a922ec688b71e4e993752d3108967a8f59477b158c0a2be4d9c42e6390",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 86,
       "name": "stage reviewed Mesa v2 payload chunk 31",
       "file": "ci/steps/086-stage-reviewed-mesa-v2-payload-chunk-31.sh",
       "sha256": "ad763e9f624d4eea46862182c2659a8c4e49960042e9d1f18df3217b64fd4c84",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 87,
       "name": "stage reviewed Mesa v2 payload chunk 32",
       "file": "ci/steps/087-stage-reviewed-mesa-v2-payload-chunk-32.sh",
       "sha256": "c9c3534cdc21afcae9167d193214fbad4e9c94d6520628ecac71ac4853a1c51c",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 88,
       "name": "stage reviewed Mesa v2 payload chunk 33",
       "file": "ci/steps/088-stage-reviewed-mesa-v2-payload-chunk-33.sh",
       "sha256": "2435af54f5edbe07f03924664d37c79f97e9da1045f0bf40039e442ab10d8b33",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 89,
       "name": "stage reviewed Mesa v2 payload chunk 34",
       "file": "ci/steps/089-stage-reviewed-mesa-v2-payload-chunk-34.sh",
       "sha256": "b6a95a5f0c738c63a9018ad19da29bcbad651159ff5b07ecc67f1422e484a6f2",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 90,
       "name": "stage reviewed Mesa v2 payload chunk 35",
       "file": "ci/steps/090-stage-reviewed-mesa-v2-payload-chunk-35.sh",
       "sha256": "ae20947bcadd01d8800ef782e15b839cb4c63e5f3b989bf023b39e42d2b0e6aa",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 91,
       "name": "stage reviewed Mesa v2 payload chunk 36",
       "file": "ci/steps/091-stage-reviewed-mesa-v2-payload-chunk-36.sh",
       "sha256": "6acf98386780f35f2340800768fd77c4ed2979067450ccc5ba3f33f306fb6731",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 92,
       "name": "stage reviewed Mesa v2 payload chunk 37",
       "file": "ci/steps/092-stage-reviewed-mesa-v2-payload-chunk-37.sh",
       "sha256": "57e3b46a39d0f05cc313d2193f7e4e16cfb8f3011dcaabe1712f3d2f8df5728b",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 93,
       "name": "stage reviewed Mesa v2 payload chunk 38",
       "file": "ci/steps/093-stage-reviewed-mesa-v2-payload-chunk-38.sh",
       "sha256": "c96311a41ad55f463ec5fdb7604410a572bac49d9adb5e2e5356205f77a76d7a",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 94,
       "name": "stage reviewed Mesa v2 payload chunk 39",
       "file": "ci/steps/094-stage-reviewed-mesa-v2-payload-chunk-39.sh",
       "sha256": "d94214b0183d968439f012f59a149c7495d0a17221d7aba8c878ca051ba0aa78",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 95,
       "name": "stage reviewed Mesa v2 payload chunk 40",
       "file": "ci/steps/095-stage-reviewed-mesa-v2-payload-chunk-40.sh",
       "sha256": "e9b1d63623ed192f075679ac241fabf7b8ad6646da5a58a62b45a717249ad982",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 96,
       "name": "stage reviewed Mesa v2 payload chunk 41",
       "file": "ci/steps/096-stage-reviewed-mesa-v2-payload-chunk-41.sh",
       "sha256": "0eb7b2f2f427b6e9c739f129d3427fd4ebef0f93417d2849d8e1dd67713f616e",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 97,
       "name": "stage reviewed Mesa v2 payload chunk 42",
       "file": "ci/steps/097-stage-reviewed-mesa-v2-payload-chunk-42.sh",
       "sha256": "c2692907e6dd4bfc76830bd00241d0d729ecf25f95383f2d5d5255fe6dd9d007",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 98,
       "name": "stage reviewed Mesa v2 payload chunk 43",
       "file": "ci/steps/098-stage-reviewed-mesa-v2-payload-chunk-43.sh",
       "sha256": "38f2befc06e5a8474b0af934dbedaadc5d95a889f57a66c36acf150470b42ac7",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 99,
       "name": "stage reviewed Mesa v2 payload chunk 44",
       "file": "ci/steps/099-stage-reviewed-mesa-v2-payload-chunk-44.sh",
       "sha256": "5add1a3c79b91891f41db0cd919dc517dc71da0f7694fbaa646d70648965d973",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 100,
       "name": "stage reviewed Mesa v2 payload chunk 45",
       "file": "ci/steps/100-stage-reviewed-mesa-v2-payload-chunk-45.sh",
       "sha256": "f0085558a053390327c9c7591d6187ffdafac3a5eeef8b3af2b6051d3d8c7dbf",
-      "bytes": 12312
+      "bytes": 12312,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 101,
       "name": "stage reviewed Mesa v2 payload chunk 46",
       "file": "ci/steps/101-stage-reviewed-mesa-v2-payload-chunk-46.sh",
       "sha256": "ef911a39944e294d5407268e2a7eb3ddd4216f7a47b73daa142d241414c1fe70",
-      "bytes": 11024
+      "bytes": 11024,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 102,
       "name": "install reviewed Mesa v2 backports before runtime tree build",
       "file": "ci/steps/102-install-reviewed-mesa-v2-backports-before-runtime-tree-build.sh",
       "sha256": "dc99343b54856b1047f3bd47fa694659b8eeef82a5cb96705d4b1920d24692ab",
-      "bytes": 685
+      "bytes": 685,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 103,
       "name": "verify reviewed Mesa v2 installed sources before packaging",
       "file": "ci/steps/103-verify-reviewed-mesa-v2-installed-sources-before-packaging.sh",
       "sha256": "39a0ba3785a7a8aa6e3151fe032cfb603ea84ed7a45e1ad21542e946175ac023",
-      "bytes": 1093
+      "bytes": 1093,
+      "workflow_call_count": 0,
+      "status": "archival-not-called"
     },
     {
       "index": 104,
       "name": "verify final reviewed source digests before packaging",
       "file": "ci/steps/104-verify-final-reviewed-source-digests-before-packaging.sh",
       "sha256": "9ad7808b5be075ee7ce9eb55e6d80debc3c815a1f99c931ca08a2dca064ebee2",
-      "bytes": 3656
+      "bytes": 3656,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 105,
       "name": "package",
       "file": "ci/steps/105-package.sh",
       "sha256": "f097ace4c48b5c06e94495d840c312ded4e8b3b8938aa2208dce0d64d274283d",
-      "bytes": 163
+      "bytes": 163,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 106,
       "name": "verify resolved reviewed source UFS and diagnostic symbols",
       "file": "ci/steps/106-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh",
-      "sha256": "c9d96cbebe5b165e0dd82dd8c9005df6e42917663d8d64b9abd7ec59e1a4f06e",
-      "bytes": 12173
+      "sha256": "ec9258c41e954d9538161c7cb33644ecfb5822c2c97803dfa48646a4c398afef",
+      "bytes": 12199,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 107,
       "name": "verify packaged USB closure strong hooks and original bindings",
       "file": "ci/steps/107-verify-packaged-usb-closure-strong-hooks-and-original-bindin.sh",
       "sha256": "61702ccacb4ac9d17378ef75d6836e4c683c607e1e50cb3d8231dc082b4def1d",
-      "bytes": 7317
+      "bytes": 7317,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 108,
       "name": "verify reviewed component revisions in packaged manifest",
       "file": "ci/steps/108-verify-reviewed-component-revisions-in-packaged-manifest.sh",
       "sha256": "90fc06535574e8ff91a21800f50538112c56adc64405cfd5a71212ad49a083a8",
-      "bytes": 692
+      "bytes": 692,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 109,
       "name": "verify reviewed Mesa v2 actual patched source and report",
       "file": "ci/steps/109-verify-reviewed-mesa-v2-actual-patched-source-and-report.sh",
       "sha256": "a3630fa94ff59e70cd982d8a350f6abb723b2d16ab8537c40e5d0ef1cc8e1170",
-      "bytes": 6979
+      "bytes": 6979,
+      "workflow_call_count": 0,
+      "status": "archival-not-called"
     },
     {
       "index": 110,
       "name": "verify packaged Metal bridge and embedded addon identity",
       "file": "ci/steps/110-verify-packaged-metal-bridge-and-embedded-addon-identity.sh",
       "sha256": "76ad4dff6661b774dd2b56848fabab243a3043ededf3b6df334b70c36d2adb50",
-      "bytes": 4959
+      "bytes": 4959,
+      "workflow_call_count": 1,
+      "status": "active"
     },
     {
       "index": 111,
       "name": "assert ABL dtb (0x218 + __symbols__)",
       "file": "ci/steps/111-assert-abl-dtb-0x218-symbols.sh",
       "sha256": "4b4e864175e86600fc40a2ec33152c1daabf897f92eb3f85d1b4fb68f43a6b8d",
-      "bytes": 1095
+      "bytes": 1095,
+      "workflow_call_count": 1,
+      "status": "active"
     }
   ],
   "postbuild_repair": {
@@ -772,13 +986,52 @@
       "ci/steps/106-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh"
     ],
     "runtime_source_scripts_unchanged": true,
-    "native_execution": "pending"
+    "native_execution": "prior acquired kernel checks:12 PASS; Mesa160 build pending",
+    "exact_oid_shell_sha256": "ec9258c41e954d9538161c7cb33644ecfb5822c2c97803dfa48646a4c398afef",
+    "local_exact_oid_shell_sha256": "63a4b2979389e699ce85c54b15c55ffb6fd2d75287bca21f8ab263bd8618842f",
+    "canonical_native_symbols_sha256": "9fa4120c52c2a9e2186531dbe4bac1832c347228e22b7322b09d0eae8c3c5407",
+    "ast_equivalent": true
   },
   "support_files": [
     {
       "file": "ci/collect-rust-provenance.py",
       "sha256": "ad2fd4ee1867641414b39d30e15ada131ae0353cdefee2ebaa6af3a1cfb81bf2",
       "bytes": 8804
+    },
+    {
+      "file": "ci/mesa160/artifact-gate.py",
+      "sha256": "2bb8968fe53b674ddc44fd3de8596b1502bf93e3740e09f2a88204e2f7c055f3",
+      "bytes": 5250
+    },
+    {
+      "file": "ci/mesa160/install-spec.json",
+      "sha256": "5d84a4bb2a3b3d7e500e9d6ed537777d64e8cc5fe16cb56e7f17f777d4fa6fb9",
+      "bytes": 298833
+    },
+    {
+      "file": "ci/mesa160/install.py",
+      "sha256": "751a9538f8686c1dc647c0b081613342229eb1c058b39f00ca2e321f4217337c",
+      "bytes": 1499
+    },
+    {
+      "file": "ci/mesa160/prebuild-gate.py",
+      "sha256": "7abc521bc5dcad889e190b706e7380ea33d2c059b9bfdbb47a7438a5f4cfcf86",
+      "bytes": 1309
     }
-  ]
+  ],
+  "mesa160_release": {
+    "base_workflow_sha256": "d63b17993efe002fd11c4213bc45b1578cf9084a068cb9544d09dc931cacaa16",
+    "added_steps": 1,
+    "replaced_gates": 2,
+    "unchanged_steps": 118,
+    "archival_scripts": [
+      "ci/steps/103-verify-reviewed-mesa-v2-installed-sources-before-packaging.sh",
+      "ci/steps/109-verify-reviewed-mesa-v2-actual-patched-source-and-report.sh"
+    ],
+    "translator": "existing 8b9+0053; six later drafts excluded",
+    "porting_owner": "lead",
+    "publisher_owner": "lead",
+    "native_build": "pending",
+    "transport": "canonical LF, unchanged logical content"
+  }
 }

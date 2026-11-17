@@ -155,8 +155,10 @@ def diagnostic_symbol_report(data,Image):
    assert all(native.sections[r['section']-1]['segment']=='__TEXT_EXEC' for r in matches),'diagnostic function outside native executable section'
   report[name]=matches
  for label in ('request','status'):
-  matches=[r for r in rows if 'unixnu_diag_'+label in r['name'] and 'sysctl' in r['name'].lower()]
-  report[label+'_oid_symbols']=strong(matches,'unixnu_diag_'+label)
+  name='sysctl__kern_unixnu_diag_'+label
+  matches=strong([r for r in rows if r['name'] in (name,'_'+name)],'unixnu_diag_'+label)
+  assert all((native.sections[r['section']-1]['segment'],native.sections[r['section']-1]['name'])==('__DATA_CONST','__const') for r in matches),'diagnostic OID outside native constant data'
+  report[label+'_oid_symbols']=matches
  report['fileset_native_offset']=native.at;report['native_defined_section_symbols']=len(rows);report['outer_defined_section_symbols']=sum(map(len,root.symbols().values()))
  return report
 
