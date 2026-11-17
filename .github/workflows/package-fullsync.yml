@@ -456,6 +456,7 @@ jobs:
         if: inputs.os == '27'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/104-verify-final-reviewed-source-digests-before-packaging.sh"
       - name: package
+        id: package-build
         working-directory: device
         env:
           UNIXNU_UNIQUE_CHIP_ID: ${{ secrets.UNIXNU_UNIQUE_CHIP_ID }}
@@ -464,21 +465,22 @@ jobs:
           OS_PROFILE: ${{ inputs.os }}
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/105-package.sh"
       - name: verify resolved reviewed source UFS and diagnostic symbols
-        if: inputs.os == '27'
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/106-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh"
       - name: verify packaged USB closure strong hooks and original bindings
-        if: inputs.os == '27'
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/107-verify-packaged-usb-closure-strong-hooks-and-original-bindin.sh"
       - name: verify reviewed component revisions in packaged manifest
-        if: inputs.os == '27'
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/108-verify-reviewed-component-revisions-in-packaged-manifest.sh"
       - name: verify reviewed Mesa v2 actual patched source and report
-        if: inputs.os == '27'
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/109-verify-reviewed-mesa-v2-actual-patched-source-and-report.sh"
       - name: verify packaged Metal bridge and embedded addon identity
-        if: inputs.os == '27'
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/110-verify-packaged-metal-bridge-and-embedded-addon-identity.sh"
       - name: assert ABL dtb (0x218 + __symbols__)
+        if: always() && steps.package-build.outcome == 'success'
         # The ABL step only installs the fetcher into board.toml preflight, so the
         # tree is produced during `package`. It overwrites build/sheng/sheng.dtb
         # AFTER check-sheng.py validated the stock tree, i.e. the validated file is
@@ -493,6 +495,28 @@ jobs:
             UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/runtime/data.dbr
             UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/runtime/inputs.json
           key: ${{ steps.seed-key.outputs.key }}-${{ inputs.os }}
+      - name: collect resolved packaging configuration
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: |
+          BASE="UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27"
+          python3 UniXNU/unixnu status -D device --os 27 --uefi uefi-sheng --json > "$BASE/logs/resolved-status.json"
+      - name: collect actual Rust dependency evidence
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: |
+          BASE="UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27"
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/collect-rust-provenance.py" --tree "$BASE/tree" --target ios27 --output "$BASE/logs/rust-provenance-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+      - name: preserve unverified images after failed postbuild checks
+        if: failure() && steps.package-build.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: unverified-images-for-audit-${{ inputs.os }}
+          retention-days: 2
+          if-no-files-found: error
+          path: |
+            UniXNU/out/sheng/*/*/boot/boot.img
+            UniXNU/out/sheng/*/*/payload/payload.img
+            UniXNU/out/sheng/*/*/kernel/kernel.macho
+            UniXNU/out/sheng/*/*/package.manifest.json
       - name: installation seed backup
         if: always() && inputs.os == '27' && hashFiles('UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/runtime/data.dbr') != ''
         uses: actions/upload-artifact@v4
@@ -523,4 +547,15 @@ jobs:
           name: build-logs-${{ inputs.os }}
           retention-days: 2
           if-no-files-found: warn
-          path: UniXNU/out/sheng/*/*/logs/
+          path: |
+            UniXNU/out/sheng/*/*/logs/
+            UniXNU/out/sheng/*/*/package.manifest.json
+            UniXNU/out/sheng/*/*/*audit.json
+            UniXNU/out/sheng/*/*/mesa-reviewed-source.json
+            UniXNU/out/sheng/*/*/kernel/kernel.json
+            UniXNU/out/sheng/*/*/kernel/kernel.failed.json
+            UniXNU/out/sheng/*/*/kernel/kernel.map.json
+            UniXNU/out/sheng/*/*/tree/build/native-legacy-display/build-report.json
+            UniXNU/scripts/policies/ipados-27.0.1-24A446/prelink-regression.json
+            UniXNU/out/sheng/*/*/tree/build/adreno-metal-bridge/build-ios27.log
+            UniXNU/out/sheng/*/*/tree/build/mesa-tu-ios27/meson-logs/meson-log.txt

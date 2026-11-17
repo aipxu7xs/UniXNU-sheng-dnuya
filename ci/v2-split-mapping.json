@@ -6,8 +6,8 @@
   },
   "split_workflow": {
     "path": "package-fullsync.yml",
-    "sha256": "705eb40611c77953af665df89e1ca28860776a7a7c772f01d31c1ea215682018",
-    "bytes": 35325
+    "sha256": "d63b17993efe002fd11c4213bc45b1578cf9084a068cb9544d09dc931cacaa16",
+    "bytes": 37659
   },
   "checkout_step": {
     "after_step": 0,
@@ -727,8 +727,8 @@
       "index": 106,
       "name": "verify resolved reviewed source UFS and diagnostic symbols",
       "file": "ci/steps/106-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh",
-      "sha256": "d5e9c2b51339d69d985cc4d704a17364ba2eb7546acb95f6cdc2d79c5dc021e2",
-      "bytes": 7680
+      "sha256": "c9d96cbebe5b165e0dd82dd8c9005df6e42917663d8d64b9abd7ec59e1a4f06e",
+      "bytes": 12173
     },
     {
       "index": 107,
@@ -764,6 +764,21 @@
       "file": "ci/steps/111-assert-abl-dtb-0x218-symbols.sh",
       "sha256": "4b4e864175e86600fc40a2ec33152c1daabf897f92eb3f85d1b4fb68f43a6b8d",
       "bytes": 1095
+    }
+  ],
+  "postbuild_repair": {
+    "previous_split_sha256": "705eb40611c77953af665df89e1ca28860776a7a7c772f01d31c1ea215682018",
+    "changed_scripts": [
+      "ci/steps/106-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh"
+    ],
+    "runtime_source_scripts_unchanged": true,
+    "native_execution": "pending"
+  },
+  "support_files": [
+    {
+      "file": "ci/collect-rust-provenance.py",
+      "sha256": "ad2fd4ee1867641414b39d30e15ada131ae0353cdefee2ebaa6af3a1cfb81bf2",
+      "bytes": 8804
     }
   ]
 }
