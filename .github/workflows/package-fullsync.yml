@@ -454,6 +454,11 @@ jobs:
         run: |
           python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/install.py" UniXNU --check
           python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/install.py" UniXNU
+      - name: repair Mesa160 header declaration order
+        if: inputs.os == '27'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-order/install.py" UniXNU --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-order/install.py" UniXNU
       - name: verify reviewed Mesa160 installed sources before packaging
         if: inputs.os == '27'
         run: python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/prebuild-gate.py" UniXNU
@@ -564,3 +569,4 @@ jobs:
             UniXNU/scripts/policies/ipados-27.0.1-24A446/prelink-regression.json
             UniXNU/out/sheng/*/*/tree/build/adreno-metal-bridge/build-ios27.log
             UniXNU/out/sheng/*/*/tree/build/mesa-tu-ios27/meson-logs/meson-log.txt
+            UniXNU/out/sheng/*/*/tree/.cache/mesa-tu-ios27-build.log
