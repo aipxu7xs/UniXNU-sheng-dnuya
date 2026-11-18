@@ -443,8 +443,8 @@
       "index": 51,
       "name": "device inputs",
       "file": "ci/steps/051-device-inputs.sh",
-      "sha256": "58a3dc1b95fcd5aacc5f80877ab8ce6ed46391050469c4f00434a810bc6ae3fd",
-      "bytes": 1063,
+      "sha256": "e2edf1641cc6d97e6d80e03ce7bb0102559eadb61e7a0d3d757cacccda41d800",
+      "bytes": 1862,
       "workflow_call_count": 1,
       "status": "active"
     },

@@ -12,8 +12,17 @@ for name in ('linux', 'freebsd'):
     if directory.exists():
         continue
     directory.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run(['git', 'clone', '--depth', '1', '--branch', source['ref'], '--filter=blob:none', '--sparse',
-                    source['url'], str(directory)], check=True)
+    # Resolve the immutable lock directly, independently of a moving branch/tag.
+    commit = source['commit']
+    assert len(commit) == 40 and all(c in '0123456789abcdef' for c in commit)
+    subprocess.run(['git', 'init', '--quiet', str(directory)], check=True)
+    subprocess.run(['git', '-C', str(directory), 'remote', 'add', 'origin', source['url']], check=True)
     subprocess.run(['git', '-C', str(directory), 'sparse-checkout', 'set', '--no-cone', *source['paths']], check=True)
+    subprocess.run(['git', '-C', str(directory), 'fetch', '--depth', '1', '--filter=blob:none', 'origin', commit], check=True)
+    fetched = subprocess.check_output(['git', '-C', str(directory), 'rev-parse', 'FETCH_HEAD^{commit}'], text=True).strip()
+    assert fetched == commit, f'{name}: fetched object differs from source lock'
+    subprocess.run(['git', '-C', str(directory), 'checkout', '--detach', commit], check=True)
+    actual = subprocess.check_output(['git', '-C', str(directory), 'rev-parse', 'HEAD'], text=True).strip()
+    assert actual == commit, f'{name}: checkout differs from source lock'
 PY
 python3 drivers/Ath12kWifi/tools/fetch-sources.py
