@@ -1,13 +1,10 @@
-python3 - <<'PY'
-import hashlib, json, pathlib
-candidates = list(pathlib.Path('UniXNU/out/sheng').glob('*/*/tree/build/sheng/sheng.dtb'))
-if len(candidates) != 1:
-    raise SystemExit('expected one assembled-tree sheng.dtb, found %d' % len(candidates))
-p = candidates[0]
-work = p.parents[3]
-report = json.loads((work / 'boot/boot.json').read_text())
-if hashlib.sha256(p.read_bytes()).hexdigest() != report['dtb_sha256']:
-    raise SystemExit('DTB differs from the input recorded by boot image assembly')
+#!/usr/bin/env bash
+set -euo pipefail
+BASE="UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27"
+python3 - "$BASE" <<'PY'
+from pathlib import Path
+import sys
+p = Path(sys.argv[1]) / 'tree/build/sheng/sheng.dtb'
 if not p.is_file():
     raise SystemExit('sheng.dtb missing: the ABL dtb step produced nothing')
 data = p.read_bytes()
@@ -20,5 +17,6 @@ if len(data) < 400000:
     problems.append('only %d bytes; the vendor_boot 0x218 tree is ~506 KB' % len(data))
 if problems:
     raise SystemExit('ABL dtb assertion failed: ' + '; '.join(problems))
-print('abl dtb ok: %d bytes, __symbols__ present' % len(data))
+print('assembled ABL DTB input ok: %d bytes, __symbols__ present' % len(data))
 PY
+python3 "$GITHUB_WORKSPACE/ci-self/ci/verify-embedded-boot-dtb.py" --image "$BASE/boot/boot.img" --report "$BASE/boot/boot.json"

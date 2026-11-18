@@ -974,8 +974,8 @@
       "index": 111,
       "name": "assert ABL dtb (0x218 + __symbols__)",
       "file": "ci/steps/111-assert-abl-dtb-0x218-symbols.sh",
-      "sha256": "4b4e864175e86600fc40a2ec33152c1daabf897f92eb3f85d1b4fb68f43a6b8d",
-      "bytes": 1095,
+      "sha256": "a86f48e16f6bdff8e84b738bf40a6d9ecc1b3b98e47d223f721ec5a92661ad81",
+      "bytes": 947,
       "workflow_call_count": 1,
       "status": "active"
     }
@@ -986,17 +986,56 @@
       "ci/steps/106-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh"
     ],
     "runtime_source_scripts_unchanged": true,
-    "native_execution": "prior acquired kernel checks:12 PASS; Mesa160 build pending",
+    "native_execution": "not run for this gate repair",
     "exact_oid_shell_sha256": "ec9258c41e954d9538161c7cb33644ecfb5822c2c97803dfa48646a4c398afef",
     "local_exact_oid_shell_sha256": "63a4b2979389e699ce85c54b15c55ffb6fd2d75287bca21f8ab263bd8618842f",
     "canonical_native_symbols_sha256": "9fa4120c52c2a9e2186531dbe4bac1832c347228e22b7322b09d0eae8c3c5407",
-    "ast_equivalent": true
+    "ast_equivalent": true,
+    "repair": "embedded-boot-dtb-and-rust-component-paths",
+    "base_release_manifest_sha256": "e6dd5bbcbdc0153b2aa91256c6c917bb9e6a905407705afa6b0eca7339ecad85",
+    "changed_files": [
+      "ci/steps/111-assert-abl-dtb-0x218-symbols.sh",
+      "ci/collect-rust-provenance.py",
+      "ci/verify-embedded-boot-dtb.py"
+    ],
+    "hardware_verified": false,
+    "file_hashes": {
+      "ci/steps/111-assert-abl-dtb-0x218-symbols.sh": {
+        "before_sha256": "4b4e864175e86600fc40a2ec33152c1daabf897f92eb3f85d1b4fb68f43a6b8d",
+        "after_sha256": "a86f48e16f6bdff8e84b738bf40a6d9ecc1b3b98e47d223f721ec5a92661ad81",
+        "bytes": 947
+      },
+      "ci/collect-rust-provenance.py": {
+        "before_sha256": "ad2fd4ee1867641414b39d30e15ada131ae0353cdefee2ebaa6af3a1cfb81bf2",
+        "after_sha256": "77a0eb893bd2d85f890a05951adb4ec4f60b383127fd08f592c2184049cc447f",
+        "bytes": 11806
+      },
+      "ci/verify-embedded-boot-dtb.py": {
+        "before_sha256": null,
+        "after_sha256": "d7efc05bfa5d16e8198181b2302cbf9e837a5ce3981a7f24610e0e7b00b55395",
+        "bytes": 6069
+      }
+    },
+    "checks": {
+      "embedded_dtb_from_boot_image": true,
+      "boot_report_fields": [
+        "kernel_sha256",
+        "dtb_sha256",
+        "image_sha256",
+        "image_bytes",
+        "header_version"
+      ],
+      "configured_component_link_only": true,
+      "root_escape_rejected": true,
+      "provenance_scope": "postbuild-observation-not-build-attestation",
+      "lock_pinned": false
+    }
   },
   "support_files": [
     {
       "file": "ci/collect-rust-provenance.py",
-      "sha256": "ad2fd4ee1867641414b39d30e15ada131ae0353cdefee2ebaa6af3a1cfb81bf2",
-      "bytes": 8804
+      "sha256": "77a0eb893bd2d85f890a05951adb4ec4f60b383127fd08f592c2184049cc447f",
+      "bytes": 11806
     },
     {
       "file": "ci/mesa160-lifecycle/install-spec.json",
@@ -1057,6 +1096,11 @@
       "file": "ci/mesa160/prebuild-gate.py",
       "sha256": "610711ff16661940b993dec4bfc134508dd21a57620b5e89db0b9782af86218d",
       "bytes": 2418
+    },
+    {
+      "file": "ci/verify-embedded-boot-dtb.py",
+      "sha256": "d7efc05bfa5d16e8198181b2302cbf9e837a5ce3981a7f24610e0e7b00b55395",
+      "bytes": 6069
     }
   ],
   "mesa160_release": {

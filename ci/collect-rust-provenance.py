@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import tomllib
@@ -15,7 +16,8 @@ def digest(data):
 
 def collect(tree, output, target='ios27', source=None, probe=None):
     tree = Path(tree).resolve()
-    source = Path(source).resolve() if source else tree / '.cache/gpu-reference/metal2vulkan'
+    source_input = Path(source) if source else tree / '.cache/gpu-reference/metal2vulkan'
+    source = source_input.resolve()
     output = Path(output).resolve()
     if output.is_relative_to(tree) or output.is_relative_to(source):
         raise ValueError('Output must be outside all input trees')
@@ -79,18 +81,75 @@ def collect(tree, output, target='ios27', source=None, probe=None):
         if digest(manifest_raw) != report['files']['manifest-original'].get('sha256'):
             raise ValueError('manifest changed')
         manifest = tomllib.loads(manifest_raw.decode('utf-8'))
+        tree_lexical = Path(os.path.abspath(tree))
+        source_input_path = source_input
+        source_lexical = Path(os.path.abspath(source_input_path))
+        source_root = Path(source).resolve()
+        component_link = tree / 'drivers/AdrenoMetal'
+        try:
+            component_resolved = component_link.resolve(strict=True)
+            component_root = component_resolved if component_resolved != Path(os.path.abspath(component_link)) else None
+            if component_root is not None and not component_root.is_dir():
+                component_root = None
+        except OSError:
+            component_root = None
+
+        def normalize_path(value):
+            raw = Path(value)
+            lexical = Path(os.path.abspath(raw if raw.is_absolute() else manifest_path.parent / raw))
+            resolved = lexical.resolve()
+
+            def relative(path, base):
+                try:
+                    return path.relative_to(base)
+                except ValueError:
+                    return None
+
+            # Keep paths written through the known tree alias stable, but only
+            # dereference an external target when it is the configured component.
+            tree_lex_rel = relative(lexical, tree_lexical)
+            source_lex_rel = relative(lexical, source_lexical)
+            if source_lex_rel is not None:
+                source_rel = relative(resolved, source_root)
+                if source_rel is not None:
+                    return '<translator>/' + source_rel.as_posix()
+                component_rel = relative(resolved, component_root) if component_root is not None else None
+                if component_rel is not None:
+                    suffix = component_rel.as_posix()
+                    return '<tree>/drivers/AdrenoMetal' + ('/' + suffix if suffix != '.' else '')
+                raise ValueError('source path resolved outside configured roots')
+
+            if tree_lex_rel is not None:
+                if component_root is not None and tree_lex_rel.parts[:2] == ('drivers', 'AdrenoMetal'):
+                    component_rel = relative(resolved, component_root)
+                    if component_rel is None:
+                        raise ValueError('component link escaped its configured root')
+                    suffix = component_rel.as_posix()
+                    return '<tree>/drivers/AdrenoMetal' + ('/' + suffix if suffix != '.' else '')
+                tree_rel = relative(resolved, tree)
+                if tree_rel is not None:
+                    return '<tree>/' + tree_rel.as_posix()
+                raise ValueError('tree path resolved outside declared roots')
+
+            tree_rel = relative(resolved, tree)
+            if tree_rel is not None:
+                return '<tree>/' + tree_rel.as_posix()
+            source_rel = relative(resolved, source_root)
+            if source_rel is not None:
+                return '<translator>/' + source_rel.as_posix()
+            component_rel = relative(resolved, component_root) if component_root is not None else None
+            if component_rel is not None:
+                suffix = component_rel.as_posix()
+                return '<tree>/drivers/AdrenoMetal' + ('/' + suffix if suffix != '.' else '')
+            raise ValueError('manifest path outside declared roots and configured component link')
+
         def normalize(value, key=''):
             if isinstance(value, dict):
                 return {k: normalize(v, k) for k, v in value.items()}
             if isinstance(value, list):
                 return [normalize(v, key) for v in value]
             if key == 'path' and isinstance(value, str):
-                p = Path(value)
-                p = (manifest_path.parent / p).resolve() if not p.is_absolute() else p.resolve()
-                for base, marker in [(source, '<translator>'), (tree, '<tree>')]:
-                    if p.is_relative_to(base):
-                        return marker + '/' + p.relative_to(base).as_posix()
-                raise ValueError('manifest path outside declared roots')
+                return normalize_path(value)
             return value
         normalized = (json.dumps(normalize(manifest), sort_keys=True, indent=2) + '\n').encode()
         (output / 'manifest.normalized.json').write_bytes(normalized)
