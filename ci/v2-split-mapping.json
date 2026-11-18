@@ -6,8 +6,8 @@
   },
   "split_workflow": {
     "path": ".github/workflows/package-fullsync.yml",
-    "sha256": "f53353833a019b003f9cb34867c4d2a018919c0499c20d351dadbae15b8e38cb",
-    "bytes": 38888
+    "sha256": "56c288c63216a653b8cbcee156e30dac6f008ae95dd806a817220b8636a0951c",
+    "bytes": 39168
   },
   "checkout_step": {
     "after_step": 0,
@@ -999,6 +999,16 @@
       "bytes": 8804
     },
     {
+      "file": "ci/mesa160-lifecycle/install-spec.json",
+      "sha256": "09c6d607b9cd47ffe3a19ba88058117932adc9c93459c2cea52c18748b7c8e72",
+      "bytes": 17454
+    },
+    {
+      "file": "ci/mesa160-lifecycle/install.py",
+      "sha256": "89c048ddba591e28409da5f7ad68b92879f62820af29ea4082cbd1b39ca21b42",
+      "bytes": 1852
+    },
+    {
       "file": "ci/mesa160-lrz/install-spec.json",
       "sha256": "b180c38d259ee1dc3e39f32e74f2259bc55757b250f4e0f2f695589ee54e4982",
       "bytes": 18041
@@ -1030,8 +1040,8 @@
     },
     {
       "file": "ci/mesa160/artifact-gate.py",
-      "sha256": "9b4be9012bf0583d68b1d19acc32c9c82a22f0624b902726ae6d8df17f220836",
-      "bytes": 6760
+      "sha256": "d6f978606fab897f168d4e9865f421d113dc73e9d99719db7c9b4b6ed2952555",
+      "bytes": 7253
     },
     {
       "file": "ci/mesa160/install-spec.json",
@@ -1045,8 +1055,8 @@
     },
     {
       "file": "ci/mesa160/prebuild-gate.py",
-      "sha256": "a4180357a36f58c0d73c1405f00efeab200ec0cee0834e6154f0f0ef162a01df",
-      "bytes": 2146
+      "sha256": "610711ff16661940b993dec4bfc134508dd21a57620b5e89db0b9782af86218d",
+      "bytes": 2418
     }
   ],
   "mesa160_release": {
@@ -1081,6 +1091,12 @@
     "patch_count": 29,
     "semantic_backports": 185,
     "prior_failed_run": 44073876448,
+    "native_build": "pending"
+  },
+  "mesa160_lifecycle_repair": {
+    "patch_count": 30,
+    "semantic_backports": 185,
+    "prior_failed_run": 44088802197,
     "native_build": "pending"
   }
 }

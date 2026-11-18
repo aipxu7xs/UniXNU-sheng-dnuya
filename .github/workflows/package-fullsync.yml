@@ -469,6 +469,11 @@ jobs:
         run: |
           python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-lrz/install.py" UniXNU --check
           python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-lrz/install.py" UniXNU
+      - name: repair Mesa160 partial-clear LRZ lifecycle
+        if: inputs.os == '27'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-lifecycle/install.py" UniXNU --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-lifecycle/install.py" UniXNU
       - name: verify reviewed Mesa160 installed sources before packaging
         if: inputs.os == '27'
         run: python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/prebuild-gate.py" UniXNU
