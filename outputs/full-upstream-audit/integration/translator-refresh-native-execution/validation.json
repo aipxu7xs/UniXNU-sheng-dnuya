@@ -1,0 +1,20 @@
+{
+  "status": "PASS_HOST",
+  "checks": [
+    "AST prepare.py",
+    "AST run-native.py",
+    "AST guard.py",
+    "nextest summary positive + 5 negatives",
+    "YAML + Bash AST",
+    "resolution cannot qualify; reviewed lock required",
+    "exact refreshed focused test names; no removed env mode",
+    "reconstructed source 7650 files and 615 runtime inputs exact",
+    "sealed support input hashes",
+    "archive digest pinned before extraction"
+  ],
+  "native_executed": false,
+  "source_reconstruction": "separate background job",
+  "lock": "NOT_RESOLVED",
+  "gpu": "NOT_RUN",
+  "device": "NOT_RUN"
+}

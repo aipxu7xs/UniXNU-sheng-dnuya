@@ -1,0 +1,13 @@
+{
+  "status": "PASS_STATIC",
+  "files": [
+    {
+      "path": "crates/metal2vulkan-runtime/src/device/compiles.rs",
+      "before_sha256": "ac8344708d0f4b93ebb0f82c144e007b73aa48564314adf5782c93cff278dd05",
+      "after_sha256": "4fa97e80c9d85f5be81b372668d4a9f240e286ae30629d54982da758234c654d",
+      "tests_unchanged": true
+    }
+  ],
+  "native_executed": false,
+  "note": "Removes environment bypass; preserves stack, QoS and fallback mechanisms. Native routing tests pending."
+}

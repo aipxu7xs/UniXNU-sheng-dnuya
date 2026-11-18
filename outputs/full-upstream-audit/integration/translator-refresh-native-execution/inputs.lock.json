@@ -1,0 +1,20 @@
+{
+  "translator_commit": "46e7cc96a284150bdf19b4a6a7890b0a8bc0ef71",
+  "translator_tree": "51723fe1c15c48f6d4df2a73f179c193e0f90656",
+  "rust": "nightly-2026-11-03",
+  "archive_url": "https://api.github.com/repos/steelbrain/metal2vulkan/tarball/46e7cc96a284150bdf19b4a6a7890b0a8bc0ef71",
+  "archive_integrity": "exact full path/SHA256/Git-blob manifest; archive digest recorded",
+  "guard": "d311542fba86f45cd9db5489d51d7dc3908c3d7b8f30c441a3b7e01eaabd836a",
+  "nextest_sha256": "74e1003eeb47ed3d42cbdecf2bdf722c332736ab85440137050d90760c897e91",
+  "files": {
+    "upstream-manifest.json": "cbf37632e0f6841095d7ef9881f0ff52896157c9688a53532602b73fb95f8fd5",
+    "overlay.patch": "6d8a717d2631920088be08614c1ba2ff6c23cf936b47762e7ab949237025b1c4",
+    "repair.json": "37e8eb0d450b3404908cce696511e3526c489a6bee742aa9781ef7fc322203a6",
+    "repair-compiles.rs": "4fa97e80c9d85f5be81b372668d4a9f240e286ae30629d54982da758234c654d",
+    "guard.py": "b2af3881b9b909afc8f6de501bff7c4b641b099c6f824ce32cc47366eb59a34e",
+    "tree-manifest.json": "393d8f752f6c3a9ad2561380cb4f87ca671bbc3928be4b803a097b535332a122"
+  },
+  "product_cargo_lock": null,
+  "qualification": "NOT_RUN",
+  "archive_sha256": "fccfb69960715848cb99f0d422d5784a150101da960eae72425268abca6ba506"
+}
