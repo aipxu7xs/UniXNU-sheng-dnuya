@@ -1,0 +1,203 @@
+{
+  "components": [
+    {
+      "name": "Adreno740",
+      "path": "UniXNU/drivers/Adreno740",
+      "repository": "UniXNU/Adreno740",
+      "selected_pin": "1c9029bc3216a39d9e514ba41dee12e95e8f3598",
+      "effective_pin": "1c9029bc3216a39d9e514ba41dee12e95e8f3598",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\Adreno740-1c9029bc3216",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "AdrenoMetal",
+      "path": "UniXNU/drivers/AdrenoMetal",
+      "repository": "UniXNU/AdrenoMetal",
+      "selected_pin": "c9ebd2fb17253996f0a8d835c9ab7c2f740778e1",
+      "effective_pin": "c9ebd2fb17253996f0a8d835c9ab7c2f740778e1",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\AdrenoMetal-c9ebd2fb1725",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "AppleKeyStoreState",
+      "path": "UniXNU/drivers/AppleKeyStoreState",
+      "repository": "UniXNU/AppleKeyStoreState",
+      "selected_pin": "6ff4f11d8fdf853351f8d98e1bbe1373fb8da2e6",
+      "effective_pin": "6ff4f11d8fdf853351f8d98e1bbe1373fb8da2e6",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\AppleKeyStoreState-6ff4f11d8fdf",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "ArmCpu",
+      "path": "UniXNU/drivers/ArmCpu",
+      "repository": "UniXNU/ArmCpu",
+      "selected_pin": "5f3702697ed80fd2e98594de1af7e32b4b77b08b",
+      "effective_pin": "5f3702697ed80fd2e98594de1af7e32b4b77b08b",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\ArmCpu-5f3702697ed8",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "ArmDTPlatform",
+      "path": "UniXNU/drivers/ArmDTPlatform",
+      "repository": "UniXNU/ArmDTPlatform",
+      "selected_pin": "e8bd8d5de395c6cbc00d762c1bef57dbd15a448d",
+      "effective_pin": "e8bd8d5de395c6cbc00d762c1bef57dbd15a448d",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\ArmDTPlatform-e8bd8d5de395",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "Ath12kWifi",
+      "path": "device/drivers/Ath12kWifi",
+      "repository": "UniXNU/Ath12kWifi",
+      "selected_pin": "f087c7ddac07e945f20d199dbaf6c95c6db3346a",
+      "effective_pin": "f087c7ddac07e945f20d199dbaf6c95c6db3346a",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\Ath12kWifi-f087c7ddac07",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "DarwinBoot",
+      "path": "UniXNU/drivers/DarwinBoot",
+      "repository": "UniXNU/DarwinBoot",
+      "selected_pin": "5243c68ec332a227fe3680cd5da6d5a0e127035c",
+      "effective_pin": "5243c68ec332a227fe3680cd5da6d5a0e127035c",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\DarwinBoot-5243c68ec332",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "GopFramebuffer",
+      "path": "UniXNU/drivers/GopFramebuffer",
+      "repository": "UniXNU/GopFramebuffer",
+      "selected_pin": "b0d812d578efa2acb005b66f73168891719af09a",
+      "effective_pin": "b0d812d578efa2acb005b66f73168891719af09a",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\GopFramebuffer-b0d812d578ef",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "QcaBluetooth",
+      "path": "device/drivers/QcaBluetooth",
+      "repository": "UniXNU/QcaBluetooth",
+      "selected_pin": "effe4ec5c57cd400a5f818b21c9903fef237edbc",
+      "effective_pin": "fa528145aee3073c47533d74ea260eb2818b6b63",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\QcaBluetooth-fa528145aee3",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested",
+      "conflict_resolution": "Current upstream already contains all three reviewed discovery-counter changes and their tests; adopt its complete files without duplicating counters."
+    },
+    {
+      "name": "QcomDwc3",
+      "path": "device/drivers/QcomDwc3",
+      "repository": "UniXNU/QcomDwc3",
+      "selected_pin": "d4e96f322ed9cbf32845d08db6da24e09bb77ca8",
+      "effective_pin": "f5edd26d8c539a4faff2c6de151ba4a3c8796bde",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\QcomDwc3-f5edd26d8c53",
+      "adaptations": [
+        "QcomDwc3.cpp"
+      ],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "RamBlock",
+      "path": "UniXNU/drivers/RamBlock",
+      "repository": "UniXNU/RamBlock",
+      "selected_pin": "00a6e5dd6bb1709e817e13daec7986308cfb6d0f",
+      "effective_pin": "00a6e5dd6bb1709e817e13daec7986308cfb6d0f",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\RamBlock-00a6e5dd6bb1",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "ShengHidInput",
+      "path": "device/drivers/ShengHidInput",
+      "repository": "UniXNU/ShengHidInput",
+      "selected_pin": "114061452959a547aaa08f9ca5aa54033394ca2f",
+      "effective_pin": "114061452959a547aaa08f9ca5aa54033394ca2f",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\ShengHidInput-114061452959",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "ShengNovatekTouch",
+      "path": "device/drivers/ShengNovatekTouch",
+      "repository": "UniXNU/ShengNovatekTouch",
+      "selected_pin": "988239b0b146cad7399892b9e9916895b95448af",
+      "effective_pin": "988239b0b146cad7399892b9e9916895b95448af",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\ShengNovatekTouch-988239b0b146",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "ShengPreflight",
+      "path": "device/drivers/ShengPreflight",
+      "repository": "UniXNU/ShengPreflight",
+      "selected_pin": "9cfc8d2c8d77f2008ba228fa6eff83d2c7ab7fd2",
+      "effective_pin": "9cfc8d2c8d77f2008ba228fa6eff83d2c7ab7fd2",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\ShengPreflight-9cfc8d2c8d77",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "ShengUfs",
+      "path": "device/drivers/ShengUfs",
+      "repository": "UniXNU/ShengUfs",
+      "selected_pin": "9d527ae1a8d36a7ff210f9f4c9b429549c34c991",
+      "effective_pin": "9d527ae1a8d36a7ff210f9f4c9b429549c34c991",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\ShengUfs-9d527ae1a8d3",
+      "adaptations": [],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    },
+    {
+      "name": "XnuPrelink",
+      "path": "UniXNU/kits/XnuPrelink",
+      "repository": "UniXNU/XnuPrelink",
+      "selected_pin": "440589b0c31625f17edf363e24b3c82c51c70bb9",
+      "effective_pin": "440589b0c31625f17edf363e24b3c82c51c70bb9",
+      "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\XnuPrelink-440589b0c316",
+      "adaptations": [
+        "fileset_emit.py",
+        "fileset_layout.py"
+      ],
+      "decision": "integrated",
+      "validation": "source-staged",
+      "hardware": "not-tested"
+    }
+  ],
+  "conflicts": []
+}

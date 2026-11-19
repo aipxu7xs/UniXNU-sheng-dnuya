@@ -1,0 +1,90 @@
+[
+  {
+    "name": "soc-fixed-range",
+    "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/compare/a9f45dc6...2dc650ca76ae38715cd0712e60a44b14fe251745",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\soc-fixed-range.json",
+    "bytes": 82018,
+    "sha256": "39f73fc441a283cae6b6dcc1265db0ddf2b9beb4d1f5be539b241b11e20aceaa",
+    "captured_at": "2026-11-19T10:24:59.030390+00:00"
+  },
+  {
+    "name": "official-porting",
+    "url": "https://unixnu.com/porting/",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\official-porting.html",
+    "bytes": 144211,
+    "sha256": "23f3d02ea7ff979bcf557e49b55008bdddac6f124bd3df175aceef3a2ff74dd1",
+    "captured_at": "2026-11-19T10:24:58.604937+00:00"
+  },
+  {
+    "name": "official-porting-device-repository",
+    "url": "https://unixnu.com/porting/device-repository",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\official-porting-device-repository.html",
+    "bytes": 206796,
+    "sha256": "39166450f765cd1dea862aae9da9e797b04b602bb3a2a28ba43381560b5fd594",
+    "captured_at": "2026-11-19T10:24:58.628144+00:00"
+  },
+  {
+    "name": "official-reference-components",
+    "url": "https://unixnu.com/reference/components",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\official-reference-components.html",
+    "bytes": 151087,
+    "sha256": "bc12e0228065e5d92f8188b696d2f80c1640affd9e8f83b029ae0d67c6dc000b",
+    "captured_at": "2026-11-19T10:24:58.361754+00:00"
+  },
+  {
+    "name": "official-porting-records",
+    "url": "https://unixnu.com/porting/records",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\official-porting-records.html",
+    "bytes": 157212,
+    "sha256": "6f5b18f137da63c33180789b08bd2796e6acb4be8b25a436e879b80c5846c1b3",
+    "captured_at": "2026-11-19T10:24:58.636354+00:00"
+  },
+  {
+    "name": "official-porting-ufs",
+    "url": "https://unixnu.com/porting/ufs",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\official-porting-ufs.html",
+    "bytes": 162247,
+    "sha256": "42ed784513ae9ed0451f34cff137c3f97a7e969f1c639e2df0e2f0650451db61",
+    "captured_at": "2026-11-19T10:24:58.353056+00:00"
+  },
+  {
+    "name": "official-concepts-prelink",
+    "url": "https://unixnu.com/concepts/prelink",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\official-concepts-prelink.html",
+    "bytes": 150470,
+    "sha256": "e9a5d378052a045221ddf3a47a90edff339e596ff05ea58d010193bcc0fc68a8",
+    "captured_at": "2026-11-19T10:24:59.345852+00:00"
+  },
+  {
+    "name": "official-concepts-payload",
+    "url": "https://unixnu.com/concepts/payload",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\official-concepts-payload.html",
+    "bytes": 154037,
+    "sha256": "16b3c24f73c3e5eaacb9b554ebb91d523feaef5d4dd644ace0619b9bdb19a90d",
+    "captured_at": "2026-11-19T10:25:00.179581+00:00"
+  },
+  {
+    "name": "official-porting-uefi-firmware",
+    "url": "https://unixnu.com/porting/uefi-firmware",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\official-porting-uefi-firmware.html",
+    "bytes": 177181,
+    "sha256": "bea0261c77ad9047307ce8adcb1835d2d248c145c50b48da0c296005c8ee5d18",
+    "captured_at": "2026-11-19T10:25:00.051715+00:00"
+  },
+  {
+    "name": "official-building",
+    "url": "https://unixnu.com/building",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\official-building.html",
+    "bytes": 181991,
+    "sha256": "f2ee9b913707017b5c6348f8dfbe1dabed206c66c88eb70a424a9be7f38ef51c",
+    "captured_at": "2026-11-19T10:24:59.817690+00:00"
+  },
+  {
+    "name": "official-porting-bring-up",
+    "url": "https://unixnu.com/porting/bring-up",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\official-porting-bring-up.html",
+    "bytes": 153744,
+    "sha256": "c82dfca0d322f306eed1ccbe6ecc2bbd35ab1ced84634155805354e169dd85c8",
+    "captured_at": "2026-11-19T10:24:59.541924+00:00"
+  }
+]

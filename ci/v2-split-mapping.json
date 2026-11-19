@@ -6,8 +6,8 @@
   },
   "split_workflow": {
     "path": ".github/workflows/package-fullsync.yml",
-    "sha256": "56c288c63216a653b8cbcee156e30dac6f008ae95dd806a817220b8636a0951c",
-    "bytes": 39168
+    "sha256": "039d7faa4107fbeca06175c833045c90174bca0ad67b9518111e353465719a77",
+    "bytes": 40090
   },
   "checkout_step": {
     "after_step": 0,
@@ -911,8 +911,8 @@
       "index": 104,
       "name": "verify final reviewed source digests before packaging",
       "file": "ci/steps/104-verify-final-reviewed-source-digests-before-packaging.sh",
-      "sha256": "9ad7808b5be075ee7ce9eb55e6d80debc3c815a1f99c931ca08a2dca064ebee2",
-      "bytes": 3656,
+      "sha256": "1cc54be6d67e3624cc10780c58689c49f8f1417c049b71d7e3b208b495c3e5f5",
+      "bytes": 3735,
       "workflow_call_count": 1,
       "status": "active"
     },
@@ -929,7 +929,7 @@
       "index": 106,
       "name": "verify resolved reviewed source UFS and diagnostic symbols",
       "file": "ci/steps/106-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh",
-      "sha256": "ec9258c41e954d9538161c7cb33644ecfb5822c2c97803dfa48646a4c398afef",
+      "sha256": "2d080d85210955678370870a4a17bbd1c5feb0076e4e168b7e929e9d6f059bad",
       "bytes": 12199,
       "workflow_call_count": 1,
       "status": "active"
@@ -947,8 +947,8 @@
       "index": 108,
       "name": "verify reviewed component revisions in packaged manifest",
       "file": "ci/steps/108-verify-reviewed-component-revisions-in-packaged-manifest.sh",
-      "sha256": "90fc06535574e8ff91a21800f50538112c56adc64405cfd5a71212ad49a083a8",
-      "bytes": 692,
+      "sha256": "0d9212f7e2bad6f840d04a520bd7539c2378c87c508f2daac2d3cdda785c65a8",
+      "bytes": 816,
       "workflow_call_count": 1,
       "status": "active"
     },
@@ -965,8 +965,8 @@
       "index": 110,
       "name": "verify packaged Metal bridge and embedded addon identity",
       "file": "ci/steps/110-verify-packaged-metal-bridge-and-embedded-addon-identity.sh",
-      "sha256": "76ad4dff6661b774dd2b56848fabab243a3043ededf3b6df334b70c36d2adb50",
-      "bytes": 4959,
+      "sha256": "1e5faa9ddeb4a4bf00d02b6ae22f6a1caecf841daa0e1efd7bbf3fe7e3e3d1b0",
+      "bytes": 5066,
       "workflow_call_count": 1,
       "status": "active"
     },
@@ -1142,5 +1142,14 @@
     "semantic_backports": 185,
     "prior_failed_run": 44088802197,
     "native_build": "pending"
+  },
+  "fixed_upstream_20261119": {
+    "snapshot_sha256": "92158731b9f32509b7ccd612ab25eea118f24eaa68b32aa8722be424b646f547",
+    "source_file_count": 127,
+    "component_repositories": 16,
+    "installer_sha256": "717765221bfcbe3ad233505c3278a1ffefb8d377a5a39763984fa7bfcdee3449",
+    "manifest_sha256": "7a0ea4c8fcb4d0a5945cda44029980d3e5ab008744eaf2cb06c23527465369d2",
+    "native_build": "pending",
+    "hardware": "not-tested"
   }
 }

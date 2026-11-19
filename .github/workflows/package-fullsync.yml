@@ -477,6 +477,12 @@ jobs:
       - name: verify reviewed Mesa160 installed sources before packaging
         if: inputs.os == '27'
         run: python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/prebuild-gate.py" UniXNU
+      - name: install complete fixed upstream sheng OS27 endpoint
+        if: inputs.os == '27'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/apply.py" "$GITHUB_WORKSPACE" --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/apply.py" "$GITHUB_WORKSPACE"
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/apply.py" "$GITHUB_WORKSPACE" --verify
       - name: verify final reviewed source digests before packaging
         if: inputs.os == '27'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/104-verify-final-reviewed-source-digests-before-packaging.sh"
@@ -489,6 +495,11 @@ jobs:
           INIT_DATA: ${{ inputs.init_data }}
           OS_PROFILE: ${{ inputs.os }}
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/105-package.sh"
+      - name: attest fixed endpoint after native packaging
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/apply.py" "$GITHUB_WORKSPACE" --verify --postbuild > frozen-upstream-postbuild.json
+          cp frozen-upstream-effective.json frozen-upstream-postbuild.json UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/logs/
       - name: verify resolved reviewed source UFS and diagnostic symbols
         if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/106-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh"
@@ -574,6 +585,8 @@ jobs:
           retention-days: 2
           if-no-files-found: warn
           path: |
+            frozen-upstream-effective.json
+            frozen-upstream-postbuild.json
             UniXNU/out/sheng/*/*/logs/
             UniXNU/out/sheng/*/*/package.manifest.json
             UniXNU/out/sheng/*/*/*audit.json

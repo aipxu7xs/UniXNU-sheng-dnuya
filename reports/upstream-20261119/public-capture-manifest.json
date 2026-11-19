@@ -1,0 +1,26 @@
+[
+  {
+    "name": "framework-new-range",
+    "url": "https://api.github.com/repos/UniXNU/UniXNU/compare/519d80242a5028ee123447b01bc3b809baed565f...8542980d02b4d2cc5c32ee3542de1760b2562aac",
+    "bytes": 550244,
+    "sha256": "d1498ec9171d389c8f0c430a732781e730908cd9a273674f19a82dfefd505def",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\framework-new-range.json",
+    "captured_at": "2026-11-19T09:52:57.338878+00:00"
+  },
+  {
+    "name": "runner-current",
+    "url": "https://api.github.com/repos/DnuyaSha/UniXNU-sheng/actions/workflows/package-fullsync.yml/runs?per_page=3",
+    "bytes": 37020,
+    "sha256": "1d567fb4355ace395685d7430d14541a47a799acab9b560ab7b45eb8877852d7",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\runner-current.json",
+    "captured_at": "2026-11-19T09:52:55.832351+00:00"
+  },
+  {
+    "name": "live-sheng-docs",
+    "url": "https://unixnu.com/zh/devices/sheng",
+    "bytes": 446490,
+    "sha256": "d52b99cc0da11d9411bddfbcad6dfeeff1350638676d66ca3973fafbcc2af392",
+    "path": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\public-evidence\\live-sheng-docs.html",
+    "captured_at": "2026-11-19T09:52:57.328517+00:00"
+  }
+]

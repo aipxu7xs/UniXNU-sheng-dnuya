@@ -1,0 +1,305 @@
+[
+  {
+    "repository": "UniXNU/Adreno740",
+    "selected": "1c9029bc3216a39d9e514ba41dee12e95e8f3598",
+    "head": "be70fb13ed19d5fdf139d27977da6f54078cf50a",
+    "status": "diverged",
+    "total_commits": 47,
+    "files": [
+      {
+        "path": "NativeAdrenoAccelerator.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoCpu.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoGpuContext.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoMemory.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoMemory.h",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoPool.cpp",
+        "status": "added"
+      },
+      {
+        "path": "NativeAdrenoPool.h",
+        "status": "added"
+      },
+      {
+        "path": "NativeAdrenoPreempt.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoPreempt.h",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoPublish.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoRing.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoRing.h",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoService.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoSubmit.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoSubmit.h",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoUserClient.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoUserClient.h",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoVm.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "NativeAdrenoVm.h",
+        "status": "modified"
+      },
+      {
+        "path": "NativeGpuLatency.h",
+        "status": "added"
+      },
+      {
+        "path": "NativeGpuPerfCounters.h",
+        "status": "added"
+      },
+      {
+        "path": "NativeGpuPerfCountersTest.cpp",
+        "status": "added"
+      },
+      {
+        "path": "NativeGpuThreadTargets.h",
+        "status": "added"
+      },
+      {
+        "path": "NativeGpuTrace.h",
+        "status": "added"
+      },
+      {
+        "path": "NativeGpuTrace.inc",
+        "status": "added"
+      },
+      {
+        "path": "NativeGpuTraceStore.h",
+        "status": "added"
+      },
+      {
+        "path": "NativeGpuTraceTest.cpp",
+        "status": "added"
+      },
+      {
+        "path": "README.md",
+        "status": "modified"
+      },
+      {
+        "path": "tests/HostKernelHooks.cpp",
+        "status": "added"
+      },
+      {
+        "path": "tests/XnuMemoryFixture.h",
+        "status": "modified"
+      },
+      {
+        "path": "tests/test_gpu.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "tests/test_gpuctx.cpp",
+        "status": "added"
+      },
+      {
+        "path": "tests/test_maintenance.cpp",
+        "status": "added"
+      },
+      {
+        "path": "tests/test_memory.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "tests/test_pool.cpp",
+        "status": "added"
+      },
+      {
+        "path": "tests/test_pool_memory.cpp",
+        "status": "added"
+      },
+      {
+        "path": "tests/test_preempt.cpp",
+        "status": "added"
+      },
+      {
+        "path": "tests/test_ring.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "tests/test_submit.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "tests/test_system_memory.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "tests/test_userclient.cpp",
+        "status": "modified"
+      }
+    ],
+    "sha256": "263200589a6903a7184f34e7ab2bfb1ab78b7d3a291ab9da92d4dd2a40ef23f8",
+    "url": "https://api.github.com/repos/UniXNU/Adreno740/compare/1c9029bc3216a39d9e514ba41dee12e95e8f3598...be70fb13ed19d5fdf139d27977da6f54078cf50a"
+  },
+  {
+    "repository": "UniXNU/AdrenoMetal",
+    "selected": "c9ebd2fb17253996f0a8d835c9ab7c2f740778e1",
+    "head": "cc0a4e8e57d20f4a4698753c2530875f2b10c0ca",
+    "status": "ahead",
+    "total_commits": 2,
+    "files": [
+      {
+        "path": "README.md",
+        "status": "modified"
+      }
+    ],
+    "sha256": "efd3de9589bb5d2abce01e02dad852b7c4e5b97cf17db739231257fe34bb9eaf",
+    "url": "https://api.github.com/repos/UniXNU/AdrenoMetal/compare/c9ebd2fb17253996f0a8d835c9ab7c2f740778e1...cc0a4e8e57d20f4a4698753c2530875f2b10c0ca"
+  },
+  {
+    "repository": "UniXNU/ArmCpu",
+    "selected": "5f3702697ed80fd2e98594de1af7e32b4b77b08b",
+    "head": "73c2360509690986d0d44b4da7236a653b91d0d7",
+    "status": "ahead",
+    "total_commits": 3,
+    "files": [
+      {
+        "path": "README.md",
+        "status": "modified"
+      }
+    ],
+    "sha256": "c88f880a231abdcde0e2efa39c5e3accacf9697250494e3e42b393d6eafeffbb",
+    "url": "https://api.github.com/repos/UniXNU/ArmCpu/compare/5f3702697ed80fd2e98594de1af7e32b4b77b08b...73c2360509690986d0d44b4da7236a653b91d0d7"
+  },
+  {
+    "repository": "UniXNU/Ath12kWifi",
+    "selected": "f087c7ddac07e945f20d199dbaf6c95c6db3346a",
+    "head": "84e02e0c0a3354c341c76affef582c7c41883f1f",
+    "status": "ahead",
+    "total_commits": 3,
+    "files": [
+      {
+        "path": "README.md",
+        "status": "modified"
+      }
+    ],
+    "sha256": "a0a18e99e566a83579db04745e0ab740ce9923c06892f6a596f5e3a0c02e9513",
+    "url": "https://api.github.com/repos/UniXNU/Ath12kWifi/compare/f087c7ddac07e945f20d199dbaf6c95c6db3346a...84e02e0c0a3354c341c76affef582c7c41883f1f"
+  },
+  {
+    "repository": "UniXNU/QcaBluetooth",
+    "selected": "986d6319d1d2819b27ed2c9786776f10bf63cc76",
+    "head": "fa528145aee3073c47533d74ea260eb2818b6b63",
+    "status": "ahead",
+    "total_commits": 8,
+    "files": [
+      {
+        "path": "README.md",
+        "status": "modified"
+      },
+      {
+        "path": "include/qbt.h",
+        "status": "modified"
+      },
+      {
+        "path": "src/qbt_core.c",
+        "status": "modified"
+      },
+      {
+        "path": "src/qbt_internal.h",
+        "status": "modified"
+      },
+      {
+        "path": "tests/runtime.c",
+        "status": "modified"
+      },
+      {
+        "path": "tools/native_macos27.py",
+        "status": "modified"
+      }
+    ],
+    "sha256": "b3e79b8c47b3853294004398aacab213db3053841bc014811e89f09c55372f11",
+    "url": "https://api.github.com/repos/UniXNU/QcaBluetooth/compare/986d6319d1d2819b27ed2c9786776f10bf63cc76...fa528145aee3073c47533d74ea260eb2818b6b63"
+  },
+  {
+    "repository": "UniXNU/QcomDwc3",
+    "selected": "0dd83827279ee070dca7ddb486c90365567cc99d",
+    "head": "f5edd26d8c539a4faff2c6de151ba4a3c8796bde",
+    "status": "ahead",
+    "total_commits": 4,
+    "files": [
+      {
+        "path": "QcomDwc3.cpp",
+        "status": "modified"
+      },
+      {
+        "path": "QcomUcsi.h",
+        "status": "modified"
+      },
+      {
+        "path": "tests/ucsi_host.cpp",
+        "status": "modified"
+      }
+    ],
+    "sha256": "1f28fb239f197b1d78455ca227d936a3bccc4064081583d114d4e88b18fb99db",
+    "url": "https://api.github.com/repos/UniXNU/QcomDwc3/compare/0dd83827279ee070dca7ddb486c90365567cc99d...f5edd26d8c539a4faff2c6de151ba4a3c8796bde"
+  },
+  {
+    "repository": "UniXNU/ShengNovatekTouch",
+    "selected": "988239b0b146cad7399892b9e9916895b95448af",
+    "head": "4d6133c374c4980a1fa82879ad25b5ef2ae47896",
+    "status": "ahead",
+    "total_commits": 1,
+    "files": [
+      {
+        "path": "README.md",
+        "status": "modified"
+      }
+    ],
+    "sha256": "94041052588cebe8677bb71307e441eabfc51f5d88b7ebdb980a6cf2109b5a1f",
+    "url": "https://api.github.com/repos/UniXNU/ShengNovatekTouch/compare/988239b0b146cad7399892b9e9916895b95448af...4d6133c374c4980a1fa82879ad25b5ef2ae47896"
+  },
+  {
+    "repository": "UniXNU/ShengUfs",
+    "selected": "9d527ae1a8d36a7ff210f9f4c9b429549c34c991",
+    "head": "f020bd693c34790c04e97c52720af3cd842336fb",
+    "status": "diverged",
+    "total_commits": 1,
+    "files": [],
+    "sha256": "b86b0085e123df2b349d600c6094a1ff42ffe868cfafd372645e64d02ca5d751",
+    "url": "https://api.github.com/repos/UniXNU/ShengUfs/compare/9d527ae1a8d36a7ff210f9f4c9b429549c34c991...f020bd693c34790c04e97c52720af3cd842336fb"
+  }
+]

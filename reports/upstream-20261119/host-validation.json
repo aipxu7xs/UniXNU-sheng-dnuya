@@ -1,0 +1,43 @@
+{
+  "status": "PASS_HOST",
+  "time": "2026-11-19T10:24:48.577106+00:00",
+  "checks": [
+    {
+      "check": "python_ast",
+      "files": 651,
+      "errors": 0
+    },
+    {
+      "check": "toml",
+      "files": 187
+    },
+    {
+      "check": "bash_n",
+      "files": 140,
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "check": "workflow_yaml_and_overlay_order",
+      "steps": 127
+    },
+    {
+      "check": "root_overlay_exact_preimages_tamper_atomicity_idempotence_path_safety",
+      "files": 127,
+      "repeat_source_writes": 0
+    },
+    {
+      "check": "os27_profile_catalog_and_transport",
+      "selected_components": 11
+    },
+    {
+      "check": "existing_unixnu_python_suites",
+      "exit": 0,
+      "log": "host-unittest.log",
+      "tail": "pass --ramdisk FILE to include configured boot entries\n== ramdisk: empty; build payload or pass --ramdisk FILE to include configured boot entries\n== ramdisk: empty; build payload or pass --ramdisk FILE to include configured boot entries\n== ramdisk: empty; build payload or pass --ramdisk FILE to include configured boot entries\n== bootimg\n== bootimg: using qualified firmware transport with the current DarwinBoot loader\n== bootimg\n== bootimg\n== bootimg\n== bootimg: using qualified firmware transport with the current DarwinBoot loader\n== bootimg: C:\\Users\\I\\AppData\\Local\\Temp\\tmp8er49rpa\\boot\\boot.img (8192 bytes)\n== bootimg\n== bootimg: using qualified firmware transport with the current DarwinBoot loader\n== bootimg: C:\\Users\\I\\AppData\\Local\\Temp\\tmp8er49rpa\\boot\\boot.img (8192 bytes)\n== kernel: prelink\n== kernel: prelink failed; diagnostic record C:\\Users\\I\\AppData\\Local\\Temp\\tmphi5o_cyd\\kernel\\kernel.failed.json\n== kernel: prelink\n== kernel: C:\\Users\\I\\AppData\\Local\\Temp\\tmpn9j5ibbs\\kernel\\kernel.macho sha256 41c04b3f2d0c69a66494faa96f05b622709379f3a5251078e0cd39fa9c44d67e\n== kernel: native only C:\\Users\\I\\AppData\\Local\\Temp\\tmp73jeaqa6\\out\\kernel\\kernel.macho sha256 921fff779e4784a88c40ffb5672040854e839684fe41a2cca6a0af8582e47919\n== vendor_boot: C:\\Users\\I\\AppData\\Local\\Temp\\tmp3ty4em01\\big.img (1048576 bytes), ramdisk 36864 bytes at 0x1000, address 0x1000000\n== vendor_boot: C:\\Users\\I\\AppData\\Local\\Temp\\tmpciskik8w\\empty.img (1048576 bytes), ramdisk 0 bytes at 0x1000, address 0x1000000\n== vendor_boot: C:\\Users\\I\\AppData\\Local\\Temp\\tmpb1vygjs8\\addr.img (1048576 bytes), ramdisk 4096 bytes at 0x1000, address 0x40000000\n== vendor_boot: stock.img reproduces byte for byte from its own ramdisk\n== vendor_boot: C:\\Users\\I\\AppData\\Local\\Temp\\tmp3mgqpimd\\out.img (1048576 bytes), ramdisk 12288 bytes at 0x1000, address 0x1000000\n...............................s..........\n----------------------------------------------------------------------\nRan 42 tests in 2.310s\n\nOK (skipped=1)\n"
+    }
+  ],
+  "errors": [],
+  "native_build_executed": false,
+  "hardware_verified": false
+}

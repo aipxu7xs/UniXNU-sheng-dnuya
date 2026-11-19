@@ -1,0 +1,12 @@
+{
+  "status": "PASS_HOST",
+  "time": "2026-11-19T10:31:24.978763+00:00",
+  "actual_git_repositories": 16,
+  "exact_parent_gitlinks_verified": true,
+  "first_source_writes": 123,
+  "repeat_source_writes": 0,
+  "declared_gic_mutation_check": "passed with macOS LF bytes; source transformation only, not compiled",
+  "undeclared_component_drift": "rejected",
+  "native_build_executed": false,
+  "hardware_verified": false
+}

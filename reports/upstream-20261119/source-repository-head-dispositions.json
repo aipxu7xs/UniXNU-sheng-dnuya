@@ -1,0 +1,1034 @@
+{
+  "repositories": [
+    {
+      "repository": "ONLYA/corecrypto-2023",
+      "captured_head": "11fba65b12d8830630e248dfa8344caf8b065f26",
+      "reference_pins": [
+        "11fba65b12d8830630e248dfa8344caf8b065f26"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/ONLYA/corecrypto-2023/commits/main",
+        "fetched_at": "2026-11-19T03:00:56.631316+00:00",
+        "path": "ONLYA--corecrypto-2023--head.json",
+        "bytes": 5611,
+        "sha256": "4250e497e02654839ae9b9299dca3a40fa59de96abe9efe1ac17ffc1d51b674a",
+        "etag": "\"ce393fce6f08af85600fab1ca5fa4090dd5b0a86efa8af0811537e93941147e3\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "Project-Silicium/Device-Binaries",
+      "captured_head": "ec93042707d230705d9f40fc73910170eb707312",
+      "reference_pins": [
+        "a1501e0c2e642d6ac0d8f52c85af2a67b75a7799"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/Project-Silicium/Device-Binaries/commits/main",
+        "fetched_at": "2026-11-19T03:00:56.794270+00:00",
+        "path": "Project-Silicium--Device-Binaries--head.json",
+        "bytes": 8563,
+        "sha256": "b7a8109a656006ebfbffb7db22a59b7784d4ddf46894caa4aa99774f0b8c60d0",
+        "etag": "\"a66ba76a1988fa3c5f61650d4d288e38c0b77ad3fdc699e3e01b4a1156fd652b\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "Project-Silicium/Silicium-ACPI",
+      "captured_head": "8c4cdc43abf23cffdeb588621126253bb2c559da",
+      "reference_pins": [
+        "2d465ad77c25de908f0ec7bdfcb57f865b61233c"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/Project-Silicium/Silicium-ACPI/commits/main",
+        "fetched_at": "2026-11-19T03:00:56.692806+00:00",
+        "path": "Project-Silicium--Silicium-ACPI--head.json",
+        "bytes": 6301,
+        "sha256": "e94a2115bde58896bc9f5e01d07e04624c2930e999841d2313830d838a90bffa",
+        "etag": "\"70fcd83494ae988f9f231e41da86bb91a749f49d215cb7bb4a78168abd85f3e5\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "The412Banner/Banners-Turnip",
+      "captured_head": "104ce5674d92ac587f4432a6d8c0420a5822a9a5",
+      "reference_pins": [
+        "cb840f547d4866d9a1a2cb04258da0e16a19e84d"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/The412Banner/Banners-Turnip/commits/A8xx",
+        "fetched_at": "2026-11-19T03:00:56.394897+00:00",
+        "path": "The412Banner--Banners-Turnip--head.json",
+        "bytes": 9147,
+        "sha256": "69ef51642e5901e9460f03950167142ff4782fdbda9b6dcae2f6d7eb10a81a1d",
+        "etag": "\"24c870a57c3f155b8775388381301c64444b85bf562b5f0e34231f06e1fda069\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "UniXNU/Adreno740",
+      "captured_head": "be70fb13ed19d5fdf139d27977da6f54078cf50a",
+      "reference_pins": [
+        "1c9029bc3216a39d9e514ba41dee12e95e8f3598"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/Adreno740/commits/main",
+        "fetched_at": "2026-11-19T03:00:57.404617+00:00",
+        "path": "UniXNU--Adreno740--head.json",
+        "bytes": 29944,
+        "sha256": "e41b949cbc1f674d03235e19adf95a9c09bc573ff2b74991a4cb2c6b53ff6158",
+        "etag": "\"0be18bdb2aa78fc280741923f6c1adf3250d764b7114c2ca615b6ae152e7ca58\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "1c9029bc3216a39d9e514ba41dee12e95e8f3598",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/AdrenoFirmware",
+      "captured_head": "20ad3d7aca14bd46aecab6335c780f5413fa054b",
+      "reference_pins": [
+        "20ad3d7aca14bd46aecab6335c780f5413fa054b"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/AdrenoFirmware/commits/main",
+        "fetched_at": "2026-11-19T03:00:57.392405+00:00",
+        "path": "UniXNU--AdrenoFirmware--head.json",
+        "bytes": 5264,
+        "sha256": "4b704537d99e6c85ccc18dc389681f4cfda2ffc240d9130e0efc4f0be1cde61d",
+        "etag": "\"e597825fb39bea95ff7c5665471d0f7745e19419903d1c553725e79a7bfe0a86\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "UniXNU/AdrenoMetal",
+      "captured_head": "cc0a4e8e57d20f4a4698753c2530875f2b10c0ca",
+      "reference_pins": [
+        "89d7942e06dad93b5a5a52f817aa8c19fd899b37"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/AdrenoMetal/commits/main",
+        "fetched_at": "2026-11-19T03:00:57.506173+00:00",
+        "path": "UniXNU--AdrenoMetal--head.json",
+        "bytes": 3331,
+        "sha256": "0bf2df3899f71fa4af814990f8db4dae6885720001ec83d458a369af22595a59",
+        "etag": "\"15567314a8b45e2f60b005d048c7bf1944bab75fd1015efec490838f0e5f107a\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "c9ebd2fb17253996f0a8d835c9ab7c2f740778e1",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/AdrenoPM4",
+      "captured_head": "282606b528b2595bc4274ea7490b62b323f35a5f",
+      "reference_pins": [
+        "282606b528b2595bc4274ea7490b62b323f35a5f"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/AdrenoPM4/commits/main",
+        "fetched_at": "2026-11-19T03:00:58.194851+00:00",
+        "path": "UniXNU--AdrenoPM4--head.json",
+        "bytes": 5173,
+        "sha256": "ef0363987e85f8354e89f0061f46adb4de360b06ed699d627d748efc0db64007",
+        "etag": "\"e3865561b6cbd9291411d77789fcd10f2a05aff21454e2d64381a78ae6077052\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "UniXNU/AirNir",
+      "captured_head": "b356371a74cd158c2902f4886f373ebb0f833a36",
+      "reference_pins": [
+        "b356371a74cd158c2902f4886f373ebb0f833a36"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/AirNir/commits/main",
+        "fetched_at": "2026-11-19T03:00:58.691899+00:00",
+        "path": "UniXNU--AirNir--head.json",
+        "bytes": 5195,
+        "sha256": "a8365f710335c38359c49741b527778eb34af5c05a4f4e06471791861837af88",
+        "etag": "\"69c9d1c36728deed230154cf964c5a44afa207e57a814135bfbff085a46ade5e\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "UniXNU/AppleKeyStoreState",
+      "captured_head": "6ff4f11d8fdf853351f8d98e1bbe1373fb8da2e6",
+      "reference_pins": [
+        "6ff4f11d8fdf853351f8d98e1bbe1373fb8da2e6"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/AppleKeyStoreState/commits/main",
+        "fetched_at": "2026-11-19T03:00:58.795002+00:00",
+        "path": "UniXNU--AppleKeyStoreState--head.json",
+        "bytes": 4245,
+        "sha256": "d5a6a38a6718ce5045d8a095721a2e99e6d79f164c772c0d749a47f516d315af",
+        "etag": "\"0404daf2f1add2f635c38b5eb8cfdca78a9cfcfcd3bd2b9586ef1462c8cc1b7f\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "6ff4f11d8fdf853351f8d98e1bbe1373fb8da2e6",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/ArmCpu",
+      "captured_head": "73c2360509690986d0d44b4da7236a653b91d0d7",
+      "reference_pins": [
+        "acba4ee2674cfb23434431feb124871ae9b3b581"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/ArmCpu/commits/main",
+        "fetched_at": "2026-11-19T03:01:00.091797+00:00",
+        "path": "UniXNU--ArmCpu--head.json",
+        "bytes": 48112,
+        "sha256": "b9ba8b8be14a5768fc4b9a4986f577d9b319f71add6bfc06c982eda8a4f57e37",
+        "etag": "\"15e15c3ed8480e81e2489038bd27a3dce475f18594ca7c96dcdd95e43709af67\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "5f3702697ed80fd2e98594de1af7e32b4b77b08b",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/ArmDTPlatform",
+      "captured_head": "e8bd8d5de395c6cbc00d762c1bef57dbd15a448d",
+      "reference_pins": [
+        "e8bd8d5de395c6cbc00d762c1bef57dbd15a448d"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/ArmDTPlatform/commits/main",
+        "fetched_at": "2026-11-19T03:00:59.619019+00:00",
+        "path": "UniXNU--ArmDTPlatform--head.json",
+        "bytes": 6897,
+        "sha256": "d60bc5140a054a8b8b050cd448be86193a3c7dc0e9bdbf51b6aad0385d5a24d4",
+        "etag": "\"13dfcb0f085ff9fd0ac575a76746dbcbdb237087e8bfb2d9c9b79c3331f25f79\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "e8bd8d5de395c6cbc00d762c1bef57dbd15a448d",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/ArmSmmu4K",
+      "captured_head": "83969cd874503e65997ff7639f7dcf3d0a92cd17",
+      "reference_pins": [
+        "83969cd874503e65997ff7639f7dcf3d0a92cd17"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/ArmSmmu4K/commits/main",
+        "fetched_at": "2026-11-19T03:01:00.396331+00:00",
+        "path": "UniXNU--ArmSmmu4K--head.json",
+        "bytes": 5274,
+        "sha256": "459dd69902079e641675a8fa01a3555e63d1c01510f1629cd1285988df5b4295",
+        "etag": "\"6fee5f2bb250c1bff91247dca38288631bdfe27ca69189e4b669ee3edd7e7aae\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "UniXNU/ArmVirtPlatform",
+      "captured_head": "d1423a8bceac4be0478a93d9173587111c040084",
+      "reference_pins": [
+        "d1423a8bceac4be0478a93d9173587111c040084"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/ArmVirtPlatform/commits/main",
+        "fetched_at": "2026-11-19T03:01:01.354569+00:00",
+        "path": "UniXNU--ArmVirtPlatform--head.json",
+        "bytes": 5231,
+        "sha256": "30444b1e859d1f93213b1f2de762dcf98ef529378109fb4581b9df3462df8676",
+        "etag": "\"8f110724a167393b711e9484a74f2984c883a6d8235362055df8d96820dacf0f\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Not in the selected sheng OS27 component closure"
+    },
+    {
+      "repository": "UniXNU/Ath12kWifi",
+      "captured_head": "84e02e0c0a3354c341c76affef582c7c41883f1f",
+      "reference_pins": [
+        "5f7f5a8a9f02f7ab45ed10a2f226e348c519a838"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/Ath12kWifi/commits/main",
+        "fetched_at": "2026-11-19T03:01:02.399047+00:00",
+        "path": "UniXNU--Ath12kWifi--head.json",
+        "bytes": 33012,
+        "sha256": "0f8d11deeeaf60ea2d86e8f9fa62e6788854ffcf3d3bd13842d6d7e764e870ec",
+        "etag": "\"90a2e5c8a11855106c00bb6cd67ce2bd55e3694646d2564df413f4e446345872\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "f087c7ddac07e945f20d199dbaf6c95c6db3346a",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/DarwinBoot",
+      "captured_head": "5243c68ec332a227fe3680cd5da6d5a0e127035c",
+      "reference_pins": [
+        "5243c68ec332a227fe3680cd5da6d5a0e127035c"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/DarwinBoot/commits/main",
+        "fetched_at": "2026-11-19T03:01:02.293846+00:00",
+        "path": "UniXNU--DarwinBoot--head.json",
+        "bytes": 21699,
+        "sha256": "f9ceb26f23064322cea8d98cb9234aeb4a85fbcbdd82e2d6980a4f86456e5fb6",
+        "etag": "\"64305e21b77c9cd2935c46533c580bd6397a3ee956934dbdde09947287e190fe\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "5243c68ec332a227fe3680cd5da6d5a0e127035c",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/GopFramebuffer",
+      "captured_head": "b0d812d578efa2acb005b66f73168891719af09a",
+      "reference_pins": [
+        "b0d812d578efa2acb005b66f73168891719af09a"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/GopFramebuffer/commits/main",
+        "fetched_at": "2026-11-19T03:01:02.514135+00:00",
+        "path": "UniXNU--GopFramebuffer--head.json",
+        "bytes": 12568,
+        "sha256": "1d67bfee96b8c6d012e94bfd2c25cb0ebea1f5a2e15e4a15a1385490795590b1",
+        "etag": "\"35c04b8a813a30b7b86740b9c6c54d17bbe18add248c116daec3821dfe73230b\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "b0d812d578efa2acb005b66f73168891719af09a",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/QcaBluetooth",
+      "captured_head": "fa528145aee3073c47533d74ea260eb2818b6b63",
+      "reference_pins": [
+        "986d6319d1d2819b27ed2c9786776f10bf63cc76"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/QcaBluetooth/commits/main",
+        "fetched_at": "2026-11-19T03:01:02.915188+00:00",
+        "path": "UniXNU--QcaBluetooth--head.json",
+        "bytes": 4553,
+        "sha256": "2979bd8ff2fc6f55eb9103c1178a0d6e0334237cc820160fb00ba87b10ff663b",
+        "etag": "\"1f8a8ad6afea0f1900dc4fe72122f46c0bf6472ed10a8dea8ab90a6f5f298ff2\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "fa528145aee3073c47533d74ea260eb2818b6b63",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/QcomBaseband",
+      "captured_head": "dd0199cf3300764ed52b23f4a47761f91fab21a2",
+      "reference_pins": [
+        "dd0199cf3300764ed52b23f4a47761f91fab21a2"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/QcomBaseband/commits/main",
+        "fetched_at": "2026-11-19T03:01:03.239605+00:00",
+        "path": "UniXNU--QcomBaseband--head.json",
+        "bytes": 23243,
+        "sha256": "41ae11d1b2fc88849b08bf697955b4d482396f7d9e10c74eab98a01fbea36242",
+        "etag": "\"3eef289e10c814491dc4f46ffe727ae46bc79b6e2294c771fb106ba863aebde4\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Not in the selected sheng OS27 component closure"
+    },
+    {
+      "repository": "UniXNU/QcomDwc3",
+      "captured_head": "f5edd26d8c539a4faff2c6de151ba4a3c8796bde",
+      "reference_pins": [
+        "0dd83827279ee070dca7ddb486c90365567cc99d"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/QcomDwc3/commits/main",
+        "fetched_at": "2026-11-19T03:01:03.994142+00:00",
+        "path": "UniXNU--QcomDwc3--head.json",
+        "bytes": 3024,
+        "sha256": "d71f4a593505f3381626703ef1e831e221efaf2b2191e150a60b8d0cc6edeef7",
+        "etag": "\"5cef1085e2b7554195e64cba9ef98960ba2840a8adc82c7e7a515f5be5f11381\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "f5edd26d8c539a4faff2c6de151ba4a3c8796bde",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/QcomGeniSpi",
+      "captured_head": "eac47baefe6a5d2368a70351e6ad1b6361bedbe2",
+      "reference_pins": [
+        "eac47baefe6a5d2368a70351e6ad1b6361bedbe2"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/QcomGeniSpi/commits/main",
+        "fetched_at": "2026-11-19T03:01:04.197125+00:00",
+        "path": "UniXNU--QcomGeniSpi--head.json",
+        "bytes": 5131,
+        "sha256": "fe939acb8f97eb5fb290290287c420fa5459462c7876d3e1c7caf9b675529967",
+        "etag": "\"557279ef6747cf8b6b22a467dbda91b599793c176a8f246ab99e728e47153630\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Not in the selected sheng OS27 component closure"
+    },
+    {
+      "repository": "UniXNU/RamBlock",
+      "captured_head": "00a6e5dd6bb1709e817e13daec7986308cfb6d0f",
+      "reference_pins": [
+        "737f6dae119ef11990e77dc06bcead945098865e"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/RamBlock/commits/main",
+        "fetched_at": "2026-11-19T03:01:04.891668+00:00",
+        "path": "UniXNU--RamBlock--head.json",
+        "bytes": 9051,
+        "sha256": "5a51afe45875ac37b890c7deca5f79f63f50e0d70ac49dcab878a92ef13b2a1e",
+        "etag": "\"2e96b4ff5a13b06f1172614c78d4c6f032f4838e9d2baa16bdfe978c0900fd75\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "00a6e5dd6bb1709e817e13daec7986308cfb6d0f",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/ShengHidInput",
+      "captured_head": "114061452959a547aaa08f9ca5aa54033394ca2f",
+      "reference_pins": [
+        "114061452959a547aaa08f9ca5aa54033394ca2f"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/ShengHidInput/commits/main",
+        "fetched_at": "2026-11-19T03:01:04.845524+00:00",
+        "path": "UniXNU--ShengHidInput--head.json",
+        "bytes": 7726,
+        "sha256": "963edfb0f3c8921960d91d9d0f158075e92ec5000de803430c082eac0400fb98",
+        "etag": "\"90403c590a54e550cc42fea7013cc72ba81297f1ac698e71e55eb5a51855a7b9\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "114061452959a547aaa08f9ca5aa54033394ca2f",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/ShengNovatekTouch",
+      "captured_head": "4d6133c374c4980a1fa82879ad25b5ef2ae47896",
+      "reference_pins": [
+        "3b44b1b7603eaadae942ea44ddc51bdcc48ad060"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/ShengNovatekTouch/commits/main",
+        "fetched_at": "2026-11-19T03:01:05.997039+00:00",
+        "path": "UniXNU--ShengNovatekTouch--head.json",
+        "bytes": 3518,
+        "sha256": "4df686ccec4d152b1f620ffb8de70b9e85a897a8be544e73b6d53f849ed24133",
+        "etag": "\"592da5a45b18fbc2b5b86a7035107405d1124a51ba20520ce308ca5aecb19d48\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "988239b0b146cad7399892b9e9916895b95448af",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/ShengPreflight",
+      "captured_head": "9cfc8d2c8d77f2008ba228fa6eff83d2c7ab7fd2",
+      "reference_pins": [
+        "9cfc8d2c8d77f2008ba228fa6eff83d2c7ab7fd2"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/ShengPreflight/commits/main",
+        "fetched_at": "2026-11-19T03:01:06.195827+00:00",
+        "path": "UniXNU--ShengPreflight--head.json",
+        "bytes": 5195,
+        "sha256": "b4795c32143841c1981adb458a833a17f858a57e62baeeee2a3b50e1d2299423",
+        "etag": "\"0875374113d410a2a828ea49f1ae54dc5728b0f47da9b3b83de8b06513b733c9\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "9cfc8d2c8d77f2008ba228fa6eff83d2c7ab7fd2",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/ShengUfs",
+      "captured_head": "f020bd693c34790c04e97c52720af3cd842336fb",
+      "reference_pins": [
+        "57f031c99d7f69ffa611626bebaeab0731e93254"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/ShengUfs/commits/main",
+        "fetched_at": "2026-11-19T03:01:06.196826+00:00",
+        "path": "UniXNU--ShengUfs--head.json",
+        "bytes": 6833,
+        "sha256": "18d94d16af307b1a5450d359576a595fb2f35081775d684ec97538bbe7414d3d",
+        "etag": "\"74a9bce2804aafb9bb7ca769fb394f6e8fe90a1a4ff22db02655c9d1ea2b1016\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "9d527ae1a8d36a7ff210f9f4c9b429549c34c991",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/SoftwareAES",
+      "captured_head": "da07dd5c7d62bbe960f5bd4fe7789574d3a49d8c",
+      "reference_pins": [
+        "da07dd5c7d62bbe960f5bd4fe7789574d3a49d8c"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/SoftwareAES/commits/main",
+        "fetched_at": "2026-11-19T03:01:05.897083+00:00",
+        "path": "UniXNU--SoftwareAES--head.json",
+        "bytes": 7231,
+        "sha256": "5860243296f33df83f2d542f52985f0218617d73dec65fef002ff8b2369c7208",
+        "etag": "\"a9cd9ae9701bac93d8da52aaa08de1498c161e27a94af7a88526a5f139cc6eee\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Not in the selected sheng OS27 component closure"
+    },
+    {
+      "repository": "UniXNU/UniXNU",
+      "captured_head": "519d80242a5028ee123447b01bc3b809baed565f",
+      "reference_pins": [
+        "0c1bac3d51a3009dca1708b15a5198f4b43d057a"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/UniXNU/commits/main",
+        "fetched_at": "2026-11-19T03:01:14.897846+00:00",
+        "path": "UniXNU--UniXNU--head.json",
+        "bytes": 1006193,
+        "sha256": "83b403fe90771eb09d4a045b4d5bc8aa90a397cd31eae3fa48b179f599e64b9e",
+        "etag": "\"289b92ca4ba574d7c91d1b164c0f18decbaf37487b4120929fa3796d07117086\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "reason": "Audited root endpoint selected through exact source overlay or SoC pin; separate per-commit ledger",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/UniXNU-sheng",
+      "captured_head": "c8f92b208068eeaa4cd2b0f592671f04ee70076e",
+      "reference_pins": [
+        "68800685763d755c368775b848dd703fb3f8a3ce"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/UniXNU-sheng/commits/main",
+        "fetched_at": "2026-11-19T03:01:07.091863+00:00",
+        "path": "UniXNU--UniXNU-sheng--head.json",
+        "bytes": 13213,
+        "sha256": "a84b7a81a6cf79aab2f81ec8fbea55fc319c7dba6a2b624556f775cf24a2bd3c",
+        "etag": "\"ac60416c0cc135e485887680aaaf51043f771e160358b961a10459574ac38ab6\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "reason": "Audited root endpoint selected through exact source overlay or SoC pin; separate per-commit ledger",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/UniXNU-sm8550-common",
+      "captured_head": "2dc650ca76ae38715cd0712e60a44b14fe251745",
+      "reference_pins": [
+        "2dc650ca76ae38715cd0712e60a44b14fe251745"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/main",
+        "fetched_at": "2026-11-19T03:01:07.702861+00:00",
+        "path": "UniXNU--UniXNU-sm8550-common--head.json",
+        "bytes": 4743,
+        "sha256": "dd5919bbb4e7cf0082196bd3887c051333654d9c00a8b849f15bd918e6034a57",
+        "etag": "\"8208dff3df8339218495aa335ca33a5e4f7907aa1a8e3b3fe9d29ddd90413e0b\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "reason": "Audited root endpoint selected through exact source overlay or SoC pin; separate per-commit ledger",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/VerifiedRoot",
+      "captured_head": "974f043d0c71ba2e60331483a41c6c6d35274ee3",
+      "reference_pins": [
+        "974f043d0c71ba2e60331483a41c6c6d35274ee3"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/VerifiedRoot/commits/main",
+        "fetched_at": "2026-11-19T03:01:08.707074+00:00",
+        "path": "UniXNU--VerifiedRoot--head.json",
+        "bytes": 13709,
+        "sha256": "9a6cc6c303533733e720ab398b992598413a5f20d409c8d67c6f79691c9c72de",
+        "etag": "\"855afa7ae7e3013a10124a38fc8cd7697bd749a9aafee25dc730226da3a6ba16\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Not in the selected sheng OS27 component closure"
+    },
+    {
+      "repository": "UniXNU/VirtioMmioBlock",
+      "captured_head": "4e1013eb8c45077b57f8d38d61b389fe899ea1c3",
+      "reference_pins": [
+        "4e1013eb8c45077b57f8d38d61b389fe899ea1c3"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/VirtioMmioBlock/commits/main",
+        "fetched_at": "2026-11-19T03:01:08.593607+00:00",
+        "path": "UniXNU--VirtioMmioBlock--head.json",
+        "bytes": 4465,
+        "sha256": "910d8cd9d3b159b18c59f529e82bd8269c578de1c6657923edeef7043fe418d0",
+        "etag": "\"0c27b12e6df952ca92579a6de31b16a995f5347050ba9c2f630ac397fd4c4aec\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Not in the selected sheng OS27 component closure"
+    },
+    {
+      "repository": "UniXNU/VirtioMmioConsole",
+      "captured_head": "70253216890b2afcaa6333948726f896f84fc757",
+      "reference_pins": [
+        "70253216890b2afcaa6333948726f896f84fc757"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/VirtioMmioConsole/commits/main",
+        "fetched_at": "2026-11-19T03:01:09.497358+00:00",
+        "path": "UniXNU--VirtioMmioConsole--head.json",
+        "bytes": 5269,
+        "sha256": "36a5650edcee576d69b5a9705575084d1e91c546cf216f4f4048e29a1938829e",
+        "etag": "\"3b62145da7e585af7073aa66c3f09eb3eea38f75053090071af388941d7e0a58\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Not in the selected sheng OS27 component closure"
+    },
+    {
+      "repository": "UniXNU/XnuPrelink",
+      "captured_head": "440589b0c31625f17edf363e24b3c82c51c70bb9",
+      "reference_pins": [
+        "440589b0c31625f17edf363e24b3c82c51c70bb9"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/XnuPrelink/commits/main",
+        "fetched_at": "2026-11-19T03:01:09.712172+00:00",
+        "path": "UniXNU--XnuPrelink--head.json",
+        "bytes": 13676,
+        "sha256": "affc3fbee32da2758732de43614c233b9186a787bd238e0ed88fa5c44646561a",
+        "etag": "\"030800f5c056b34320462b9dc77c0265eaa9ac627454efc9c8e11c8625e79278\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "440589b0c31625f17edf363e24b3c82c51c70bb9",
+      "reason": "Canonical selected component; fixed endpoint/equivalent code or qualified current head bound in installer",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "UniXNU/uefi-sheng",
+      "captured_head": "b303410c8e401fc9419ae65a024356ed09a438ef",
+      "reference_pins": [
+        "66421cb7bb5694843aec8de1ca3d1de4c20cca38"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/UniXNU/uefi-sheng/commits/sheng",
+        "fetched_at": "2026-11-19T03:01:10.694772+00:00",
+        "path": "UniXNU--uefi-sheng--head.json",
+        "bytes": 28391,
+        "sha256": "e3d47d5001b8e2f961c6a0071c2344feb1fbebb481a2736785a65fbe723a35f2",
+        "etag": "\"ed67d16b6b4a79f234dcbe661228cc15844aa636ddf72949eaa3a47bb4937734\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "integrated",
+      "effective_pin": "b303410c8e401fc9419ae65a024356ed09a438ef",
+      "reason": "Retained locked UEFI plus four exact reviewed firmware callbacks/backports",
+      "native_validation": "pending-current-run"
+    },
+    {
+      "repository": "apple-oss-distributions/AvailabilityVersions",
+      "captured_head": "149b1777f3e8c2133042d8e188f72e3adf6a7110",
+      "reference_pins": [
+        "149b1777f3e8c2133042d8e188f72e3adf6a7110"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/apple-oss-distributions/AvailabilityVersions/commits/main",
+        "fetched_at": "2026-11-19T03:01:10.926477+00:00",
+        "path": "apple-oss-distributions--AvailabilityVersions--head.json",
+        "bytes": 26908,
+        "sha256": "08b9c78d233351467ae0a5d1656c5399001553ec49dc4a51c8899f9447d59c6d",
+        "etag": "\"8cf8cae3224a016e9010ef7dd8492b9de617dff52ed1b464de5998cafd59407c\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "apple-oss-distributions/IOHIDFamily",
+      "captured_head": "777ccd9698845aadf711e32d843c8c9b777431d9",
+      "reference_pins": [
+        "e31e90a24c27ad6cbe981650d12a1a4124065b03"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/apple-oss-distributions/IOHIDFamily/commits/main",
+        "fetched_at": "2026-11-19T03:01:21.997124+00:00",
+        "path": "apple-oss-distributions--IOHIDFamily--head.json",
+        "bytes": 577755,
+        "sha256": "01b8016135b60f2f1c2227cb955dc9a201b32705d9ef287f634d4b3cc58f668e",
+        "etag": "\"288130a76f1ccaf50f10a1533db2ed8db42931acc0aef8c9cb38275c93b3aac3\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "apple-oss-distributions/IONetworkingFamily",
+      "captured_head": "bb910e2b458939f6b1f53c0fa6907f258b431ea4",
+      "reference_pins": [
+        "bb910e2b458939f6b1f53c0fa6907f258b431ea4"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/apple-oss-distributions/IONetworkingFamily/commits/main",
+        "fetched_at": "2026-11-19T03:01:12.204987+00:00",
+        "path": "apple-oss-distributions--IONetworkingFamily--head.json",
+        "bytes": 9207,
+        "sha256": "80dffe89092bf9bbd438bd69b04f646a8368a686b0e4972468415f980c1d3d1c",
+        "etag": "\"7194a151e27c5f1017a217ed6124452b1bcd28bab1e42e79009284aa6b747743\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "apple-oss-distributions/IOStorageFamily",
+      "captured_head": "7edb88fbae296fb7c8ce2f64e115e116e566d51c",
+      "reference_pins": [
+        "7edb88fbae296fb7c8ce2f64e115e116e566d51c"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/apple-oss-distributions/IOStorageFamily/commits/main",
+        "fetched_at": "2026-11-19T03:01:13.505416+00:00",
+        "path": "apple-oss-distributions--IOStorageFamily--head.json",
+        "bytes": 21510,
+        "sha256": "dd6c1841e7c746e0399e697e10a28e5be0f28b718938a4f206690943d390861b",
+        "etag": "\"d87eff0859af10c53bd04399a3a0d377f9445b754d892d47e1f426ddfa862631\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "apple-oss-distributions/libdispatch",
+      "captured_head": "2361ffb78a76f7ee488cd052eb0bc5c767118bf9",
+      "reference_pins": [
+        "701f4d1a24ae9c6863901bbbb22624b7d1b87321"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/apple-oss-distributions/libdispatch/commits/main",
+        "fetched_at": "2026-11-19T03:01:15.400560+00:00",
+        "path": "apple-oss-distributions--libdispatch--head.json",
+        "bytes": 53747,
+        "sha256": "e0508a7c576538b6b26a4c11eb203c343fcbb4459808981511c3e0fa57072829",
+        "etag": "\"fdca190dd755d57bf3f66b25e8527757e514f97e9dfd911656e43bc40a85af8b\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "apple-oss-distributions/libplatform",
+      "captured_head": "2512ffd8bb5c6caff3c8ea83331ab8a0adc820c3",
+      "reference_pins": [
+        "b7ed7cf5cf7dd12b98672435db2225a860f199d8"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/apple-oss-distributions/libplatform/commits/main",
+        "fetched_at": "2026-11-19T03:01:17.193848+00:00",
+        "path": "apple-oss-distributions--libplatform--head.json",
+        "bytes": 28126,
+        "sha256": "07e6be193d21dfff141058e92a0036f3ae417a13d41c306c28c22649948cb7ae",
+        "etag": "\"3e91084682506cf5959196bbb6791ac8c8eb710b0d64e31de79de4d4c5fc6f61\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "apple-oss-distributions/libpthread",
+      "captured_head": "42d026df5b07825070f60134b980a1ec2552dfee",
+      "reference_pins": [
+        "1f4f5265b319111142f1bf3a27d4484ef5a98314"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/apple-oss-distributions/libpthread/commits/main",
+        "fetched_at": "2026-11-19T03:01:18.495567+00:00",
+        "path": "apple-oss-distributions--libpthread--head.json",
+        "bytes": 16782,
+        "sha256": "35be980e257590ccb597b5bfd0362017a1a1546ab5e35ae28636746c9af3b261",
+        "etag": "\"be67bcfd196dd068de937913b0f1f74349f26ec390be0a3a0c9a573411ac3ab7\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "apple-oss-distributions/xnu",
+      "captured_head": "f6217f891ac0bb64f3d375211650a4c1ff8ca1ea",
+      "reference_pins": [
+        "ac9718fb1af618d5ce8678d0dc6e8a58f252216f",
+        "aca3beaa3dfbd42498b42c5e5ce20a938e6554e5"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/apple-oss-distributions/xnu/commits/main",
+        "fetched_at": "2026-11-19T03:01:31.110513+00:00",
+        "path": "apple-oss-distributions--xnu--head.json",
+        "bytes": 896974,
+        "sha256": "02b6d4669627195ec5a63df6ef2e4b2bf5e4f0c993cd15528963d01f59429c15",
+        "etag": "\"63805acf3bb7ffea084150fa90c4da4444b180a93f1fa1326163a3bc4a5adf66\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware",
+      "captured_head": "747bdda274d0d0dce0c7c4eb01977a1270ca7163",
+      "reference_pins": [
+        "575bbe3f83565d18caa73e9b9458f754dd286f48"
+      ],
+      "capture_evidence": null,
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux",
+      "captured_head": "20eef29b7c8465ac98d7dd6d6f2ac07a8d8056ca",
+      "reference_pins": [
+        "d50d994bffa3c7c6db2d8bc4c5f0c55e3f46b0cd"
+      ],
+      "capture_evidence": null,
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "https://gitlab.freedesktop.org/mesa/mesa",
+      "captured_head": "b591938239bb52c5c3d944238299b459aab8e6ff",
+      "reference_pins": [
+        "85fda3b36405bcaea8bffc64aa4f2651dc90770d",
+        "c823a83e8f373a5c36c2b9ed1d7dc98a4f3360ee"
+      ],
+      "capture_evidence": null,
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "ianchb/sheng-firmware",
+      "captured_head": "053da477a5c338ac28d7c1c869e8c3ff7ca24d11",
+      "reference_pins": [
+        "053da477a5c338ac28d7c1c869e8c3ff7ca24d11"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/ianchb/sheng-firmware/commits/master",
+        "fetched_at": "2026-11-19T03:01:22.995700+00:00",
+        "path": "ianchb--sheng-firmware--head.json",
+        "bytes": 5654,
+        "sha256": "4e27eba9dd81a407cf6e77136ae83ff53edee8b1ea8900eec13b1edcdd6ae3fc",
+        "etag": "\"afabb001e354a646405c5090049b3ffcf47210f5378f6534abfa2b4ffc35fdae\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "ianchb/sm8550-mainline",
+      "captured_head": "87ac0f2347eb433933841e6854950dd90e96e6b2",
+      "reference_pins": [
+        "42f3b40c702abbc37c3a04c95af008cd283aeaf3"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/ianchb/sm8550-mainline/commits/sheng-7.3.4",
+        "fetched_at": "2026-11-19T03:01:24.016841+00:00",
+        "path": "ianchb--sm8550-mainline--head.json",
+        "bytes": 4923,
+        "sha256": "e51fd4a344ecfeb94c90b0bf808f68585bce9a2ef0fc057a4a6543d42d27d694",
+        "etag": "\"04eaed07af367c4ce996f85590e51feb76dec979f6b7ebc6495aa4549932662a\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "llvm/llvm-project",
+      "captured_head": "e7f64e2019bea49c2c5adb93c65183944f975fae",
+      "reference_pins": [
+        "0d261d1ca552c95a8f007e061c787ac7132fbcbc"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/llvm/llvm-project/commits/main",
+        "fetched_at": "2026-11-19T03:01:25.001204+00:00",
+        "path": "llvm--llvm-project--head.json",
+        "bytes": 17864,
+        "sha256": "247f26509c720cdab0c5627b993ca3ea1b7b29a42ab7f5596afba15a7bae0bf4",
+        "etag": "\"3c02d45ceba9cb30b776cfe0ecc738ac25e507b1ace7fe8432466f42fd3650ae\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "microsoft/mu_basecore",
+      "captured_head": "7cd9bc5fb9d6e17b7ff6742677786acef79e3c6c",
+      "reference_pins": [
+        "cfb93724a06ff86ff5ba971413368a7809ee42a5"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/microsoft/mu_basecore/commits/release%2F202608",
+        "fetched_at": "2026-11-19T03:01:32.741794+00:00",
+        "path": "microsoft--mu_basecore--head.json",
+        "bytes": 100248,
+        "sha256": "32a59c2be1a15cdecfe7833f29e691aff36726a87225202df2b4bef32e68b6ca",
+        "etag": "\"8850dcf9ff1989135d8e94bb433bdac0a01ec9947ffc0476c5e3be77f6369823\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "microsoft/mu_oem_sample",
+      "captured_head": "8de23f4ae04866a0f4aa8d009f90d232c9bf42b6",
+      "reference_pins": [
+        "b70b4b7bb02c43bf9db2172dfb3ed0457e2361d6"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/microsoft/mu_oem_sample/commits/release%2F202608",
+        "fetched_at": "2026-11-19T03:01:32.017742+00:00",
+        "path": "microsoft--mu_oem_sample--head.json",
+        "bytes": 6405,
+        "sha256": "a68a28049e6ee9aaaab38f6dfce6f1bfcae63071fd93b239a6bf099f4594dfeb",
+        "etag": "\"3bd35ff018abfc19890fc35adf15b12a0d8ca61bc5945cf827c06876032e5730\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "microsoft/mu_plus",
+      "captured_head": "b85fb3793c7a7b1991ceff8257912825025866a9",
+      "reference_pins": [
+        "b8d46c71610318e36a661819e1e3c0b8bdda413a"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/microsoft/mu_plus/commits/release%2F202608",
+        "fetched_at": "2026-11-19T03:01:34.035898+00:00",
+        "path": "microsoft--mu_plus--head.json",
+        "bytes": 6384,
+        "sha256": "c52f7fd8dc9dac250ad560aba8eb8f53a2ded6ddcf3984b5c875c5f888e1753f",
+        "etag": "\"5d12549994f214abdad1ad672415cfd820f05a6b91ac20693ed19e2376c3f2ad\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "nullmoth/nvidia-macos-driver",
+      "captured_head": "87e524ab36f12d17c04626d6cf7fc3bde1cc63e4",
+      "reference_pins": [
+        "637282334617d27bccf8aa2448497c0f19465dc8"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/nullmoth/nvidia-macos-driver/commits/main",
+        "fetched_at": "2026-11-19T03:01:36.995588+00:00",
+        "path": "nullmoth--nvidia-macos-driver--head.json",
+        "bytes": 2728,
+        "sha256": "9b2738d92a897d320e0a4bd70d1b955b6f7b312e1f41bef7c98d84c5fcec91b0",
+        "etag": "\"85a10b1aedf8c1e2d7de375b623cf7ca234ba5b92d7ad48ba5f38b47ae4b19a6\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "openssl/openssl",
+      "captured_head": "3a3f13563825c34b0cc0c78694adcadd890a2875",
+      "reference_pins": [
+        "67b5686b4419b4cb8caa502711c41815f5279751"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/openssl/openssl/commits/master",
+        "fetched_at": "2026-11-19T03:01:38.193613+00:00",
+        "path": "openssl--openssl--head.json",
+        "bytes": 34552,
+        "sha256": "abd9b8038a189198b76a0048c21f50dcf2c0dd2ef0657a8a3e6757d95ba7a98f",
+        "etag": "\"a2be6f8f5bcd2b8dcb9d36408adfaa8529498c63dc57f9ad794b8ee1f94b7ec5\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "steelbrain/metal2vulkan",
+      "captured_head": "d9236a8a11d3b90a1aa27b54e2d74d3891c4d2e5",
+      "reference_pins": [
+        "842fd73b71f4c595810651bb61d8a0c48f486845"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/steelbrain/metal2vulkan/commits/master",
+        "fetched_at": "2026-11-19T03:01:37.960319+00:00",
+        "path": "steelbrain--metal2vulkan--head.json",
+        "bytes": 8121,
+        "sha256": "47872f3a1506418b124c588991c5c51aabf56167172e5fa0f8ce7bc1384c198f",
+        "etag": "\"099b00a4714a97c4ecf84cdb1dec45c91ba38e7fb8d310340255534a0fb1a948\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    },
+    {
+      "repository": "ucb-bar/berkeley-softfloat-3",
+      "captured_head": "07ebd29db0cfb55723a79fbbffe99103ef38e305",
+      "reference_pins": [
+        "a0c6494cdc11865811dec815d5c0049fba9d82a8"
+      ],
+      "capture_evidence": {
+        "url": "https://api.github.com/repos/ucb-bar/berkeley-softfloat-3/commits/master",
+        "fetched_at": "2026-11-19T03:01:38.391154+00:00",
+        "path": "ucb-bar--berkeley-softfloat-3--head.json",
+        "bytes": 14806,
+        "sha256": "c5ea41591b4027f122cc6fff0d77ef8e022a51e11911c9d780b2ae612b28c468",
+        "etag": "\"bfa2d423e26cfdc3a8bb1036029af85a9ac677517c7822063a9f6ca5db1a2716\""
+      },
+      "hardware_validation": "not-tested",
+      "decision": "not-applicable",
+      "reason": "Rolling repository HEAD is not selected by the official sheng OS27 ABI/source lock; retain the exact reference/version pins and existing reviewed fixes. This disposition concerns upgrading HEAD, not removal of the pinned dependency."
+    }
+  ],
+  "repository_count": 56,
+  "interpretation": "HEAD-upgrade disposition; every pinned dependency remains in its selected input graph",
+  "native_build": "pending",
+  "hardware": "not-tested"
+}

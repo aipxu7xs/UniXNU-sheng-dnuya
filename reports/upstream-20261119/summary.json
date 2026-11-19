@@ -1,0 +1,45 @@
+{
+  "snapshot_sha256": "92158731b9f32509b7ccd612ab25eea118f24eaa68b32aa8722be424b646f547",
+  "generated_at": "2026-11-19T10:27:15.700113+00:00",
+  "target": "sheng / iPadOS 27.0.1 24A446",
+  "root_commits": {
+    "total": 1416,
+    "decisions": {
+      "integrated": 849,
+      "not-applicable": 567
+    }
+  },
+  "root_paths": {
+    "total": 443,
+    "decisions": {
+      "not-applicable": 309,
+      "integrated": 134
+    },
+    "structural_containers": 52
+  },
+  "soc_commits": {
+    "total": 9,
+    "decisions": {
+      "integrated": 9
+    }
+  },
+  "component_extension_commits": {
+    "total": 881,
+    "decisions": {
+      "not-applicable": 639,
+      "integrated": 242
+    }
+  },
+  "unmerged_pr_files": {
+    "total": 15482,
+    "decisions": {
+      "pending-validation": 3826,
+      "not-applicable": 11656
+    }
+  },
+  "unresolved_root_file_decisions": 0,
+  "source_integration": "sealed overlay; not yet executed in CI",
+  "native_build": "pending",
+  "device_boot": "not-tested",
+  "full_sync_claim": false
+}

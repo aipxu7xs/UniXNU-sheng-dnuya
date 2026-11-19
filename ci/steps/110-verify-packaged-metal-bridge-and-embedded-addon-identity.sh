@@ -1,15 +1,17 @@
 python3 - <<'PY'
 import hashlib,json,pathlib,struct,zlib,os,subprocess,tempfile
 BASE=pathlib.Path('UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27')
-COMPONENT='54c18dcffc359d21f4e620c3b38b3908cecc46a5';TRANSLATOR='8b9b2875ab2ca32de30db6d5c396e1469e164bee'
+COMPONENT='c9ebd2fb17253996f0a8d835c9ab7c2f740778e1';TRANSLATOR='46e7cc96a284150bdf19b4a6a7890b0a8bc0ef71'
 def sha(path):return hashlib.file_digest(path.open('rb'),'sha256').hexdigest()
-def translator_tree(source,overlay):
+def translator_tree(source,overlays):
  assert subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()==TRANSLATOR
  # Scratch index only: bind actual patched worktree and exact selected overlay to the same Git tree.
  with tempfile.TemporaryDirectory() as td:
   env=dict(os.environ,GIT_INDEX_FILE=str(pathlib.Path(td)/'index'))
   def git(*args):return subprocess.check_output(['git','-C',str(source),*args],env=env,text=True).strip()
-  git('read-tree','HEAD');git('apply','--cached',str(overlay.resolve()));expected=git('write-tree')
+  git('read-tree','HEAD')
+  for overlay in overlays:git('apply','--cached',str(overlay.resolve()))
+  expected=git('write-tree')
   git('read-tree','HEAD');git('add','-A');actual=git('write-tree')
   assert actual==expected,'translator working tree differs from selected overlay'
   return actual
@@ -19,7 +21,7 @@ def verify():
  assert manifest['revisions']['package:main']=='71b8a5a3d78edfe6404a706c1ebccd9915fb3c5e'
  assert manifest['revisions']['driver:AdrenoMetal']==COMPONENT
  tree=BASE/'tree';build=tree/'build'
- expected_scripts={'scripts/build-adreno-metal-bridge.py':'83fb5781a5da900b4661870bf4b9e87194985141be6522d450af82b02e18d67f','scripts/build-adreno-metal-plugin.py':'332401a82955428ee88e0563e0c9a3c686641096e498fccb0eaddaedeb2682ac','scripts/data/gpu-metal-vulkan-inputs.json':'090a7c255f1a393e3013b4b54b94048dc463e5d3ea1fff8cf580beea46a576cb'}
+ expected_scripts={'scripts/build-adreno-metal-bridge.py': 'b87153a5d025dd0eeb0b98150a362ca016f5c2ec263ed3a9a05ff40f69feae9a', 'scripts/build-adreno-metal-plugin.py': '332401a82955428ee88e0563e0c9a3c686641096e498fccb0eaddaedeb2682ac', 'scripts/data/gpu-metal-vulkan-inputs.json': '004f3b42e3e6e599b2ebb286c22796c4fc71e40116916762d02b164a7d4b1505'}
  for relative,digest in expected_scripts.items():assert sha(tree/relative)==digest,relative+' assembled-tree override'
  record=json.loads((build/'adreno-metal-bridge/ios27/libadreno_metal_bridge.a.json').read_text());identity=record['identity']
  assert identity['target']=='ios27' and identity['component']==COMPONENT and identity['translator']==TRANSLATOR
@@ -29,7 +31,7 @@ def verify():
  assert info['target']=='ios27' and info['component']==COMPONENT and info['bridge_component']==COMPONENT
  assert info['runtime']==identity['runtime'] and info['cache_build']==info['runtime']+'-'+info['turnip_uuid']
  assert len(info['turnip_uuid'])==32 and not info['runtime_draw_checks']
- source_tree=translator_tree(tree/'.cache/gpu-reference/metal2vulkan',tree/'drivers/AdrenoMetal/bridge/patches/0053-main-optimizations-on-development-8b9b2875.patch')
+ source_tree=translator_tree(tree/'.cache/gpu-reference/metal2vulkan',[tree/'drivers/AdrenoMetal/bridge/patches'/name for name in ('0063-main-optimizations-on-development-46e7cc96.patch','0064-copies-leave-unreachable-pages-alone.patch')])
  assert identity['source_tree']==source_tree
  assert identity['runtime']==hashlib.sha256((TRANSLATOR+'\n'+source_tree).encode()).hexdigest()[:32]
  bundle=plugin.parent
