@@ -107,6 +107,10 @@ jobs:
         if: inputs.os == '27'
         working-directory: device
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/010-repair-gpu-selftest-iova-and-kernel-client-contract.sh"
+      - name: guard unmapped GPU selftest buffers
+        if: inputs.os == '27'
+        working-directory: device
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/010b-guard-unmapped-gpu-selftest-buffers.sh"
       - name: use plain GICR priority stores for the 24A446 fault experiment
         if: inputs.os == '27'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/011-use-plain-gicr-priority-stores-for-the-24a446-fault-experime.sh"
