@@ -1,0 +1,126 @@
+{
+  "captured_at": "2026-11-19T11:44:15.600816+00:00",
+  "captures": [
+    {
+      "name": "soc-commit-009512d62acc907189648aa51f2066d85940e97d",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/009512d62acc907189648aa51f2066d85940e97d",
+      "sha256": "71d0ec3a5797a674ffdc3dd9ee203d3ca5e66c27d4f76ecfd903bc5985fdba88",
+      "commit": "009512d62acc907189648aa51f2066d85940e97d",
+      "files": 5,
+      "parents": [
+        "a9f45dc60c035084b95463781538380f4c3606c9"
+      ]
+    },
+    {
+      "name": "soc-commit-516e29e138cdcc996c7083f0661e3629bd1225b3",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/516e29e138cdcc996c7083f0661e3629bd1225b3",
+      "sha256": "e8cc20eb208442cf1192521c6f940c4c656d0a72a58ab8425b777b3f36100a20",
+      "commit": "516e29e138cdcc996c7083f0661e3629bd1225b3",
+      "files": 1,
+      "parents": [
+        "009512d62acc907189648aa51f2066d85940e97d"
+      ]
+    },
+    {
+      "name": "soc-commit-2b02fd417714278d4048615a238b4c2f89697c49",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/2b02fd417714278d4048615a238b4c2f89697c49",
+      "sha256": "5886c3ff129756255e9cfe2832614bd73dfa357cdbace419dbbb3e1b1c0fdf04",
+      "commit": "2b02fd417714278d4048615a238b4c2f89697c49",
+      "files": 2,
+      "parents": [
+        "516e29e138cdcc996c7083f0661e3629bd1225b3"
+      ]
+    },
+    {
+      "name": "soc-commit-f8f6023e67e4507b6edee155955ae29deab44ac0",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/f8f6023e67e4507b6edee155955ae29deab44ac0",
+      "sha256": "2bcbeaf7c384abf676e99b411774c039d181a3d3e9bc8239a89c4cbd793b655b",
+      "commit": "f8f6023e67e4507b6edee155955ae29deab44ac0",
+      "files": 1,
+      "parents": [
+        "2b02fd417714278d4048615a238b4c2f89697c49"
+      ]
+    },
+    {
+      "name": "soc-commit-9c16817f4877a6f5723adf256db1c1b59af2b791",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/9c16817f4877a6f5723adf256db1c1b59af2b791",
+      "sha256": "13c6c26c9d9bdcefdfc1158f290a618dd19c0bcf32037e104a61830aa06c09c3",
+      "commit": "9c16817f4877a6f5723adf256db1c1b59af2b791",
+      "files": 2,
+      "parents": [
+        "f8f6023e67e4507b6edee155955ae29deab44ac0"
+      ]
+    },
+    {
+      "name": "soc-commit-97665e28578483082b674e8375a8fa65f4cf49cf",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/97665e28578483082b674e8375a8fa65f4cf49cf",
+      "sha256": "cf01a28b97d6cc9350429e93ffa7b4019d0e80b5c0d4bdc8669adfe7f45ec23c",
+      "commit": "97665e28578483082b674e8375a8fa65f4cf49cf",
+      "files": 1,
+      "parents": [
+        "9c16817f4877a6f5723adf256db1c1b59af2b791"
+      ]
+    },
+    {
+      "name": "soc-commit-e2c6d4ce01eaa030222f8acefa48929220c35f27",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/e2c6d4ce01eaa030222f8acefa48929220c35f27",
+      "sha256": "02a0afa0bdf95f85d8ad53e93a7df50b02c14593176d64629a8a03a5addbe13b",
+      "commit": "e2c6d4ce01eaa030222f8acefa48929220c35f27",
+      "files": 2,
+      "parents": [
+        "97665e28578483082b674e8375a8fa65f4cf49cf"
+      ]
+    },
+    {
+      "name": "soc-commit-f04fd8b13e929bf5dd4fea0f40fa7f971a02de0d",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/f04fd8b13e929bf5dd4fea0f40fa7f971a02de0d",
+      "sha256": "32a3fbab582b5ff6ad88020ae519bf1248108963a5f3bfeb05cb786ff41a848e",
+      "commit": "f04fd8b13e929bf5dd4fea0f40fa7f971a02de0d",
+      "files": 2,
+      "parents": [
+        "e2c6d4ce01eaa030222f8acefa48929220c35f27"
+      ]
+    },
+    {
+      "name": "soc-commit-2dc650ca76ae38715cd0712e60a44b14fe251745",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/2dc650ca76ae38715cd0712e60a44b14fe251745",
+      "sha256": "dd5919bbb4e7cf0082196bd3887c051333654d9c00a8b849f15bd918e6034a57",
+      "commit": "2dc650ca76ae38715cd0712e60a44b14fe251745",
+      "files": 1,
+      "parents": [
+        "f04fd8b13e929bf5dd4fea0f40fa7f971a02de0d"
+      ]
+    },
+    {
+      "name": "live-UniXNU-sheng",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sheng/commits/main",
+      "sha256": "a84b7a81a6cf79aab2f81ec8fbea55fc319c7dba6a2b624556f775cf24a2bd3c",
+      "commit": "c8f92b208068eeaa4cd2b0f592671f04ee70076e",
+      "files": 1,
+      "parents": [
+        "57f9428f8825bfc882552f863f8e8e1839cd7226",
+        "7f269ce619b38706e07f7ff863b1a3babdb0f727"
+      ]
+    },
+    {
+      "name": "live-UniXNU",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU/commits/main",
+      "sha256": "9d46631f8bf04f658f4be0c01e78b012821d1e926236ffe10c09201298e05a2d",
+      "commit": "8542980d02b4d2cc5c32ee3542de1760b2562aac",
+      "files": 35,
+      "parents": [
+        "519d80242a5028ee123447b01bc3b809baed565f"
+      ]
+    },
+    {
+      "name": "live-UniXNU-sm8550-common",
+      "url": "https://api.github.com/repos/UniXNU/UniXNU-sm8550-common/commits/main",
+      "sha256": "dd5919bbb4e7cf0082196bd3887c051333654d9c00a8b849f15bd918e6034a57",
+      "commit": "2dc650ca76ae38715cd0712e60a44b14fe251745",
+      "files": 1,
+      "parents": [
+        "f04fd8b13e929bf5dd4fea0f40fa7f971a02de0d"
+      ]
+    }
+  ]
+}

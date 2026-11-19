@@ -1,0 +1,68 @@
+{
+  "source_pin": "2dc650ca76ae38715cd0712e60a44b14fe251745",
+  "all_commits": 9,
+  "all_changed_paths": 10,
+  "other_device_only_exclusions": [],
+  "files": [
+    {
+      "path": "README.md",
+      "blob": "7c10f21b240ed563b89c0ed02ba7543135ca24c2",
+      "status": "modified",
+      "decision": "integrated"
+    },
+    {
+      "path": "kits/Sm8550Platform/Sm8550AppsSmmu.c",
+      "blob": "f1ff2991e639b546f17aaa3a11be727972c144eb",
+      "status": "added",
+      "decision": "integrated"
+    },
+    {
+      "path": "kits/Sm8550Platform/Sm8550AppsSmmu.h",
+      "blob": "17608a0f23dc1d8d1dfc3a0aad1b15a3e2566536",
+      "status": "added",
+      "decision": "integrated"
+    },
+    {
+      "path": "kits/Sm8550Platform/Sm8550Gcc.c",
+      "blob": "1b54f0a5463732eb0862a5cc439f17c298e6054b",
+      "status": "added",
+      "decision": "integrated"
+    },
+    {
+      "path": "kits/Sm8550Platform/Sm8550GeniUart.c",
+      "blob": "d08c769fa2262a59a69ef0dbc8627dae2cd869f2",
+      "status": "added",
+      "decision": "integrated"
+    },
+    {
+      "path": "kits/Sm8550Platform/Sm8550GeniUart.h",
+      "blob": "7f4f45a3dc7a5686ea663db0424c7494833519c3",
+      "status": "added",
+      "decision": "integrated"
+    },
+    {
+      "path": "kits/Sm8550Platform/Sm8550QupDma.c",
+      "blob": "5ea7e4daca6766041c2c2f2c688ccf3059330f92",
+      "status": "added",
+      "decision": "integrated"
+    },
+    {
+      "path": "kits/Sm8550Platform/Sm8550QupDma.h",
+      "blob": "522a9a11d18641fb090a198d38b227528e371404",
+      "status": "added",
+      "decision": "integrated"
+    },
+    {
+      "path": "kits/Sm8550Platform/Sm8550VideoCc.c",
+      "blob": "77fc797cf4f7d91dc68c80cb0b46a11a102b83f3",
+      "status": "added",
+      "decision": "integrated"
+    },
+    {
+      "path": "kits/Sm8550Platform/Sm8550VideoCc.h",
+      "blob": "9e59fb01a8b8e2995a2e2807a4cd5038e7d6ea19",
+      "status": "added",
+      "decision": "integrated"
+    }
+  ]
+}

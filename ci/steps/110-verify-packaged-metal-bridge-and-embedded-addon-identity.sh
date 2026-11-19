@@ -21,7 +21,7 @@ def verify():
  assert manifest['revisions']['package:main']=='71b8a5a3d78edfe6404a706c1ebccd9915fb3c5e'
  assert manifest['revisions']['driver:AdrenoMetal']==COMPONENT
  tree=BASE/'tree';build=tree/'build'
- expected_scripts={'scripts/build-adreno-metal-bridge.py': 'b87153a5d025dd0eeb0b98150a362ca016f5c2ec263ed3a9a05ff40f69feae9a', 'scripts/build-adreno-metal-plugin.py': '332401a82955428ee88e0563e0c9a3c686641096e498fccb0eaddaedeb2682ac', 'scripts/data/gpu-metal-vulkan-inputs.json': '004f3b42e3e6e599b2ebb286c22796c4fc71e40116916762d02b164a7d4b1505'}
+ expected_scripts={'scripts/build-adreno-metal-bridge.py': '55be80858299be65938bbfd45be0700719fc0f61cb2317d4264c427c3a019d73', 'scripts/build-adreno-metal-plugin.py': '332401a82955428ee88e0563e0c9a3c686641096e498fccb0eaddaedeb2682ac', 'scripts/data/gpu-metal-vulkan-inputs.json': '004f3b42e3e6e599b2ebb286c22796c4fc71e40116916762d02b164a7d4b1505'}
  for relative,digest in expected_scripts.items():assert sha(tree/relative)==digest,relative+' assembled-tree override'
  record=json.loads((build/'adreno-metal-bridge/ios27/libadreno_metal_bridge.a.json').read_text());identity=record['identity']
  assert identity['target']=='ios27' and identity['component']==COMPONENT and identity['translator']==TRANSLATOR
@@ -31,7 +31,7 @@ def verify():
  assert info['target']=='ios27' and info['component']==COMPONENT and info['bridge_component']==COMPONENT
  assert info['runtime']==identity['runtime'] and info['cache_build']==info['runtime']+'-'+info['turnip_uuid']
  assert len(info['turnip_uuid'])==32 and not info['runtime_draw_checks']
- source_tree=translator_tree(tree/'.cache/gpu-reference/metal2vulkan',[tree/'drivers/AdrenoMetal/bridge/patches'/name for name in ('0063-main-optimizations-on-development-46e7cc96.patch','0064-copies-leave-unreachable-pages-alone.patch')])
+ source_tree=translator_tree(tree/'.cache/gpu-reference/metal2vulkan',[tree/'drivers/AdrenoMetal/bridge/patches'/name for name in ('0063-main-optimizations-on-development-46e7cc96.patch','0064-copies-leave-unreachable-pages-alone.patch','0065-ipados-mach-copied-pages.patch')])
  assert identity['source_tree']==source_tree
  assert identity['runtime']==hashlib.sha256((TRANSLATOR+'\n'+source_tree).encode()).hexdigest()[:32]
  bundle=plugin.parent
@@ -52,6 +52,8 @@ def verify():
   length,mode,size,packed=struct.unpack_from('<IIQQ',data,at);at+=24
   assert 1<length<=160 and at+length<=len(data) and data[at+length-1]==0
   name=data[at:at+length-1].decode();assert not name.startswith('/') and '..' not in pathlib.PurePosixPath(name).parts
+  assert not name.startswith('GPUBundles/'), 'macOS addon prefix in iPadOS package'
+  assert 'Shader Cache.app/' not in name and '/Contents/MacOS/' not in name and 'LaunchAgents/' not in name, 'desktop-only addon entry: '+name
   at+=(length+7)&~7;assert at+packed<=len(data)
   for basename,expected in expected_entries.items():
    if name.endswith('NativeAdrenoMetal.bundle/'+basename):

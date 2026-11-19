@@ -1,0 +1,46 @@
+{
+  "schema": "sheng-upstream-repository-policy-v2",
+  "clarified_at": "2026-11-19T11:40:41.827326+00:00",
+  "target": "sheng / iPadOS 27.0.1 24A446",
+  "snapshot_sha256": "92158731b9f32509b7ccd612ab25eea118f24eaa68b32aa8722be424b646f547",
+  "fixed_heads": {
+    "device": "c8f92b208068eeaa4cd2b0f592671f04ee70076e",
+    "framework": "519d80242a5028ee123447b01bc3b809baed565f",
+    "soc": "2dc650ca76ae38715cd0712e60a44b14fe251745",
+    "snapshot_sha256": "92158731b9f32509b7ccd612ab25eea118f24eaa68b32aa8722be424b646f547"
+  },
+  "repositories": {
+    "UniXNU/UniXNU-sheng": {
+      "source_sync": "all fixed upstream endpoint changes, preserving declared local adaptations",
+      "target_selection": "macOS/Linux-only utilities remain upstream source; not enabled or packaged by the iPadOS profile"
+    },
+    "UniXNU/UniXNU": {
+      "source_sync": "per-file/per-hunk adoption inventory for shared sheng/iPadOS 27 needs",
+      "excluded": "macOS-only desktop features and other-device-specific changes"
+    },
+    "UniXNU/UniXNU-sm8550-common": {
+      "source_sync": "all fixed endpoint changes except adaptations exclusive to other devices",
+      "range_commits": 9,
+      "range_files": 10,
+      "other_device_only_changes_found": 0
+    }
+  },
+  "validation": {
+    "source": "host pending",
+    "native": "pending rebuild",
+    "hardware": "not-tested"
+  },
+  "root_overlay_files": 167,
+  "manifest_sha256": "aed1ea81214e5b5c6ddcf230acbe2d363928b149cf52df1f1d2a1502918823d8",
+  "removed_framework_adoptions": {
+    "scripts/make-gpu-addon.py": "The endpoint delta adds the macOS Shader Cache.app, Aqua LaunchAgent and LaunchServices registration only.",
+    "tests/build/test_icon_cache_job.py": "Tests the excluded desktop icon-cache job only.",
+    "tests/build/test_shader_cache_addon.py": "Tests the excluded macOS Shader Cache.app packaging only."
+  },
+  "mixed_framework_exclusions": {
+    "devices.toml": "all other device records",
+    "scripts/build-boot-runtime.py": "ICON_CACHE_FUNCTION, icon_cache_job, desktop LaunchDaemon creation",
+    "scripts/build-fileset-release-reference.py": "macOS target macro/cache/deployment selection",
+    "tests/build/test_release_reference.py": "macOS target-definition test"
+  }
+}

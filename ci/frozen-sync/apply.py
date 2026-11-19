@@ -8,8 +8,8 @@ from pathlib import Path, PurePosixPath
 import subprocess
 
 SNAPSHOT = '92158731b9f32509b7ccd612ab25eea118f24eaa68b32aa8722be424b646f547'
-MANIFEST_SHA256 = '7a0ea4c8fcb4d0a5945cda44029980d3e5ab008744eaf2cb06c23527465369d2'
-FILE_COUNT = 127
+MANIFEST_SHA256 = 'aed1ea81214e5b5c6ddcf230acbe2d363928b149cf52df1f1d2a1502918823d8'
+FILE_COUNT = 167
 
 
 def sha(data):

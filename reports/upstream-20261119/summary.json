@@ -1,19 +1,19 @@
 {
   "snapshot_sha256": "92158731b9f32509b7ccd612ab25eea118f24eaa68b32aa8722be424b646f547",
-  "generated_at": "2026-11-19T10:27:15.700113+00:00",
+  "generated_at": "2026-11-19T11:43:37.388359+00:00",
   "target": "sheng / iPadOS 27.0.1 24A446",
   "root_commits": {
     "total": 1416,
     "decisions": {
-      "integrated": 849,
-      "not-applicable": 567
+      "integrated": 1122,
+      "not-applicable": 294
     }
   },
   "root_paths": {
     "total": 443,
     "decisions": {
-      "not-applicable": 309,
-      "integrated": 134
+      "not-applicable": 265,
+      "integrated": 178
     },
     "structural_containers": 52
   },
@@ -33,13 +33,33 @@
   "unmerged_pr_files": {
     "total": 15482,
     "decisions": {
-      "pending-validation": 3826,
-      "not-applicable": 11656
+      "pending-validation": 3820,
+      "not-applicable": 11662
     }
   },
   "unresolved_root_file_decisions": 0,
-  "source_integration": "sealed overlay; not yet executed in CI",
-  "native_build": "pending",
+  "source_integration": "167 hash-bound root source writes plus 16 exact component HEAD/index bindings; fresh native rebuild pending",
+  "native_build": "previous run 44507255994 failed; repaired source awaiting rebuild",
   "device_boot": "not-tested",
-  "full_sync_claim": false
+  "full_sync_claim": false,
+  "repository_policy": "repository-policy-v2",
+  "root_overlay_source_files": 167,
+  "selected_root_file_or_gitlink_entries": 178,
+  "source_judgments_complete": true,
+  "per_repository": {
+    "device": {
+      "endpoint_entries": 158,
+      "source_decisions": {
+        "integrated": 158
+      }
+    },
+    "framework": {
+      "endpoint_entries": 233,
+      "source_decisions": {
+        "integrated": 20,
+        "not-applicable": 213
+      }
+    }
+  },
+  "soc_changed_paths": 10
 }

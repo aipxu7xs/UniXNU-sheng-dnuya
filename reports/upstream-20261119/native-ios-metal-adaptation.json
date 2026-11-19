@@ -1,0 +1,23 @@
+{
+  "status": "PASS_PATCH_APPLICATION_AND_SOURCE_HOST",
+  "failed_native_run": 44507255994,
+  "error": "E0425 read_pages missing on arm64e-apple-ios",
+  "upstream_translator": "46e7cc96a284150bdf19b4a6a7890b0a8bc0ef71",
+  "patch": "0065-ipados-mach-copied-pages.patch",
+  "patch_sha256": "d854ac31bd9c1c91e9c7c5c1cecb73f5ec121bf05cd3b84e02df003c0f24f5d7",
+  "patched_translator_tree": "e7427f54980c4c1c750e040bfcb701320ad1d65e",
+  "source_files": {
+    "crates/metal2vulkan-runtime/src/copied.rs": {
+      "before_sha256": "9204afa1315f5be5088687148afeda8b8412380268a36bb7bcf4c3df32caa7f3",
+      "after_sha256": "2d8322a84c4e95b0e0cf546b8d6f8899b03e684764e3abfe05e8e28969b76a35"
+    },
+    "crates/metal2vulkan-runtime/src/host_memory.rs": {
+      "before_sha256": "6a43e461583f9932dc83988cb7a62375e92c28c4964bc786ffe21af8d6caddf3",
+      "after_sha256": "a2923f96a39dd92504baa291e5fae426b7576d0b9d734c5c1951fc0e6d2babd7"
+    }
+  },
+  "old_overlay_manifest": "7a0ea4c8fcb4d0a5945cda44029980d3e5ab008744eaf2cb06c23527465369d2",
+  "new_overlay_manifest": "20dd7a807fe5e9a969617e5ae132b0fcce952676f79396936ad7ab736b8c1b74",
+  "native_rebuild": "pending",
+  "hardware_verified": false
+}

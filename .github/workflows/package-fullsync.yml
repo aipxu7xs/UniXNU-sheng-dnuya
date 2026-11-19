@@ -483,6 +483,8 @@ jobs:
           python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/apply.py" "$GITHUB_WORKSPACE" --check
           python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/apply.py" "$GITHUB_WORKSPACE"
           python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/apply.py" "$GITHUB_WORKSPACE" --verify
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/verify-ipados-scope.py" "$GITHUB_WORKSPACE"
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/run-targeted-upstream-tests.py" "$GITHUB_WORKSPACE/UniXNU"
       - name: verify final reviewed source digests before packaging
         if: inputs.os == '27'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/104-verify-final-reviewed-source-digests-before-packaging.sh"
@@ -500,6 +502,7 @@ jobs:
         run: |
           python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/apply.py" "$GITHUB_WORKSPACE" --verify --postbuild > frozen-upstream-postbuild.json
           cp frozen-upstream-effective.json frozen-upstream-postbuild.json UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/logs/
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/frozen-sync/verify-ipados-scope.py" "$GITHUB_WORKSPACE" > UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/logs/ipados-scope.json
       - name: verify resolved reviewed source UFS and diagnostic symbols
         if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
         run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/106-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh"

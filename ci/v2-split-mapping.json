@@ -6,8 +6,8 @@
   },
   "split_workflow": {
     "path": ".github/workflows/package-fullsync.yml",
-    "sha256": "039d7faa4107fbeca06175c833045c90174bca0ad67b9518111e353465719a77",
-    "bytes": 40090
+    "sha256": "80bb3420edf50b8c5a991ed7199d280b0e340c7dd5f1b37edf172f678df855e2",
+    "bytes": 40495
   },
   "checkout_step": {
     "after_step": 0,
@@ -965,8 +965,8 @@
       "index": 110,
       "name": "verify packaged Metal bridge and embedded addon identity",
       "file": "ci/steps/110-verify-packaged-metal-bridge-and-embedded-addon-identity.sh",
-      "sha256": "1e5faa9ddeb4a4bf00d02b6ae22f6a1caecf841daa0e1efd7bbf3fe7e3e3d1b0",
-      "bytes": 5066,
+      "sha256": "2bddfaed9e05d52ab6c03e7d2d988584edca292c38b6803409a3fba5b7420e8c",
+      "bytes": 5331,
       "workflow_call_count": 1,
       "status": "active"
     },
@@ -1145,11 +1145,13 @@
   },
   "fixed_upstream_20261119": {
     "snapshot_sha256": "92158731b9f32509b7ccd612ab25eea118f24eaa68b32aa8722be424b646f547",
-    "source_file_count": 127,
+    "source_file_count": 167,
     "component_repositories": 16,
-    "installer_sha256": "717765221bfcbe3ad233505c3278a1ffefb8d377a5a39763984fa7bfcdee3449",
-    "manifest_sha256": "7a0ea4c8fcb4d0a5945cda44029980d3e5ab008744eaf2cb06c23527465369d2",
+    "installer_sha256": "6ee48599b97f7ff92ea553e56f347e85747cdf013cea1f1af69a6b455af43395",
+    "manifest_sha256": "aed1ea81214e5b5c6ddcf230acbe2d363928b149cf52df1f1d2a1502918823d8",
     "native_build": "pending",
-    "hardware": "not-tested"
+    "hardware": "not-tested",
+    "ipados_scope_gate_sha256": "063fa3b91a2510b7e8a914b58b3071252c91a14c3bbcb49eaaf80734ef5cd278",
+    "targeted_upstream_tests_sha256": "59afdcf7351df140f74f5e5d55742a56d5d6d325a6787e406e5d79653a7de0ee"
   }
 }

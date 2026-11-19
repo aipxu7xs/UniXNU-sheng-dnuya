@@ -10,7 +10,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "AdrenoMetal",
@@ -19,10 +20,20 @@
       "selected_pin": "c9ebd2fb17253996f0a8d835c9ab7c2f740778e1",
       "effective_pin": "c9ebd2fb17253996f0a8d835c9ab7c2f740778e1",
       "source": "C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\component-sources\\AdrenoMetal-c9ebd2fb1725",
-      "adaptations": [],
+      "adaptations": [
+        "bridge/patches/0065-ipados-mach-copied-pages.patch"
+      ],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "adaptation_reason": "Native iPadOS compile failure: share Darwin Mach read/region paths with iOS; retain upstream unreachable-page checks",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged",
+      "unselected_target_files": [
+        "ShaderCache/*",
+        "tools/build-shader-cache-app.py",
+        "tools/test-shader-cache-activity.mm"
+      ],
+      "target_reason": "macOS desktop cache application is not built or packaged by the ios27 entrypoint; shared bridge/frontend updates are selected"
     },
     {
       "name": "AppleKeyStoreState",
@@ -34,7 +45,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "ArmCpu",
@@ -46,7 +58,12 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged",
+      "disabled_features": [
+        "platform-sleep"
+      ],
+      "selected_fix": "single-instruction MMIO loads/stores"
     },
     {
       "name": "ArmDTPlatform",
@@ -58,7 +75,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "Ath12kWifi",
@@ -70,7 +88,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "DarwinBoot",
@@ -82,7 +101,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "GopFramebuffer",
@@ -94,7 +114,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "QcaBluetooth",
@@ -107,7 +128,11 @@
       "decision": "integrated",
       "validation": "source-staged",
       "hardware": "not-tested",
-      "conflict_resolution": "Current upstream already contains all three reviewed discovery-counter changes and their tests; adopt its complete files without duplicating counters."
+      "conflict_resolution": "Current upstream already contains all three reviewed discovery-counter changes and their tests; adopt its complete files without duplicating counters.",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged",
+      "unselected_target_files": [
+        "tools/native_macos27.py"
+      ]
     },
     {
       "name": "QcomDwc3",
@@ -121,7 +146,8 @@
       ],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "RamBlock",
@@ -133,7 +159,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "ShengHidInput",
@@ -145,7 +172,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "ShengNovatekTouch",
@@ -157,7 +185,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "ShengPreflight",
@@ -169,7 +198,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "ShengUfs",
@@ -181,7 +211,8 @@
       "adaptations": [],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     },
     {
       "name": "XnuPrelink",
@@ -196,7 +227,8 @@
       ],
       "decision": "integrated",
       "validation": "source-staged",
-      "hardware": "not-tested"
+      "hardware": "not-tested",
+      "target_scope": "canonical pinned source with declared local adaptations; only configured iPadOS build inputs are compiled and packaged"
     }
   ],
   "conflicts": []

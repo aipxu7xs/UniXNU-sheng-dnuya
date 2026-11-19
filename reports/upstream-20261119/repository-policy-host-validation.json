@@ -1,0 +1,54 @@
+{
+  "status": "PARTIAL_HOST_PLATFORM_LIMITATIONS",
+  "time": "2026-11-19T11:56:46.467181+00:00",
+  "suites": [
+    {
+      "suite": "test_archive_providers.py",
+      "exit": 0,
+      "tail": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nOK\n"
+    },
+    {
+      "suite": "test_firmware_toolchain.py",
+      "exit": 1,
+      "tail": "t-validation-tree\\UniXNU\\scripts\\unixnu\\util.py\", line 54, in run\n    result = subprocess.run(command, cwd=cwd, env=env, text=True, capture_output=True)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files\\WindowsApps\\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\\dependencies\\python\\Lib\\subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Program Files\\WindowsApps\\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\\dependencies\\python\\Lib\\subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"C:\\Program Files\\WindowsApps\\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\\dependencies\\python\\Lib\\subprocess.py\", line 1538, in _execute_child\n    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nOSError: [WinError 193] %1 \u4e0d\u662f\u6709\u6548\u7684 Win32 \u5e94\u7528\u7a0b\u5e8f\u3002\n\n----------------------------------------------------------------------\nRan 7 tests in 0.104s\n\nFAILED (errors=1)\n"
+    },
+    {
+      "suite": "test_payload_pending.py",
+      "exit": 0,
+      "tail": "== ramdisk: empty; build payload or pass --ramdisk FILE to include configured boot entries\n== ramdisk: C:\\Users\\I\\AppData\\Local\\Temp\\payload-pending-test-aqf5aoku\\payload\\payload.img (use --ramdisk none for an empty one)\n== ramdisk: C:\\Users\\I\\AppData\\Local\\Temp\\payload-pending-test-w6mqr195\\payload\\payload.img (use --ramdisk none for an empty one)\n== ramdisk: C:\\Users\\I\\AppData\\Local\\Temp\\payload-pending-test-_ycf0khz\\payload\\payload.img (use --ramdisk none for an empty one)\n== ramdisk: C:\\Users\\I\\AppData\\Local\\Temp\\payload-pending-test-ytru0qau\\payload\\payload.img (use --ramdisk none for an empty one)\n......\n----------------------------------------------------------------------\nRan 6 tests in 0.067s\n\nOK\n"
+    },
+    {
+      "suite": "test_release_reference.py",
+      "exit": 0,
+      "tail": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.013s\n\nOK\n"
+    },
+    {
+      "suite": "test_root_policy_inputs.py",
+      "exit": 1,
+      "tail": "....F.\n======================================================================\nFAIL: test_payload_and_runtime_builders_are_checked_early (test_root_policy_inputs.RootPolicyInputTests.test_payload_and_runtime_builders_are_checked_early)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\I\\WorkBuddy\\2026-11-14-15-48-35\\outputs\\sheng-os27-integration-20261119\\host-validation-tree\\UniXNU\\tests\\build\\test_root_policy_inputs.py\", line 87, in test_payload_and_runtime_builders_are_checked_early\n    self.assertIn('scripts/wifi.py', str(caught.exception))\nAssertionError: 'scripts/wifi.py' not found in 'Build inputs missing:\\n  C:\\\\Users\\\\I\\\\AppData\\\\Local\\\\Temp\\\\tmpxu2tb_2s\\\\scripts\\\\plugin.py\\n  C:\\\\Users\\\\I\\\\AppData\\\\Local\\\\Temp\\\\tmpxu2tb_2s\\\\scripts\\\\wifi.py'\n\n----------------------------------------------------------------------\nRan 6 tests in 0.060s\n\nFAILED (failures=1)\n"
+    }
+  ],
+  "source_scope": {
+    "status": "PASS_SOURCE_SCOPE",
+    "profile": "ipados-27.0.1-24A446",
+    "source_synchronization_is_separate_from_activation": true,
+    "platform_sleep_enabled": false,
+    "desktop_icon_cache_adopted": false,
+    "data_preservation_argument": "data-persist=2",
+    "exact_shared_builders": {
+      "UniXNU/scripts/make-gpu-addon.py": "a7132ff58fd92bda2995f49d3344224a6ee14d1ae7801a9646dda529d1617979",
+      "UniXNU/scripts/build-boot-runtime.py": "7ff232fa13dcf3b9c3c8ad42d1d3def664503421b2b2820d099a97d507b6a729",
+      "UniXNU/scripts/build-fileset-release-reference.py": "ddb66164bca695a7ff329b71d2088277d106494a11930b11e88176fc369d86c0"
+    },
+    "native_compilation_verified": false,
+    "hardware_verified": false
+  },
+  "native_build_executed": false,
+  "hardware_verified": false,
+  "native_posix_tests_required": true,
+  "platform_limitations": {
+    "test_firmware_toolchain.py": "Windows cannot directly execute the POSIX shebang tool fixture (WinError 193).",
+    "test_root_policy_inputs.py": "Upstream test expects a POSIX scripts/wifi.py path; Windows emits a backslash-separated path."
+  },
+  "native_runner_gates_added": true
+}

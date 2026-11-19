@@ -77,7 +77,7 @@ result = "On cold-cache boot 41ee75ce, the Home Screen displayed complete Settin
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "firmware"
@@ -113,7 +113,7 @@ result = "2026-10-26: DEBUG firmware and a 219283456-byte boot image built for t
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "cpu"
@@ -143,7 +143,7 @@ result = "Boot da1dbd496 recorded 6,680 exact SpringBoard samples with CPU IDs, 
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "memory"
@@ -208,7 +208,7 @@ result = "[os_overrides.\"macos-27.3-26C5035r\".payload.runtime] data_seed_tool 
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "display"
@@ -287,7 +287,7 @@ result = "Five fingers retained distinct IDs through a 250 ms pause. All 57 rapi
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "keyboard"
@@ -379,7 +379,7 @@ result = "iPadOS 27 build 24A446, same manual sequence in each boot. metal-flow=
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "bluetooth"
@@ -469,7 +469,7 @@ result = "AirPods Pro pair, reconnect after reboot and play A2DP at normal volum
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "usb"
@@ -494,7 +494,7 @@ result = "05ac:12ab at Device Speed 4 with a USB 3 cable; Trust accepted on the 
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "network"
@@ -538,7 +538,7 @@ result = "The launchd cache fixture checks that the Wi-Fi job and other stock jo
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "audio"
@@ -699,7 +699,7 @@ result = "On macOS the keyboard firmware image is placed in __DATA,__firmware."
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "diagnostics"
@@ -747,7 +747,7 @@ result = "With cs-profile=1, exact cross-calls target the SpringBoard main threa
 [[area.evidence]]
 kind = "source"
 reference = "reports/upstream-20261119/README.md"
-result = "2026-11-19 fixed sheng/24A446 upstream endpoint selected by the hash-bound ci/frozen-sync installer. Host source, configuration and Python checks passed. Native CI and this device's new boot remain pending; inherited upstream device evidence is not a new observation for this integration. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
+result = "2026-11-19 repository-scoped synchronization: full sheng, 20 selected shared framework entries, and all 9 SM8550-common commits (10 paths, no other-board-only adaptations). The hash-bound installer selects 167 root files and 16 component repositories. Source scope separates synchronized macOS utilities from iPadOS activation. Native run 44507255994 failed in the iOS Metal translator; patch 0065 and scope corrections require a fresh native build. Host checks and inherited upstream evidence do not establish hardware success. Data-preserving deployment requires recovery rollback readback and ABL loading gates."
 
 [[area]]
 id = "arm64e-os"
