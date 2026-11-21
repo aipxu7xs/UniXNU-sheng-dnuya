@@ -1,6 +1,6 @@
 import pathlib,json,hashlib,argparse
 O=pathlib.Path(__file__).resolve().parent
-PIN='5d84a4bb2a3b3d7e500e9d6ed537777d64e8cc5fe16cb56e7f17f777d4fa6fb9'
+PIN='f529f64c24ef9032129e9389aa37ac6957d92cd7ab2c1e3d93811d83a3fa871c'
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest() if p.is_file() else None
 def install(root,check=False):
  root=pathlib.Path(root).resolve();sp=O/"install-spec.json"
