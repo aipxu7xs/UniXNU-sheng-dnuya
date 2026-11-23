@@ -6,8 +6,8 @@
   },
   "split_workflow": {
     "path": ".github/workflows/package-fullsync.yml",
-    "sha256": "56c288c63216a653b8cbcee156e30dac6f008ae95dd806a817220b8636a0951c",
-    "bytes": 39168
+    "sha256": "2cf324300ed88eab483b15a8243056dbe22c2e8f622dcad4af9d27d33ff0d169",
+    "bytes": 40565
   },
   "checkout_step": {
     "after_step": 0,
@@ -407,8 +407,8 @@
       "index": 47,
       "name": "usb diagnostics (usb=2 register sampling + log-sys=1)",
       "file": "ci/steps/047-usb-diagnostics-usb-2-register-sampling-log-sys-1.sh",
-      "sha256": "4802666ad3e5b643ae4fd374c1a6bbc8a149cd6704649ecc64f339d9f7ca7db0",
-      "bytes": 2996,
+      "sha256": "65171f52f97cd708251214ca28962169233dd0969c46d630a0fb2ab2228df99f",
+      "bytes": 3035,
       "workflow_call_count": 1,
       "status": "active"
     },
@@ -911,7 +911,7 @@
       "index": 104,
       "name": "verify final reviewed source digests before packaging",
       "file": "ci/steps/104-verify-final-reviewed-source-digests-before-packaging.sh",
-      "sha256": "e3bd43725867acccecc566c927ebdd14a506adecb365aeb9c0efa7f004e872cc",
+      "sha256": "32213a9277b1450815896653571ade05b4a7bc6c29dbaccfd843aad305c76dfc",
       "bytes": 3656,
       "workflow_call_count": 1,
       "status": "active"
@@ -929,7 +929,7 @@
       "index": 106,
       "name": "verify resolved reviewed source UFS and diagnostic symbols",
       "file": "ci/steps/106-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh",
-      "sha256": "2561b5a7b4bbcedbd3fb898a0cb8451d264416f6cef91486b0bef4375700e98c",
+      "sha256": "6775afe5eb5c68f7e05d6174a1628206ee45e46668bc516d3a6b3e7636d8c55f",
       "bytes": 12199,
       "workflow_call_count": 1,
       "status": "active"

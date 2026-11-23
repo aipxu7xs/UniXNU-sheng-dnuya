@@ -48,7 +48,7 @@ python3 - <<'PY'
 import pathlib
 p = pathlib.Path('device/board.toml')
 t = p.read_text()
-ADD = ['"diag=1"', '"gpu-trace=1"', '"diag-export=600"', '"gpu-perf=1"']
+ADD = ['"diag=1"', '"gpu-trace=1"', '"diag-export=600"', '"gpu-perf=1"', '"dpu-early-done=1"']
 pieces = t.split('"kernel_args" = [')
 if len(pieces) < 2:
     raise SystemExit('measurement capture: no kernel_args array in board.toml')
@@ -74,5 +74,5 @@ for a in ADD:
         raise SystemExit('measurement capture: param not exactly once in board.toml: ' + a)
 if t2 != t:
     p.write_text(t2)
-print('measurement capture: diag=1 gpu-trace=1 diag-export=600 gpu-perf=1 appended to iPadOS payload kernel_args')
+print('measurement capture: diag=1 gpu-trace=1 diag-export=600 gpu-perf=1 dpu-early-done=1 appended to iPadOS payload kernel_args')
 PY
