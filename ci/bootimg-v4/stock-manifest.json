@@ -1,0 +1,14 @@
+{
+ "size": 100663296,
+ "sha256": "164665e297591e57a817c747c31dcd202d992b278efab9f737a0e6cf5a638b43",
+ "encoding": "xz preset 9e, split 3MiB, base64",
+ "chunks": [
+  "vendor_boot.img.xz.part00.b64",
+  "vendor_boot.img.xz.part01.b64",
+  "vendor_boot.img.xz.part02.b64",
+  "vendor_boot.img.xz.part03.b64",
+  "vendor_boot.img.xz.part04.b64",
+  "vendor_boot.img.xz.part05.b64",
+  "vendor_boot.img.xz.part06.b64"
+ ]
+}
