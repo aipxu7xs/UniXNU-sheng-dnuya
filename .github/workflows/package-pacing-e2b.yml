@@ -1,0 +1,639 @@
+name: package-pacing-e2b
+
+# PACING E2B EXPERIMENT LINE (derived from package-fullsync): retire delivery
+# is quantized to the published-refresh grid (dpu-retire-pacing component,
+# step 047e adds the gating boot-arg) to pace the compositor production loop;
+# B1 early-done and the diag capture stay identical to the #8 line. Original header:
+
+# FULL upstream sync round N+2: official device main + official framework main
+# + sm8550 SoC pin bump (a9f45dc6 -> SoC main 2dc650ca: GeniUart/QupDma/VideoCc/AppsSmmu),
+# + PR #229 cherry-pick, + the sheng ABL 0x218 DTB fix, + build-logs upload,
+# + measured device-only USB closure and native driver (34 roots / 43 closure members).
+#
+# The platform seed comes from the repository secret UNIXNU_UNIQUE_CHIP_ID and
+# is baked into the images, so the run's artifacts belong to one device alone:
+# download them, then delete the run.
+
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        description: "OS profile of the images"
+        type: choice
+        options: ["27", "26", "17"]
+        default: "27"
+      init_data:
+        description: "Create a NEW installation seed if no saved seed exists (iPadOS 27 only)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: package-pacing-e2b-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    runs-on: macos-26-intel
+    timeout-minutes: 360
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+    steps:
+      - name: verify Intel host and unchanged Xcode SDK inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = x86_64
+          test -d "$DEVELOPER_DIR"
+          xcodebuild -version
+          test "$(xcodebuild -version | head -n 1)" = 'Xcode 26.6'
+          test "$(xcrun --sdk iphoneos --show-sdk-version)" = 26.5
+          test "$(xcrun --sdk macosx --show-sdk-version)" = 26.5
+      - name: check out reviewed build step scripts
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: ci-self
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: UniXNU/UniXNU-sheng
+          ref: 68800685763d755c368775b848dd703fb3f8a3ce # official device main (full upstream sync)
+          path: device
+          submodules: recursive
+      - uses: actions/checkout@v4
+        with:
+          repository: UniXNU/UniXNU
+          ref: 71b8a5a3d78edfe6404a706c1ebccd9915fb3c5e # frozen complete framework audit
+          path: UniXNU
+          submodules: recursive
+      - uses: actions/checkout@v4
+        with:
+          repository: UniXNU/uefi-sheng
+          ref: b303410c8e401fc9419ae65a024356ed09a438ef # frozen UEFI audit; reviewed board backports follow separately
+          path: uefi-sheng
+          submodules: recursive
+      - name: bump sm8550 SoC pin (Sm8550GeniUart.h requirement)
+        # ROOT CAUSE (runs 43375570118 / 43388561958): device main's feeds.toml and
+        # unixnu.lock pin SoC a9f45dc6, whose kits/Sm8550Platform lacks everything the
+        # device build compiles - Sm8550GeniUart.h/.c (BluetoothProbe), Sm8550QupDma,
+        # Sm8550VideoCc (video clock, H264) and Sm8550AppsSmmu. SoC main 2dc650ca has
+        # all four; every file the build references is checked by preflight.
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/004-bump-sm8550-soc-pin-sm8550geniuart-h-requirement.sh"
+      - name: apply pinned USB device-only sources and 34 roots
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/005-apply-pinned-usb-device-only-sources-and-34-roots.sh"
+      - name: verify frozen framework component gitlinks before local repairs
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/006-verify-frozen-framework-component-gitlinks-before-local-repa.sh"
+      - name: verify frozen Metal builders translator and overlay pairing
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/007-verify-frozen-metal-builders-translator-and-overlay-pairing.sh"
+      - name: compile native board objects with -Oz (layout slack)
+        # Measured failure: run 43601833150, fileset_layout.py:115 collision branch,
+        # over_by=0x10000 (64 KiB), native __TEXT_EXEC=0xbbc000.
+        # This matches run 43595027558: no-unwind gave no executable-budget gain.
+        # Historical notes reported a 11968 KiB window, 11792 KiB baseline usage
+        # and 160 KiB root-segment gap; these are not a consistent slack equation.
+        # Use the actual aligned code_end and __DATA.va for acceptance.
+        # Whole-kernel function counts do not measure board-only code growth.
+        # The 1085 runtime.log -O2 commands were OpenSSL, not board recipes.
+        # The official VPU builder uses -Os: "native text is short of room".
+        # Keep the existing GOP helper experiment; optimize additional independent
+        # builders below. Only a completed prelink can establish layout fit.
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/008-compile-native-board-objects-with-oz-layout-slack.sh"
+      - name: optimize independent board builders for 24A446
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/009-optimize-independent-board-builders-for-24a446.sh"
+      - name: repair GPU selftest IOVA and kernel client contract
+        if: inputs.os == '27'
+        working-directory: device
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/010-repair-gpu-selftest-iova-and-kernel-client-contract.sh"
+      - name: guard unmapped GPU selftest buffers
+        if: inputs.os == '27'
+        working-directory: device
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/010b-guard-unmapped-gpu-selftest-buffers.sh"
+      - name: use plain GICR priority stores for the 24A446 fault experiment
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/011-use-plain-gicr-priority-stores-for-the-24a446-fault-experime.sh"
+      - name: enable GPU self-tests in the iPadOS kernel
+        if: inputs.os == '27'
+        working-directory: device
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/012-enable-gpu-self-tests-in-the-ipados-kernel.sh"
+      - name: report the SError syndrome at the unhandled branch (diagnostic)
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/013-report-the-serror-syndrome-at-the-unhandled-branch-diagnosti.sh"
+      - name: enforce USB closure imports and print prelink evidence
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/014-enforce-usb-closure-imports-and-print-prelink-evidence.sh"
+      - name: layout collide diagnostics (print numbers before the exception)
+        # Runs 43571646791 and 43586156184 both died at fileset_layout.py:115 with
+        # no numbers on the page. Patch the framework's Layout to print
+        # __DATA.va, code_end, over_by and native __TEXT_EXEC size at the exact
+        # collision branch, so the next failure (or success) carries the real
+        # budget numbers. Pure diagnostics: the success path is untouched.
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/015-layout-collide-diagnostics-print-numbers-before-the-exceptio.sh"
+      - name: allocate board data buffers at runtime for 24A446
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/016-allocate-board-data-buffers-at-runtime-for-24a446.sh"
+      - name: stage reviewed source payload chunk 1
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/017-stage-reviewed-source-payload-chunk-1.sh"
+      - name: stage reviewed source payload chunk 2
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/018-stage-reviewed-source-payload-chunk-2.sh"
+      - name: stage reviewed source payload chunk 3
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/019-stage-reviewed-source-payload-chunk-3.sh"
+      - name: stage reviewed source payload chunk 4
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/020-stage-reviewed-source-payload-chunk-4.sh"
+      - name: stage reviewed source payload chunk 5
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/021-stage-reviewed-source-payload-chunk-5.sh"
+      - name: stage reviewed source payload chunk 6
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/022-stage-reviewed-source-payload-chunk-6.sh"
+      - name: stage reviewed source payload chunk 7
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/023-stage-reviewed-source-payload-chunk-7.sh"
+      - name: stage reviewed source payload chunk 8
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/024-stage-reviewed-source-payload-chunk-8.sh"
+      - name: stage reviewed source payload chunk 9
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/025-stage-reviewed-source-payload-chunk-9.sh"
+      - name: stage reviewed source payload chunk 10
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/026-stage-reviewed-source-payload-chunk-10.sh"
+      - name: stage reviewed source payload chunk 11
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/027-stage-reviewed-source-payload-chunk-11.sh"
+      - name: stage reviewed source payload chunk 12
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/028-stage-reviewed-source-payload-chunk-12.sh"
+      - name: stage reviewed source payload chunk 13
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/029-stage-reviewed-source-payload-chunk-13.sh"
+      - name: stage reviewed source payload chunk 14
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/030-stage-reviewed-source-payload-chunk-14.sh"
+      - name: stage reviewed source payload chunk 15
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/031-stage-reviewed-source-payload-chunk-15.sh"
+      - name: stage reviewed source payload chunk 16
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/032-stage-reviewed-source-payload-chunk-16.sh"
+      - name: stage reviewed source payload chunk 17
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/033-stage-reviewed-source-payload-chunk-17.sh"
+      - name: stage reviewed source payload chunk 18
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/034-stage-reviewed-source-payload-chunk-18.sh"
+      - name: stage reviewed source payload chunk 19
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/035-stage-reviewed-source-payload-chunk-19.sh"
+      - name: stage reviewed source payload chunk 20
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/036-stage-reviewed-source-payload-chunk-20.sh"
+      - name: apply reviewed board timing diagnostics peripheral counters and Iris bridge
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/037-apply-reviewed-board-timing-diagnostics-peripheral-counters-.sh"
+      - name: pin device-priority ShengUfs and framework catalog
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/038-pin-device-priority-shengufs-and-framework-catalog.sh"
+      - name: install reviewed firmware callbacks for actual selected trees
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/039-install-reviewed-firmware-callbacks-for-actual-selected-tree.sh"
+      - name: report full native layout before validation
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/040-report-full-native-layout-before-validation.sh"
+      - name: device hook weak stubs (macOS-only hooks; real hooks force-pulled)
+        # PIT (run 43406736873): the DEVELOPMENT kernel link fails on 16 weak imports.
+        # They are NOT all macOS-only. Verified against the sources:
+        #   * 7 hooks HAVE real implementations (device SourceStorage.cpp:264,
+        #     SourceRootBinding.cpp:68, BootWatchdogPolicy.c:95; framework
+        #     drivers/RamBlock/NativeRamBlock.cpp:693/712). They are the UFS/root
+        #     start path (bsd_init, kern_exec, IOKitBSDInit call them); stubbing
+        #     them would disable SourceStorage and root verification, so instead
+        #     force the linker to pull their archive members with -u.
+        #   * 9 are genuinely macOS-only or optional: cs_native4k_* (CS digest
+        #     timing, BootLog.c declares them as weak_import arrays), the
+        #     memwired/pager-close hooks from the macOS 27.3 profile patches, the
+        #     legacy request layout table (has the ios17 fallback), and the
+        #     macOS-only Ethernet / software AES probes (LegacyDisplayProbe.cpp
+        #     itself comments them "macOS builds only"). arm64e cannot leave an
+        #     authenticated pointer to an undefined weak symbol, so these get
+        #     weak defaults (project convention).
+        env:
+          USB_PROFILE: ${{ inputs.os }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/041-device-hook-weak-stubs-macos-only-hooks-real-hooks-force-pul.sh"
+      - name: patch fileset reference stubs (device hook prefixes)
+        # PIT (run 43397482308): build-fileset-release-reference.py auto-stubs only
+        # native_* undefined weak symbols. Device main's newer code also references
+        # cs_native4k_* (BootLog digests), iokit_physical_descriptor_*,
+        # ml_static_mfree_prepare and sheng_* probes (ethernet, software_aes), so the
+        # comparison kernel's second link failed and archive-20 aborted the run.
+        # The comparison kernel never runs - the prelink step only reads its layout -
+        # so extending the stub prefix list is safe.
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/042-patch-fileset-reference-stubs-device-hook-prefixes.sh"
+      - name: note on upstream PR 229 (not applied)
+        # PR #229 (stoicneko: ipsw AEA decrypt on non-macOS hosts) conflicts with
+        # framework main's scripts/unixnu/ipsw.py, and both recovery attempts left
+        # conflict markers / unmerged paths in the tree (runs 43385171421 and
+        # 43386319771 died on "SyntaxError: <<<<<<< HEAD"). It only helps non-macOS
+        # hosts; our packaging/userdata builds run on macOS where /usr/bin/aea is
+        # native, so it is tracked upstream and deliberately not applied here.
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/043-note-on-upstream-pr-229-not-applied.sh"
+      - name: verify upstream pinned Adreno download retries and publication
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/044-verify-upstream-pinned-adreno-download-retries-and-publicati.sh"
+      - name: repair Mesa patch header
+        # UniXNU 82b847c: turnip-frame-diagnostics.patch creates tu_frame_diagnostic.h without the "new file mode"
+        # line, so git apply stops at dev/null. UniXNU e7c359c adds exactly that line; add it here for the pinned revision.
+        working-directory: UniXNU
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/045-repair-mesa-patch-header.sh"
+      - name: sheng ABL device tree (0x218 symbols)
+        # Official main's sheng-abl-dtb.py adds splash_region via fdtput; the result carries no
+        # /__symbols__ (dtc without -@), so ABL's dtbo_a overlay fixups all fail and it returns to
+        # fastboot (the black screen we proved on the real device). Mirror niuzicheng666's
+        # fetch-babylon-abldtb.py: copy the vendor_boot base tree that carries __symbols__, select
+        # msm-id 0x218 (this handset ABL "Chiptype: 536"), overwrite build/sheng/sheng.dtb, then add
+        # the step to board.toml preflight AFTER check-sheng.py.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/046-sheng-abl-device-tree-0x218-symbols.sh"
+      - name: usb diagnostics (usb=2 register sampling + log-sys=1)
+        # The QcomDwc3 driver is already in this build: build-gop-legacy-display-27.py
+        # compiles drivers/QcomDwc3/QcomDwc3.cpp and package/UsbProbe.cpp
+        # unconditionally, package/LegacyDisplayProbe.cpp calls the weak_import
+        # sheng_usb_probe(), and kernel_args already carry usb=1.
+        # What is missing is visibility: board.toml never sets log-sys, so none of the
+        # native_usb_stats [usb] boot rows are printed, and usb=1 performs no register
+        # sampling. usb=2 adds it (usb=3 would also take the controller off the bus and
+        # back once).
+        # Idempotent, and it only rewrites the kernel_args arrays that already carry usb.
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/047-usb-diagnostics-usb-2-register-sampling-log-sys-1.sh"
+      - name: retire pacing boot arg (E2b pacing experiment)
+        # E2b: step 047e appends dpu-retire-pacing=1 to the payload kernel_args,
+        # arming the dpu-retire-pacing component installed below (stacked on the
+        # GOP early-done patch): retire delivery is held to the published-refresh
+        # grid so the compositor production loop starts each frame on phase.
+        # Everything else stays identical to the #8 line (B1 on, diag on, vsync 120).
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/047e-e2b-retire-pacing-boot-arg.sh"
+      - name: tools
+        shell: bash
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/048-tools.sh"
+      - name: WCN7850 firmware
+        # firmware/wcn7850 holds only the manifest; the binaries stay out of Git. The pinned linux-firmware commit carries
+        # exactly the files the manifest pins (sizes and SHA-256 checked below; any difference stops the run).
+        working-directory: device
+        env:
+          LINUX_FIRMWARE: 575bbe3f83565d18caa73e9b9458f754dd286f48 # linux-firmware: ath12k WCN7850 hw2.0 update board-2.bin
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/049-wcn7850-firmware.sh"
+      - name: verify selected Metal bridge 7200-second build timeout
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/050-verify-selected-metal-bridge-7200-second-build-timeout.sh"
+      - name: device inputs
+        # The runtime step runs before the firmware step, so inputs a developer checkout already holds are fetched here:
+        # the proprietary-files.txt entries from its pinned @fetch mirror (SHA-256 checked) and the sources Ath12kWifi
+        # locks in tools/source-lock.json (commits and archive SHA-256 checked by fetch-sources.py).
+        working-directory: device
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/051-device-inputs.sh"
+      - name: platform seed
+        env:
+          seed: ${{ secrets.UNIXNU_UNIQUE_CHIP_ID }}
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/052-platform-seed.sh"
+      - name: seed cache identity
+        id: seed-key
+        env:
+          SEED: ${{ secrets.UNIXNU_UNIQUE_CHIP_ID }}
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/053-seed-cache-identity.sh"
+      - uses: actions/cache/restore@v4
+        id: data-cache
+        if: inputs.os == '27'
+        with:
+          path: |
+            UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/runtime/data.dbr
+            UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/runtime/inputs.json
+          key: ${{ steps.seed-key.outputs.key }}-${{ inputs.os }}
+      - name: prepare preserved Data seed
+        if: inputs.os == '27'
+        env:
+          INIT_DATA: ${{ inputs.init_data }}
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/055-prepare-preserved-data-seed.sh"
+      - name: stage reviewed Mesa v2 payload chunk 1
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/056-stage-reviewed-mesa-v2-payload-chunk-1.sh"
+      - name: stage reviewed Mesa v2 payload chunk 2
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/057-stage-reviewed-mesa-v2-payload-chunk-2.sh"
+      - name: stage reviewed Mesa v2 payload chunk 3
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/058-stage-reviewed-mesa-v2-payload-chunk-3.sh"
+      - name: stage reviewed Mesa v2 payload chunk 4
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/059-stage-reviewed-mesa-v2-payload-chunk-4.sh"
+      - name: stage reviewed Mesa v2 payload chunk 5
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/060-stage-reviewed-mesa-v2-payload-chunk-5.sh"
+      - name: stage reviewed Mesa v2 payload chunk 6
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/061-stage-reviewed-mesa-v2-payload-chunk-6.sh"
+      - name: stage reviewed Mesa v2 payload chunk 7
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/062-stage-reviewed-mesa-v2-payload-chunk-7.sh"
+      - name: stage reviewed Mesa v2 payload chunk 8
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/063-stage-reviewed-mesa-v2-payload-chunk-8.sh"
+      - name: stage reviewed Mesa v2 payload chunk 9
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/064-stage-reviewed-mesa-v2-payload-chunk-9.sh"
+      - name: stage reviewed Mesa v2 payload chunk 10
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/065-stage-reviewed-mesa-v2-payload-chunk-10.sh"
+      - name: stage reviewed Mesa v2 payload chunk 11
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/066-stage-reviewed-mesa-v2-payload-chunk-11.sh"
+      - name: stage reviewed Mesa v2 payload chunk 12
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/067-stage-reviewed-mesa-v2-payload-chunk-12.sh"
+      - name: stage reviewed Mesa v2 payload chunk 13
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/068-stage-reviewed-mesa-v2-payload-chunk-13.sh"
+      - name: stage reviewed Mesa v2 payload chunk 14
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/069-stage-reviewed-mesa-v2-payload-chunk-14.sh"
+      - name: stage reviewed Mesa v2 payload chunk 15
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/070-stage-reviewed-mesa-v2-payload-chunk-15.sh"
+      - name: stage reviewed Mesa v2 payload chunk 16
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/071-stage-reviewed-mesa-v2-payload-chunk-16.sh"
+      - name: stage reviewed Mesa v2 payload chunk 17
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/072-stage-reviewed-mesa-v2-payload-chunk-17.sh"
+      - name: stage reviewed Mesa v2 payload chunk 18
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/073-stage-reviewed-mesa-v2-payload-chunk-18.sh"
+      - name: stage reviewed Mesa v2 payload chunk 19
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/074-stage-reviewed-mesa-v2-payload-chunk-19.sh"
+      - name: stage reviewed Mesa v2 payload chunk 20
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/075-stage-reviewed-mesa-v2-payload-chunk-20.sh"
+      - name: stage reviewed Mesa v2 payload chunk 21
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/076-stage-reviewed-mesa-v2-payload-chunk-21.sh"
+      - name: stage reviewed Mesa v2 payload chunk 22
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/077-stage-reviewed-mesa-v2-payload-chunk-22.sh"
+      - name: stage reviewed Mesa v2 payload chunk 23
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/078-stage-reviewed-mesa-v2-payload-chunk-23.sh"
+      - name: stage reviewed Mesa v2 payload chunk 24
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/079-stage-reviewed-mesa-v2-payload-chunk-24.sh"
+      - name: stage reviewed Mesa v2 payload chunk 25
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/080-stage-reviewed-mesa-v2-payload-chunk-25.sh"
+      - name: stage reviewed Mesa v2 payload chunk 26
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/081-stage-reviewed-mesa-v2-payload-chunk-26.sh"
+      - name: stage reviewed Mesa v2 payload chunk 27
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/082-stage-reviewed-mesa-v2-payload-chunk-27.sh"
+      - name: stage reviewed Mesa v2 payload chunk 28
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/083-stage-reviewed-mesa-v2-payload-chunk-28.sh"
+      - name: stage reviewed Mesa v2 payload chunk 29
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/084-stage-reviewed-mesa-v2-payload-chunk-29.sh"
+      - name: stage reviewed Mesa v2 payload chunk 30
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/085-stage-reviewed-mesa-v2-payload-chunk-30.sh"
+      - name: stage reviewed Mesa v2 payload chunk 31
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/086-stage-reviewed-mesa-v2-payload-chunk-31.sh"
+      - name: stage reviewed Mesa v2 payload chunk 32
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/087-stage-reviewed-mesa-v2-payload-chunk-32.sh"
+      - name: stage reviewed Mesa v2 payload chunk 33
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/088-stage-reviewed-mesa-v2-payload-chunk-33.sh"
+      - name: stage reviewed Mesa v2 payload chunk 34
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/089-stage-reviewed-mesa-v2-payload-chunk-34.sh"
+      - name: stage reviewed Mesa v2 payload chunk 35
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/090-stage-reviewed-mesa-v2-payload-chunk-35.sh"
+      - name: stage reviewed Mesa v2 payload chunk 36
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/091-stage-reviewed-mesa-v2-payload-chunk-36.sh"
+      - name: stage reviewed Mesa v2 payload chunk 37
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/092-stage-reviewed-mesa-v2-payload-chunk-37.sh"
+      - name: stage reviewed Mesa v2 payload chunk 38
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/093-stage-reviewed-mesa-v2-payload-chunk-38.sh"
+      - name: stage reviewed Mesa v2 payload chunk 39
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/094-stage-reviewed-mesa-v2-payload-chunk-39.sh"
+      - name: stage reviewed Mesa v2 payload chunk 40
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/095-stage-reviewed-mesa-v2-payload-chunk-40.sh"
+      - name: stage reviewed Mesa v2 payload chunk 41
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/096-stage-reviewed-mesa-v2-payload-chunk-41.sh"
+      - name: stage reviewed Mesa v2 payload chunk 42
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/097-stage-reviewed-mesa-v2-payload-chunk-42.sh"
+      - name: stage reviewed Mesa v2 payload chunk 43
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/098-stage-reviewed-mesa-v2-payload-chunk-43.sh"
+      - name: stage reviewed Mesa v2 payload chunk 44
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/099-stage-reviewed-mesa-v2-payload-chunk-44.sh"
+      - name: stage reviewed Mesa v2 payload chunk 45
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/100-stage-reviewed-mesa-v2-payload-chunk-45.sh"
+      - name: stage reviewed Mesa v2 payload chunk 46
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/101-stage-reviewed-mesa-v2-payload-chunk-46.sh"
+      - name: install reviewed Mesa v2 backports before runtime tree build
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/102-install-reviewed-mesa-v2-backports-before-runtime-tree-build.sh"
+      - name: install reviewed Mesa160 after sealed v2
+        if: inputs.os == '27'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/install.py" UniXNU --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/install.py" UniXNU
+      - name: repair Mesa160 header declaration order
+        if: inputs.os == '27'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-order/install.py" UniXNU --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-order/install.py" UniXNU
+      - name: repair Mesa160 missing source modifier mask
+        if: inputs.os == '27'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-mask/install.py" UniXNU --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-mask/install.py" UniXNU
+      - name: repair Mesa160 LRZ and descriptor C++ compatibility
+        if: inputs.os == '27'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-lrz/install.py" UniXNU --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-lrz/install.py" UniXNU
+      - name: repair Mesa160 partial-clear LRZ lifecycle
+        if: inputs.os == '27'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-lifecycle/install.py" UniXNU --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160-lifecycle/install.py" UniXNU
+      - name: verify reviewed Mesa160 installed sources before packaging
+        if: inputs.os == '27'
+        run: python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/prebuild-gate.py" UniXNU
+      - name: install reviewed GOP early-done display patch
+        # B1 (flicker fix candidate): NativeLegacyDisplay retires a direct swap when its flip is
+        # programmed instead of after the latch tick, gated by the dpu-early-done=1 boot-arg that
+        # step 047 appends. Source is the frozen GopFramebuffer component (framework 71b8a5a3,
+        # gitlink b0d812d5); the install rewrites exactly that one source file, hash-asserted.
+        if: inputs.os == '27'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/gop-early-done/install.py" UniXNU --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/gop-early-done/install.py" UniXNU
+      - name: verify reviewed GOP early-done installed source before packaging
+        if: inputs.os == '27'
+        run: python3 "$GITHUB_WORKSPACE/ci-self/ci/gop-early-done/prebuild-gate.py" UniXNU
+      - name: install reviewed DPU retire-pacing display patch
+        # E2b (flicker pacing candidate): NativeLegacyDisplay holds the B1 early
+        # retire delivery to the next published-refresh grid point, gated by the
+        # dpu-retire-pacing=1 boot-arg that step 047e appends. Stacks on the GOP
+        # early-done patch above (its before-hash is the early-done after-hash);
+        # the install rewrites exactly that one source file, hash-asserted.
+        if: inputs.os == '27'
+        run: |
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/dpu-retire-pacing/install.py" UniXNU --check
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/dpu-retire-pacing/install.py" UniXNU
+      - name: verify reviewed DPU retire-pacing installed source before packaging
+        if: inputs.os == '27'
+        run: python3 "$GITHUB_WORKSPACE/ci-self/ci/dpu-retire-pacing/prebuild-gate.py" UniXNU
+      - name: verify final reviewed source digests before packaging
+        if: inputs.os == '27'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/104d-e2b-verify-final-reviewed-source-digests-before-packaging.sh"
+      - name: package
+        id: package-build
+        working-directory: device
+        env:
+          UNIXNU_UNIQUE_CHIP_ID: ${{ secrets.UNIXNU_UNIQUE_CHIP_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          INIT_DATA: ${{ inputs.init_data }}
+          OS_PROFILE: ${{ inputs.os }}
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/105-package.sh"
+      - name: verify resolved reviewed source UFS and diagnostic symbols
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/106d-e2b-verify-resolved-reviewed-source-ufs-and-diagnostic-symbols.sh"
+      - name: verify packaged USB closure strong hooks and original bindings
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/107-verify-packaged-usb-closure-strong-hooks-and-original-bindin.sh"
+      - name: verify reviewed component revisions in packaged manifest
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/108-verify-reviewed-component-revisions-in-packaged-manifest.sh"
+      - name: verify reviewed Mesa160 actual patched source and report
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: python3 "$GITHUB_WORKSPACE/ci-self/ci/mesa160/artifact-gate.py" UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27
+      - name: verify reviewed GOP early-done actual patched source
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: python3 "$GITHUB_WORKSPACE/ci-self/ci/gop-early-done/artifact-gate.py" UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27
+      - name: verify reviewed DPU retire-pacing actual patched source
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: python3 "$GITHUB_WORKSPACE/ci-self/ci/dpu-retire-pacing/artifact-gate.py" UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27
+      - name: verify packaged Metal bridge and embedded addon identity
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/110-verify-packaged-metal-bridge-and-embedded-addon-identity.sh"
+      - name: assert ABL dtb (0x218 + __symbols__)
+        if: always() && steps.package-build.outcome == 'success'
+        # The ABL step only installs the fetcher into board.toml preflight, so the
+        # tree is produced during `package`. It overwrites build/sheng/sheng.dtb
+        # AFTER check-sheng.py validated the stock tree, i.e. the validated file is
+        # not the shipped one. Assert the shipped tree here, right after package and
+        # before anything is cached/uploaded: a tree without /__symbols__ makes
+        # ABL's dtbo overlay fail and bounces the handset back to fastboot.
+        run: bash --noprofile --norc -eo pipefail "$GITHUB_WORKSPACE/ci-self/ci/steps/111-assert-abl-dtb-0x218-symbols.sh"
+      - uses: actions/cache/save@v4
+        if: always() && inputs.os == '27' && steps.data-cache.outputs.cache-hit != 'true' && hashFiles('UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/runtime/data.dbr') != ''
+        with:
+          path: |
+            UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/runtime/data.dbr
+            UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/runtime/inputs.json
+          key: ${{ steps.seed-key.outputs.key }}-${{ inputs.os }}
+      - name: collect resolved packaging configuration
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: |
+          BASE="UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27"
+          python3 UniXNU/unixnu status -D device --os 27 --uefi uefi-sheng --json > "$BASE/logs/resolved-status.json"
+      - name: collect actual Rust dependency evidence
+        if: always() && inputs.os == '27' && steps.package-build.outcome == 'success'
+        run: |
+          BASE="UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27"
+          python3 "$GITHUB_WORKSPACE/ci-self/ci/collect-rust-provenance.py" --tree "$BASE/tree" --target ios27 --output "$BASE/logs/rust-provenance-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+      - name: preserve unverified images after failed postbuild checks
+        if: failure() && steps.package-build.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: unverified-images-for-audit-e2b-${{ inputs.os }}
+          retention-days: 2
+          if-no-files-found: error
+          path: |
+            UniXNU/out/sheng/*/*/boot/boot.img
+            UniXNU/out/sheng/*/*/payload/payload.img
+            UniXNU/out/sheng/*/*/kernel/kernel.macho
+            UniXNU/out/sheng/*/*/package.manifest.json
+      - name: installation seed backup
+        if: always() && inputs.os == '27' && hashFiles('UniXNU/out/sheng/ipados-27.0.1-24A446/sheng_ipados27/runtime/data.dbr') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: installation-seed-e2b-${{ inputs.os }}
+          retention-days: 1
+          path: |
+            UniXNU/out/sheng/*/*/runtime/data.dbr
+            UniXNU/out/sheng/*/*/runtime/inputs.json
+      - name: images
+        uses: actions/upload-artifact@v4
+        with:
+          name: images-e2b-${{ inputs.os }}
+          retention-days: 1
+          if-no-files-found: error
+          path: |
+            UniXNU/out/sheng/*/*/boot/boot.img
+            UniXNU/out/sheng/*/*/payload/payload.img
+            UniXNU/out/sheng/*/*/kernel/kernel.macho
+            UniXNU/out/sheng/*/*/package.manifest.json
+            UniXNU/out/sheng/*/*/usb-device-audit.json
+            UniXNU/out/sheng/*/*/reviewed-source-audit.json
+            UniXNU/out/sheng/*/*/mesa-reviewed-source.json
+      - name: build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs-e2b-${{ inputs.os }}
+          include-hidden-files: true
+          retention-days: 2
+          if-no-files-found: warn
+          path: |
+            UniXNU/out/sheng/*/*/logs/
+            UniXNU/out/sheng/*/*/package.manifest.json
+            UniXNU/out/sheng/*/*/*audit.json
+            UniXNU/out/sheng/*/*/mesa-reviewed-source.json
+            UniXNU/out/sheng/*/*/kernel/kernel.json
+            UniXNU/out/sheng/*/*/kernel/kernel.failed.json
+            UniXNU/out/sheng/*/*/kernel/kernel.map.json
+            UniXNU/out/sheng/*/*/tree/build/native-legacy-display/build-report.json
+            UniXNU/scripts/policies/ipados-27.0.1-24A446/prelink-regression.json
+            UniXNU/out/sheng/*/*/tree/build/adreno-metal-bridge/build-ios27.log
+            UniXNU/out/sheng/*/*/tree/build/mesa-tu-ios27/meson-logs/meson-log.txt
+            UniXNU/out/sheng/*/*/tree/.cache/mesa-tu-ios27-build.log
+            UniXNU/.cache/mesa-tu-ios27-*.log
+            device/.cache/mesa-tu-ios27-*.log
+            UniXNU/out/**/mesa-tu-ios27-*.log
