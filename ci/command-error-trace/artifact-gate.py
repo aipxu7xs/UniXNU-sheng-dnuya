@@ -1,6 +1,6 @@
 """Verify the packaged Metal frontend carries the command-error probe."""
 import pathlib,hashlib,sys
-WANT={'drivers/AdrenoMetal/NativeBridgeMetalFrontend.mm': 'a97d624c2506a8e80ac891acaf714924778ae9ec5ac1d53b5907c5bd98677530'}
+WANT={'drivers/AdrenoMetal/NativeBridgeMetalFrontend.mm': '8488fc727da33e7919a1fef856cd3f0ea3d99abdd0e16dd05e1d0e7832cd59ee'}
 def verify(base):
  base=pathlib.Path(base).resolve()
  p=base/'tree/drivers/AdrenoMetal/NativeBridgeMetalFrontend.mm'

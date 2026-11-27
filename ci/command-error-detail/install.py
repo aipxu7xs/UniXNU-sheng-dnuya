@@ -1,7 +1,7 @@
 """Install the command-buffer error detail (refusal + pipeline) probe (P0 probe Step 1). Root: the framework checkout (stacks on command-error-trace: install 2A first)."""
 import pathlib,json,hashlib,argparse
 O=pathlib.Path(__file__).resolve().parent
-PIN='81bf42a23d409e19280ab3ea42258ad19b0e1c69407a2e5446d29a757aa536ab'
+PIN='6b62809030f9d24faf1313b7bc6a90e81e316cf9bd38d47f145b8ea588d434c2'
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest() if p.is_file() else None
 def install(root,check=False):
  root=pathlib.Path(root).resolve();sp=O/"install-spec.json"

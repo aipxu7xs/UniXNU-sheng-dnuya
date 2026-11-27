@@ -1,7 +1,7 @@
 """Install the command-buffer error records (type 20/21) probe (P0 probe Step 1). Root: the framework checkout (the "UniXNU" checkout in CI; its drivers/AdrenoMetal/)."""
 import pathlib,json,hashlib,argparse
 O=pathlib.Path(__file__).resolve().parent
-PIN='a8503a70fd935ad5ee21e542f1ca859e0ffc9ffd06b4f372350396b6ed7725fd'
+PIN='80345ab6a01945c2de270f780bbfd48c82ed9a86ace2126b817ffb5a5dd0f1e9'
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest() if p.is_file() else None
 def install(root,check=False):
  root=pathlib.Path(root).resolve();sp=O/"install-spec.json"
